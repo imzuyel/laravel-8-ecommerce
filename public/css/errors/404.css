@@ -1,0 +1,161 @@
+body {
+    background-color: #141019;
+    background: radial-gradient(at 50% -20%, #908392, #0d060e) fixed;
+  }
+
+
+  #handboy {
+    animation: swing ease-in-out 1.3s infinite alternate;
+    transform-origin: 98% 98%;
+    transform-box: fill-box;
+
+  }
+
+
+  #girllight {
+    animation: swing ease-in-out 1.3s infinite alternate;
+    transform-origin: 0% 97%;
+    transform-box: fill-box;
+  }
+
+  #hairgirl {
+    animation: swinghair ease-in-out 1.3s infinite alternate;
+    transform-origin: 60% 0%;
+    transform-box: fill-box;
+
+  }
+
+  #zero {
+    transform-origin: bottom;
+    transform-box: fill-box;
+
+  }
+
+  /*************swing************/
+  @keyframes swing {
+    0% {
+      transform: rotate(10deg);
+    }
+
+    100% {
+      transform: rotate(-10deg);
+    }
+  }
+
+
+  /*************swing hair************/
+  @keyframes swinghair {
+    0% {
+      transform: rotate(6deg);
+    }
+
+    100% {
+      transform: rotate(-6deg);
+    }
+  }
+
+
+  /* .button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  position: absolute;
+    left: 50%;
+    bottom: 10%;
+  cursor: pointer;
+}
+; */
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+    left: 50%;
+    bottom: 10%;
+    padding:11px;
+
+/*   padding: 2em 0em; */
+}
+
+.container1 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #FFF;
+
+}
+
+
+.btn {
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 45px;
+  max-width: 160px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  padding:1px 10px;
+}
+.btn:hover {
+  text-decoration: none;
+}
+
+.effect04 {
+  --uismLinkDisplay: var(--smLinkDisplay, inline-flex);
+  display: var(--uismLinkDisplay);
+  color: #fff;
+  outline: solid  2px #ffff;
+  position: relative;
+  transition-duration: 0.4s;
+  overflow: hidden;
+}
+
+.effect04::before,
+.effect04 span{
+    margin: 0 auto;
+	transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+	transition-duration: 0.4s;
+}
+
+
+.effect04:hover{
+
+  background-color: #000;
+}
+
+.effect04:hover span{
+  -webkit-transform: translateY(-400%) scale(-0.1,20);
+          transform: translateY(-400%) scale(-0.1,20);
+}
+
+
+.effect04::before{
+  content: attr(data-sm-link-text);
+	color: #FFF;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  -webkit-transform: translateY(500%) scale(-0.1,20);
+          transform: translateY(500%) scale(-0.1,20);
+}
+
+.effect04:hover::before{
+  letter-spacing: 0.05em;
+  -webkit-transform: translateY(0) scale(1,1);
+          transform: translateY(0) scale(1,1);
+}

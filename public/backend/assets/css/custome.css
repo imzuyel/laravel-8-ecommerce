@@ -1,0 +1,50 @@
+/* Tooltip */
+.tooltip .tooltip-inner {
+    background: black;
+    color: lime;
+    border: 2px solid lime;
+  }
+  .tooltip .arrow {
+    width: 11px!important;
+    height: 11px!important;
+    border: 2px solid lime;
+    bottom: 1px;
+  }
+  .tooltip .arrow:before {
+    width: 11px;
+    height: 11px;
+    background: black;
+    border: 0;
+  }
+  .tooltip.bs-tooltip-top .arrow {
+    transform: rotate(-135deg);
+  }
+  .tooltip.bs-tooltip-bottom .arrow {
+    transform: rotate(135deg);
+    top: 2px;
+  }
+  /* Dropyify */
+  .dropify-wrapper .dropify-message p {
+    font-size: initial;
+  }
+  /* Datatable */
+  .dataTables_empty {
+    color: red !important;
+  }
+
+  .dropify-wrapper .dropify-message p {
+    font-size: initial;
+  }
+  /* Ajax */
+  .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform: -webkit-translate(-50%, -50%);
+    transform: -moz-translate(-50%, -50%);
+    transform: -ms-translate(-50%, -50%);
+    color: darkred;
+    z-index: 100;
+    visibility: hidden;
+  }
