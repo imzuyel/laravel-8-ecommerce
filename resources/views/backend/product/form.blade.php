@@ -3,9 +3,9 @@
 {{ isset($product->id) ? 'Update product' : 'Create product' }}
 @endsection
 @push('css')
-<link rel="stylesheet" href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}"  />
+<link rel="stylesheet" href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('backend/assets/plugins/select2/css/select2-bootstrap4.css') }}" />
-<link rel="stylesheet" href="{{ asset('backend/assets/plugins/input-tags/css/tagsinput.css') }}"  />
+<link rel="stylesheet" href="{{ asset('backend/assets/plugins/input-tags/css/tagsinput.css') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
 <link rel="stylesheet" href="{{ asset('backend/assets/css/multiimage.css') }}" />
 @endpush
@@ -31,7 +31,7 @@
   <div class="row">
     <div class="col-12 col-lg-8">
       <div class="card radius-15 border-lg-top-info">
-        <div class="card-header border-bottom-0 mb-1">
+        <div class="card-header border-bottom-0">
           <div class="d-flex align-items-center">
             <div>
               <h5 class="mb-lg-0">Create product</h5>
@@ -48,7 +48,7 @@
 
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class=" col-form-label">Brand</label>
+                <label class=" col-form-label">Brand <span class="text-danger">*</span></label>
                 <select class="form-control single-select" name="brand_id" id="brand_id" required>
                   @foreach ($brands as $brand)
                   <option value="{{ $brand->id }}" @isset($product->
@@ -62,7 +62,7 @@
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <label class=" col-form-label">Category</label>
+                <label class=" col-form-label">Category <span class="text-danger">*</span></label>
                 <select class="form-control single-select" name="category_id1" id="category_id1">
                   @foreach ($categories as $category)
                   <option value="{{ $category->id }}" @isset($product->id)
@@ -93,7 +93,7 @@
 
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class="col-form-label">Product Name</label>
+                <label class="col-form-label">Product Name <span class="text-danger">*</span></label>
                 <input type="text" class="form-control  @error('product_name_en') is-invalid @enderror" name="product_name_en" value="{{ $product->product_name_en ?? old('product_name_en') }}" placeholder="Product Name" required>
                 @error('product_name_en')
                 <span class="text-danger" product="alert">
@@ -102,7 +102,7 @@
                 @enderror
               </div>
               <div class="form-group col-md-6">
-                <label class="col-form-label">পণ্যের নাম</label>
+                <label class="col-form-label">পণ্যের নাম <span class="text-danger">*</span></label>
                 <input type="text" class="form-control  @error('product_name_bn') is-invalid @enderror" name="product_name_bn" value="{{ $product->product_name_bn ?? old('product_name_bn') }}" placeholder="পণ্যের নাম">
                 @error('product_name_bn')
                 <span class="text-danger" product="alert">
@@ -114,7 +114,7 @@
 
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class="col-form-label">Quantity</label>
+                <label class="col-form-label">Quantity <span class="text-danger">*</span></label>
                 <input type="text" class="form-control  @error('product_qty_en') is-invalid @enderror" name="product_qty_en" value="{{ $product->product_qty_en ?? old('product_qty_en') }}" placeholder="Product quantity" required>
                 @error('product_qty_en')
                 <span class="text-danger" product="alert">
@@ -123,7 +123,7 @@
                 @enderror
               </div>
               <div class="form-group col-md-6">
-                <label class="col-form-label">পরিমাণ</label>
+                <label class="col-form-label">পরিমাণ <span class="text-danger">*</span></label>
                 <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ" required>
                 @error('product_qty_bn')
                 <span class="text-danger" product="alert">
@@ -135,7 +135,7 @@
 
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label class="col-form-label">Price</label>
+                <label class="col-form-label">Price <span class="text-danger">*</span></label>
                 <input type="text" class="form-control  @error('price_en') is-invalid @enderror" name="price_en" value="{{ $product->price_en ?? old('price_en') }}" placeholder="Product Price" required>
                 @error('price_en')
                 <span class="text-danger" product="alert">
@@ -144,7 +144,7 @@
                 @enderror
               </div>
               <div class="form-group col-md-6">
-                <label class="col-form-label">দাম</label>
+                <label class="col-form-label">দাম <span class="text-danger">*</span></label>
                 <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="{{ $product->price_bn ?? old('price_bn') }}" placeholder="পণ্যের দাম" required>
                 @error('price_bn')
                 <span class="text-danger" product="alert">
@@ -177,18 +177,20 @@
             </div>
 
             <div class="form-row">
-              <div class="form-group col-md-6">
-                <label class="col-form-label">Product tags</label>
-                <input type="text" class="form-control  @error('product_tags_en') is-invalid @enderror" name="product_tags_en" value="{{ $product->product_tags_en ?? old('product_tags_en') }}" placeholder="Product tags English" {{ !isset($product) ? '' : '' }}>
+              <div class="form-group col">
+                <label class="col-form-label">Product tags <span class="text-danger">*</span></label>
+                <input type="text" data-role="tagsinput" class="form-control  @error('product_tags_en') is-invalid @enderror" name="product_tags_en" value="{{ $product->product_tags_en ?? old('product_tags_en') }}" placeholder="Product tags English" {{ !isset($product) ? '' : '' }}>
                 @error('product_tags_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
                 </span>
                 @enderror
               </div>
-              <div class="form-group col-md-6">
-                <label class="col-form-label">পণ্য ট্যাগ</label>
-                <input type="text" class="form-control  @error('product_tags_bn') is-invalid @enderror" name="product_tags_bn" value="{{ $product->product_tags_bn ?? old('product_tags_bn') }}" placeholder="বাংলায় পণ্য ট্যাগ" {{ !isset($product) ? '' : '' }}>
+            </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label class="col-form-label">পণ্য ট্যাগ <span class="text-danger">*</span></label>
+                <input type="text" data-role="tagsinput" class="form-control  @error('product_tags_bn') is-invalid @enderror" name="product_tags_bn" value="{{ $product->product_tags_bn ?? old('product_tags_bn') }}" placeholder="বাংলায় পণ্য ট্যাগ" {{ !isset($product) ? '' : '' }}>
                 @error('product_tags_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -207,7 +209,7 @@
               @enderror
             </div>
             <div class="form-group">
-              <label class="col-form-label">সংক্ষিপ্ত বিবরণ</label>
+              <label class="col-form-label">সংক্ষিপ্ত বিবরণ </label>
               <textarea name="short_description_bn" id="short_description_bn" class="form-control  @error('short_description_bn') is-invalid @enderror" placeholder="সংক্ষিপ্ত বিবরণ">{{ $product->short_description_bn ?? old('short_description_bn') }}</textarea>
               @error('short_description_bn')
               <span class="text-danger" product="alert">
@@ -217,7 +219,7 @@
             </div>
 
             <div class="form-group">
-              <label class="col-form-label">Long description</label>
+              <label class="col-form-label">Long description <span class="text-danger">*</span></label>
               <textarea name="long_description_en" id="long_description_en" class="form-control">{{ $product->long_description_en ?? old('long_description_en') }}</textarea>
               @error('long_description_en')
               <span class="text-danger" product="alert">
@@ -226,7 +228,7 @@
               @enderror
             </div>
             <div class="form-group">
-              <label class="col-form-label">দীর্ঘ বিবরণ</label>
+              <label class="col-form-label">দীর্ঘ বিবরণ <span class="text-danger">*</span></label>
               <textarea name="long_description_bn" id="long_description_bn" class="form-control">{{ $product->long_description_bn ?? old('long_description_bn') }}</textarea>
               @error('long_description_bn')
               <span class="text-danger" product="alert">
@@ -241,7 +243,7 @@
     </div>
     <div class="col-12 col-lg-4">
       <div class="card radius-15 border-lg-top-info">
-        <div class="card-header border-bottom-0">
+        <div class="card-header border-bottom-0 mb-4">
           <div class="d-flex align-items-center">
             <div>
               <h5 class="mb-0">Other information</h5>
@@ -294,7 +296,7 @@
             </div>
 
             <div class="form-group">
-              <label class="col-form-label">Main Thambnail</label>
+              <label class="col-form-label">Main Thambnail <span class="text-danger">*</span></label>
               <input type="file" name="image" class="dropify @error('image') is-invalid @enderror" data-max-file-size-preview="8M" @if (isset($product->image))
               data-default-file="/{{ $product->image }}" @endif
               {{ !isset($product->id) ? '' : '' }} />
@@ -355,7 +357,9 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="hot_deals" name="hot_deals" value="1">
+                  <input type="checkbox" class="custom-control-input" id="hot_deals" name="hot_deals" value="1"  @isset($product->id)
+                  {{ $product->hot_deals == 1 ? 'selected' : '' }}
+                  @endisset>
                   <label class="custom-control-label" for="hot_deals">Hot Deals</label>
                 </div>
                 @error('hot_deals')
@@ -366,7 +370,9 @@
               </div>
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="featured" name="featured" value="1">
+                  <input type="checkbox" class="custom-control-input" id="featured" name="featured" value="1" @isset($product->id)
+                  {{ $product->featured == 1 ? 'selected' : '' }}
+                  @endisset>>
                   <label class="custom-control-label" for="featured">Featured</label>
                 </div>
                 @error('featured')
@@ -380,7 +386,9 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="special_offer" name="special_offer" value="1">
+                  <input type="checkbox" class="custom-control-input" id="special_offer" name="special_offer" value="1" @isset($product->id)
+                  {{ $product->special_offer == 1 ? 'selected' : '' }}
+                  @endisset>>
                   <label class="custom-control-label" for="special_offer">Special Offer</label>
                 </div>
                 @error('special_offer')
@@ -391,7 +399,9 @@
               </div>
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="special_deals" name="special_deals" value="1">
+                  <input type="checkbox" class="custom-control-input" id="special_deals" name="special_deals" value="1" @isset($product->id)
+                  {{ $product->special_deals == 1 ? 'selected' : '' }}
+                  @endisset>>
                   <label class="custom-control-label" for="special_deals">Special Deals</label>
                 </div>
                 @error('special_deals')
