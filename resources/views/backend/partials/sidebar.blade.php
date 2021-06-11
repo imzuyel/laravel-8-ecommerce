@@ -147,7 +147,7 @@
         </li>
         @endif
         @if (Auth::user()->hasPermission('app.products.index'))
-        <li class="{{ Request::is('app/products') ? 'mm-active' : '' }}{{ Request::is('app/products/*/edit') ? 'mm-active' : '' }}">
+        <li class="{{ Request::is('app/products') ? 'mm-active' : '' }}{{ Request::is('app/products/*/edit') ? 'mm-active' : '' }} {{ Request::is('app/products/multi-image/*') ? 'mm-active' : '' }} {{ Request::is('app/products/stock/*') ? 'mm-active' : '' }}">
           <a href="{{ route('app.products.index') }}"><i class="bx bx-star"></i>Manage</a>
         </li>
         @endif

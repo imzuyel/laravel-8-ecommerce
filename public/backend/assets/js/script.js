@@ -101,4 +101,47 @@ $(document).ready(function () {
             },
         });
     });
+
+
+     /**
+     * Product status update
+     */
+      $(".updateProductStatus").click(function () {
+        var status = $(this).text();
+        var product_id = $(this).attr("product_id");
+        $.ajax({
+            type: "POST",
+            url: "/app/products/update-status",
+            data: {
+                status: status,
+                product_id: product_id,
+            },
+            beforeSend: function () {
+                $(".centered").css("visibility", "visible");
+            },
+            success: function (resp) {
+                toastr.options = {
+                    closeButton: true,
+                    closeHtml: "<button>&#xd7;</button>",
+                    progressBar: true,
+                    showMethod: "slideDown",
+                };
+                if (resp["status"] == false) {
+                    $("#product-" + product_id).html(
+                        "<a class='badge-warning updateProductStatus'  href='javascript:void(0)'>Inactive</a>"
+                    );
+                    toastr["success"]("Product inactive successfully!");
+                } else {
+                    $("#product-" + product_id).html(
+                        "<a class='badge-info updateProductStatus'  href='javascript:void(0)'>Active</a>"
+                    );
+                    toastr["success"]("Product active successfully!");
+                }
+            },
+            complete: function () {
+                $(".centered").css("visibility", "hidden");
+            },
+        });
+    });
+
 });

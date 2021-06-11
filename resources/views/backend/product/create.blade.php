@@ -124,7 +124,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">পরিমাণ <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5"  required>
+                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5" required>
                 @error('product_qty_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -136,7 +136,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="col-form-label">Price <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('price_en') is-invalid @enderror" name="price_en" value="{{ $product->price_en ?? old('price_en') }}" placeholder="Product Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10"  required>
+                <input type="text" class="form-control  @error('price_en') is-invalid @enderror" name="price_en" value="{{ $product->price_en ?? old('price_en') }}" placeholder="Product Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10" required>
                 @error('price_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -145,7 +145,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">দাম <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="{{ $product->price_bn ?? old('price_bn') }}" placeholder="পণ্যের দাম" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10"  required>
+                <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="{{ $product->price_bn ?? old('price_bn') }}" placeholder="পণ্যের দাম" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10" required>
                 @error('price_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -158,7 +158,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="col-form-label">Discount %</label>
-                <input type="text" class="form-control  @error('discount_en') is-invalid @enderror" name="discount_en" value="{{ $product->discount_en ?? old('discount_en') }}"  placeholder="Product Discount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="2">
+                <input type="text" class="form-control  @error('discount_en') is-invalid @enderror" name="discount_en" value="{{ $product->discount_en ?? old('discount_en') }}" placeholder="Product Discount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="2">
                 @error('discount_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -257,7 +257,7 @@
               <div class="col">
                 <div class="form-group">
                   <label class="col-form-label">Size</label>
-                  <input data-role="tagsinput" value="S,M,L,XL" type="text" class="form-control  @error('size') is-invalid @enderror" name="size" value="{{ $product->size ?? old('size') }}" placeholder="Product size">
+                  <input data-role="tagsinput" value="{{ isset($product->id) ? $product->size : 'S,M,L,XL'}}" type="text" class="form-control  @error('size') is-invalid @enderror" name="size" placeholder="Product size">
                   @error('size')
                   <span class="text-danger" product="alert">
                     <strong>{{ $message }}</strong>
@@ -271,7 +271,7 @@
               <div class="col">
                 <div class="form-group">
                   <label class="col-form-label">Color</label>
-                  <input data-role="tagsinput" value="Red,Black,Green" type="text" class="form-control  @error('product_color_en') is-invalid @enderror" name="product_color_en" value="{{ $product->product_color_en ?? old('product_color_en') }}" placeholder="Product color ">
+                  <input data-role="tagsinput"  value="{{ isset($product->id) ? $product->product_color_en : 'Red,Black,Green'}}" type="text" class="form-control  @error('product_color_en') is-invalid @enderror" name="product_color_en"  placeholder="Product color ">
                   @error('product_color_en')
                   <span class="text-danger" product="alert">
                     <strong>{{ $message }}</strong>
@@ -280,12 +280,11 @@
                 </div>
               </div>
             </div>
-
             <div class="form-row">
               <div class="col">
                 <div class="form-group">
                   <label class="col-form-label">রঙ</label>
-                  <input data-role="tagsinput" value="লাল,কালো,সবুজ" type="text" class="form-control  @error('product_color_bn') is-invalid @enderror" name="product_color_bn" value="{{ $product->product_color_bn ?? old('product_color_bn') }}" placeholder="পণ্যের রঙ" {{ !isset($product) ? '' : '' }}>
+                  <input data-role="tagsinput"  value="{{ isset($product->id) ? $product->product_color_bn : 'লাল,কালো,সবুজ'}}" type="text" class="form-control  @error('product_color_bn') is-invalid @enderror" name="product_color_bn" value="{{ $product->product_color_bn ?? old('product_color_bn') }}" placeholder="পণ্যের রঙ" {{ !isset($product) ? '' : '' }}>
                   @error('product_color_bn')
                   <span class="text-danger" product="alert">
                     <strong>{{ $message }}</strong>
@@ -315,6 +314,8 @@
                 </div>
               </div>
             </div>
+
+
 
             <div class="form-group">
               <label class="col-form-label">Meta Kewords</label>
@@ -357,7 +358,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="hot_deals" name="hot_deals"  @isset($product->id)
+                  <input type="checkbox" class="custom-control-input" id="hot_deals" name="hot_deals" @isset($product->id)
                   {{ $product->hot_deals == 1 ? 'selected' : '' }}
                   @endisset>
                   <label class="custom-control-label" for="hot_deals">Hot Deals</label>

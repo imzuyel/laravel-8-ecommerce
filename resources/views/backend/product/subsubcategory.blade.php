@@ -3,7 +3,7 @@
       @if (!empty($subsubcategories))
         @foreach ($subsubcategories as $subcategory)
           <option value="{{ $subcategory->id }}" {{ $subcategory->id==$product->subsubcategory_id?'selected':'' }}>
-            {{ $subcategory->subcategory_name_en }}
+            {{ $subcategory->subsubcategory_name_en }}
           </option>
         @endforeach
       @endif
