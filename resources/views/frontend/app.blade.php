@@ -6,10 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/png" href=" {{ asset('frontend/assets/images/k_favicon_32x.png') }}">
   <title>Kalle's home decor</title>
-  {{-- <link rel="preconnect" href="../../fonts.gstatic.com/index.html">
-    <link href="../../fonts.googleapis.com/css45e6.css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&amp;display=swap" rel="stylesheet">
-    <link href="../../fonts.googleapis.com/css1faa.css?family=Libre+Baskerville:300,300i,400,400i,500,500i&amp;display=swap" rel="stylesheet"> --}}
-
 
   <link rel="stylesheet" href=" {{ asset('frontend/assets/css/font-icon.min.css') }}">
   <link rel="stylesheet" href=" {{ asset('frontend/assets/css/bootstrap.min.css') }}">

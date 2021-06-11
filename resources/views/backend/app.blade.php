@@ -15,6 +15,7 @@
   <link href="{{ asset('backend/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
   <link href="{{ asset('backend/assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
   <!-- loader-->
+  @FilemanagerScript
   <link href="{{ asset('backend/assets/css/pace.min.css') }}" rel="stylesheet" />
   <script src="{{ asset('backend/assets/js/pace.min.js') }}"></script>
   <!-- Bootstrap CSS -->
@@ -27,14 +28,14 @@
 
   <link rel="stylesheet" href="{{ asset('backend/assets/css/custome.css') }}" />
   @stack('css')
-  @FilemanagerScript
+
 </head>
 
 
 <body>
   <div class="wrapper">
     <img class="centered" src="/images/ajax-loader.gif" alt="" srcset="">
-    <img src="/images/no_" alt="" srcset="">
+
     <!--sidebar-wrapper-->
     @include('backend.partials.sidebar')
     <!--end sidebar-wrapper-->
@@ -115,6 +116,43 @@
           form.submit();
         }
       })
+    });
+
+  </script>
+  {{-- multiple image preview --}}
+  <script>
+    $(document).ready(function() {
+      if (window.File && window.FileList && window.FileReader) {
+        $("#files").on("change", function(e) {
+          var files = e.target.files
+            , filesLength = files.length;
+          for (var i = 0; i < filesLength; i++) {
+            var f = files[i]
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+              var file = e.target;
+              $("<span class=\"pip\">" +
+                "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                "<br/><span class=\"remove\">Remove</span>" +
+                "</span>").insertAfter("#files");
+              $(".remove").click(function() {
+                $(this).parent(".pip").remove();
+              });
+
+              // Old code here
+              /*$("<img></img>", {
+                class: "imageThumb",
+                src: e.target.result,
+                title: file.name + " | Click to remove"
+              }).insertAfter("#files").click(function(){$(this).remove();});*/
+
+            });
+            fileReader.readAsDataURL(f);
+          }
+        });
+      } else {
+        alert("Your browser doesn't support to File API")
+      }
     });
 
   </script>

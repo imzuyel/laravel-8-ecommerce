@@ -1,4 +1,4 @@
-<select class="form-control single-select" name="subcategory_id" id="subcategory_id" required>
+<select class="form-control single-select" name="subcategory_id" id="subcategory_id">
     @if (isset($product->category_id))
     @if (!empty($subcategories))
     @foreach ($subcategories as $subcategory)
