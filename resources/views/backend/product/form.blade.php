@@ -115,7 +115,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="col-form-label">Quantity <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('product_qty_en') is-invalid @enderror" name="product_qty_en" value="{{ $product->product_qty_en ?? old('product_qty_en') }}" placeholder="Product quantity" required>
+                <input type="text" class="form-control  @error('product_qty_en') is-invalid @enderror" name="product_qty_en" value="{{ $product->product_qty_en ?? old('product_qty_en') }}" placeholder="Product quantity" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5" required>
                 @error('product_qty_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -124,7 +124,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">পরিমাণ <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ" required>
+                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5"  required>
                 @error('product_qty_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -136,7 +136,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="col-form-label">Price <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('price_en') is-invalid @enderror" name="price_en" value="{{ $product->price_en ?? old('price_en') }}" placeholder="Product Price" required>
+                <input type="text" class="form-control  @error('price_en') is-invalid @enderror" name="price_en" value="{{ $product->price_en ?? old('price_en') }}" placeholder="Product Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10"  required>
                 @error('price_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -145,7 +145,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">দাম <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="{{ $product->price_bn ?? old('price_bn') }}" placeholder="পণ্যের দাম" required>
+                <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="{{ $product->price_bn ?? old('price_bn') }}" placeholder="পণ্যের দাম" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10"  required>
                 @error('price_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -158,7 +158,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="col-form-label">Discount %</label>
-                <input type="text" class="form-control  @error('discount_en') is-invalid @enderror" name="discount_en" value="{{ $product->discount_en ?? old('discount_en') }}" placeholder="Product Discount">
+                <input type="text" class="form-control  @error('discount_en') is-invalid @enderror" name="discount_en" value="{{ $product->discount_en ?? old('discount_en') }}"  placeholder="Product Discount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="2">
                 @error('discount_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -167,7 +167,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">মূল্য ছাড় %</label>
-                <input type="text" class="form-control  @error('discount_bn') is-invalid @enderror" name="discount_bn" value="{{ $product->discount_bn ?? old('discount_bn') }}" placeholder="পণ্যের মূল্য ছাড়">
+                <input type="text" class="form-control  @error('discount_bn') is-invalid @enderror" name="discount_bn" value="{{ $product->discount_bn ?? old('discount_bn') }}" placeholder="পণ্যের মূল্য ছাড়" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="2">
                 @error('discount_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -220,7 +220,7 @@
 
             <div class="form-group">
               <label class="col-form-label">Long description <span class="text-danger">*</span></label>
-              <textarea name="long_description_en" id="long_description_en" class="form-control">{{ $product->long_description_en ?? old('long_description_en') }}</textarea>
+              <textarea name="long_description_en" id="long_description_en" class="form-control" required>{{ $product->long_description_en ?? old('long_description_en') }}</textarea>
               @error('long_description_en')
               <span class="text-danger" product="alert">
                 <strong>{{ $message }}</strong>
@@ -229,7 +229,7 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">দীর্ঘ বিবরণ <span class="text-danger">*</span></label>
-              <textarea name="long_description_bn" id="long_description_bn" class="form-control">{{ $product->long_description_bn ?? old('long_description_bn') }}</textarea>
+              <textarea name="long_description_bn" id="long_description_bn" class="form-control" required>{{ $product->long_description_bn ?? old('long_description_bn') }}</textarea>
               @error('long_description_bn')
               <span class="text-danger" product="alert">
                 <strong>{{ $message }}</strong>
@@ -299,7 +299,7 @@
               <label class="col-form-label">Main Thambnail <span class="text-danger">*</span></label>
               <input type="file" name="image" class="dropify @error('image') is-invalid @enderror" data-max-file-size-preview="8M" @if (isset($product->image))
               data-default-file="/{{ $product->image }}" @endif
-              {{ !isset($product->id) ? '' : '' }} />
+              {{ !isset($product->id) ? 'required' : '' }} />
               @error('image')
               <span class="text-danger" product="alert">
                 <strong>{{ $message }}</strong>
@@ -309,7 +309,7 @@
 
             <div class="form-group">
               <div class="image-upload-wrap">
-                <input class="file-upload-input" type='file' id="files" name="multiImage[]" multiple accept="image/*" />
+                <input class="file-upload-input" type='file' id="files" name="multi_img[]" multiple accept="image/*" />
                 <div class="drag-text">
                   <h3>Product Multiple Image</h3>
                 </div>
@@ -357,7 +357,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="hot_deals" name="hot_deals" value="1"  @isset($product->id)
+                  <input type="checkbox" class="custom-control-input" id="hot_deals" name="hot_deals"  @isset($product->id)
                   {{ $product->hot_deals == 1 ? 'selected' : '' }}
                   @endisset>
                   <label class="custom-control-label" for="hot_deals">Hot Deals</label>
@@ -370,9 +370,9 @@
               </div>
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="featured" name="featured" value="1" @isset($product->id)
+                  <input type="checkbox" class="custom-control-input" id="featured" name="featured" @isset($product->id)
                   {{ $product->featured == 1 ? 'selected' : '' }}
-                  @endisset>>
+                  @endisset>
                   <label class="custom-control-label" for="featured">Featured</label>
                 </div>
                 @error('featured')
@@ -386,9 +386,9 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="special_offer" name="special_offer" value="1" @isset($product->id)
+                  <input type="checkbox" class="custom-control-input" id="special_offer" name="special_offer" @isset($product->id)
                   {{ $product->special_offer == 1 ? 'selected' : '' }}
-                  @endisset>>
+                  @endisset>
                   <label class="custom-control-label" for="special_offer">Special Offer</label>
                 </div>
                 @error('special_offer')
@@ -399,9 +399,9 @@
               </div>
               <div class="form-group col-md-6">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="special_deals" name="special_deals" value="1" @isset($product->id)
+                  <input type="checkbox" class="custom-control-input" id="special_deals" name="special_deals" @isset($product->id)
                   {{ $product->special_deals == 1 ? 'selected' : '' }}
-                  @endisset>>
+                  @endisset>
                   <label class="custom-control-label" for="special_deals">Special Deals</label>
                 </div>
                 @error('special_deals')

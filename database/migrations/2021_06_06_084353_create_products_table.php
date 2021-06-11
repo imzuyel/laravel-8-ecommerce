@@ -24,10 +24,12 @@ class CreateProductsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('subcategory_id')
+                ->nullable()
                 ->constrained('sub_categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('subsubcategory_id')
+                ->nullable()
                 ->constrained('sub_sub_categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
