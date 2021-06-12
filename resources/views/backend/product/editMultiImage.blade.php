@@ -41,7 +41,7 @@ Multi Image update
             <div class="row">
               @forelse ($multiImages as $multiImage)
               <div class="col-md-3">
-                <label class="col-form-label">Main Thambnail <span class="text-danger">*</span></label>
+                <label class="col-form-label">Multi Image<span class="text-danger">*</span></label>
                 <input type="file" name="multi_img[{{ $multiImage->id }}]" class="dropify @error('image') is-invalid @enderror" data-max-file-size-preview="8M" data-width="100" data-default-file="/{{ $multiImage->image_name }}" />
 
                 <a href="{{ route('app.products.update.multi-image.delete',$multiImage->id) }}" class="btn btn-sm btn-block btn-danger delete-confirm1" type="submit" data-toggle="tooltip" title="Delete &#128683">

@@ -144,7 +144,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        //
+
+       return view('backend.product.deatails',compact('product'));
     }
 
     public function edit(Product $product)

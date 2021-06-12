@@ -59,9 +59,12 @@ All Products
               @if (Auth::user()->hasPermission('app.products.edit'))
               <a class="btn btn-sm btn-success" href="{{ route('app.products.edit', $product->id) }}" data-toggle="tooltip" title="Edit &#128221"><i class="fadeIn animated bx bx-edit"></i>
               </a>
-              <a class="btn btn-sm btn-light-warning" href="{{ route('app.products.edit.multi-image', $product->id) }}" data-toggle="tooltip" title="Multi image &#128221"><i class="fadeIn animated bx bx-camera"></i>
+              <a class="btn btn-sm btn-info" href="{{ route('app.products.edit.multi-image', $product->id) }}" data-toggle="tooltip" title="Multi image &#127910;"><i class="fadeIn animated bx bx-camera"></i>
               </a>
-              <a class="btn btn-sm btn-light-primary" href="{{ route('app.products.stock', $product->id) }}" data-toggle="tooltip" title="Stock &#128221"><i class="fadeIn animated bx bx-data"></i>
+              <a class="btn btn-sm btn-primary" href="{{ route('app.products.stock', $product->id) }}" data-toggle="tooltip" title="Stock &#128688"><i class="fadeIn animated bx bx-data"></i>
+              </a>
+
+              <a class="btn btn-sm btn-secondary" href="{{ route('app.products.show', $product->id) }}" data-toggle="tooltip" title="Show details &#128373"><i class="fadeIn animated bx bx-log-in-circle"></i>
               </a>
               @endif
 
