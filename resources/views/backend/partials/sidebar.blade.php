@@ -113,7 +113,7 @@
             @if (Auth::user()->hasPermission('app.categories.create'))
             <li class="{{ Request::is('app/subsubcategories/create/') ? 'mm-active' : '' }}">
               <a href="{{ route('app.subsubcategories.create') }}"><i class="bx bx-plus"></i>
-                Create
+                Add
               </a>
             </li>
             @endif

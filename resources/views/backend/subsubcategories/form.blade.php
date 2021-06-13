@@ -42,8 +42,8 @@
         <div class="card-body">
           <div class="form-body">
             <div class="form-group">
-              <label class="col-form-label">Name(en)</label>
-              <input type="text" class="form-control  @error('subsubcategory_name_en') is-invalid @enderror" name="subsubcategory_name_en" value="{{ $subsubcategory->subsubcategory_name_en ?? old('subsubcategory_name_en') }}" placeholder="subsubcategory_name_en" {{ !isset($subsubcategory) ? 'required' : '' }}>
+              <label class="col-form-label">Name</label>
+              <input type="text" class="form-control  @error('subsubcategory_name_en') is-invalid @enderror" name="subsubcategory_name_en" value="{{ $subsubcategory->subsubcategory_name_en ?? old('subsubcategory_name_en') }}" placeholder="Subcategory name" {{ !isset($subsubcategory) ? 'required' : '' }}>
               @error('subsubcategory_name_en')
               <span class="text-danger" role="alert">
                 <strong>{{ $message }}</strong>
@@ -52,8 +52,8 @@
 
             </div>
             <div class="form-group">
-              <label class="col-form-label">Name(bn)</label>
-              <input type="text" class="form-control  @error('subsubcategory_name_bn') is-invalid @enderror" name="subsubcategory_name_bn" value="{{ $subsubcategory->subsubcategory_name_bn ?? old('subsubcategory_name_bn') }}" placeholder="subsubcategory_name_bn" {{ !isset($subsubcategory) ? 'required' : '' }}>
+              <label class="col-form-label">নাম</label>
+              <input type="text" class="form-control  @error('subsubcategory_name_bn') is-invalid @enderror" name="subsubcategory_name_bn" value="{{ $subsubcategory->subsubcategory_name_bn ?? old('subsubcategory_name_bn') }}" placeholder="উপ ক্যাটাগরি নাম" {{ !isset($subsubcategory) ? 'required' : '' }}>
               @error('subsubcategory_name_bn')
               <span class="text-danger" role="alert">
                 <strong>{{ $message }}</strong>
@@ -78,6 +78,7 @@
             <div class="form-group">
               <label class=" col-form-label">Select Category</label>
               <select class="form-control single-select" name="category_id" id="category_id">
+                  <option>Select Category</option>
                 @foreach ($categories as $category)
                 <option value="{{ $category->id }}" @isset($subsubcategory->id)
                   {{ $subsubcategory->category_id == $category->id ? 'selected' : '' }}

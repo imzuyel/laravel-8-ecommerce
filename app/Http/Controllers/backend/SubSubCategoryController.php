@@ -15,7 +15,7 @@ class SubSubcategoryController extends Controller
     public function index()
     {
         Gate::authorize('app.categories.index');
-        $subsubcategories = SubSubCategory::with('category', 'subcategory')->latest()->get();
+        $subsubcategories = SubSubCategory::with('category', 'subcategory')->latest('id')->get();
         return view('backend.subsubcategories.index', compact('subsubcategories'));
     }
 
@@ -34,8 +34,8 @@ class SubSubcategoryController extends Controller
         // return $request;
         Gate::authorize('app.categories.create');
         $this->validate($request, [
-            'subsubcategory_name_en'    => 'required|string|unique:sub_sub_categories,subsubcategory_name_en',
-            'subsubcategory_name_bn'    => 'required|string|unique:sub_sub_categories,subsubcategory_name_bn',
+            'subsubcategory_name_en'    => 'required|string',
+            'subsubcategory_name_bn'    => 'required|string',
             'category_id'               => 'required',
         ]);
         SubSubCategory::create([
@@ -48,7 +48,7 @@ class SubSubcategoryController extends Controller
             'status'                    => $request->filled('status'),
         ]);
         toastr()->success('Subsubcategory added successfully');
-        return redirect()->route('app.subsubcategories.index');
+        return back();
     }
 
 
@@ -66,8 +66,8 @@ class SubSubcategoryController extends Controller
     {
         Gate::authorize('app.categories.edit');
         $this->validate($request, [
-            'subsubcategory_name_en'    => 'required|string|unique:sub_sub_categories,subsubcategory_name_en,' . $subsubcategory->id,
-            'subsubcategory_name_bn'    => 'required|string|unique:sub_sub_categories,subsubcategory_name_bn,' . $subsubcategory->id,
+            'subsubcategory_name_en'    => 'required|string',
+            'subsubcategory_name_bn'    => 'required|string',
             'image'                     => 'nullable|image|mimes:jpg,png,jpeg,svg',
             'category_id'               => 'required',
         ]);
