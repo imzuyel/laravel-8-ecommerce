@@ -129,6 +129,5 @@
     , placeholder: $(this).data('placeholder')
     , allowClear: Boolean($(this).data('allow-clear'))
   , });
-
 </script>
 @endpush

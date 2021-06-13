@@ -21,7 +21,7 @@ $(document).ready(function () {
             success: function (resp) {
                 $(".centered").css("visibility", "visible");
                 $("#appendSubCategory").html(resp);
-                $("#sub_category").select2({
+                $("#subcategory_id1").select2({
                     theme: "bootstrap4",
                     width: $(this).data("width")
                         ? $(this).data("width")
@@ -101,7 +101,6 @@ $(document).ready(function () {
             },
         });
     });
-
 
      /**
      * Product status update

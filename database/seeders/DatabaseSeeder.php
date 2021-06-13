@@ -12,6 +12,7 @@ use Database\Seeders\BrandSeeder;
 use Database\Seeders\SettingSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\SubCategorySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,5 +30,6 @@ class DatabaseSeeder extends Seeder
       $this->call(SettingSeeder::class);
       $this->call(BrandSeeder::class);
       $this->call(CategorySeeder::class);
+      $this->call(SubCategorySeeder::class);
     }
 }

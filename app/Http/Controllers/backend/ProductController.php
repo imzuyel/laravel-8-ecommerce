@@ -7,7 +7,6 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SubSubCategory;
 use App\Models\ProductMultiImage;
@@ -86,8 +85,8 @@ class ProductController extends Controller
             'subsubcategory_id'             => $request->subsubcategory_id,
             'product_name_en'               => $request->product_name_en,
             'product_name_bn'               => $request->product_name_bn,
-            'product_slug_en'               => Str::slug($request->product_name_en),
-            'product_slug_bn'               => Str::slug($request->product_name_bn),
+            'product_slug_en'               => $this->make_slug($request->product_name_en),
+            'product_slug_bn'               => $this->make_slug($request->product_name_bn),
             'product_qty_en'                => $request->product_qty_en,
             'product_qty_bn'                => $request->product_qty_bn,
             'price_en'                      => $request->price_en,
@@ -205,8 +204,8 @@ class ProductController extends Controller
             'subsubcategory_id'             => $request->subsubcategory_id,
             'product_name_en'               => $request->product_name_en,
             'product_name_bn'               => $request->product_name_bn,
-            'product_slug_en'               => Str::slug($request->product_name_en),
-            'product_slug_bn'               => Str::slug($request->product_name_bn),
+            'product_slug_en'               => $this->make_slug($request->product_name_en),
+            'product_slug_bn'               => $this->make_slug($request->product_name_en),
             'product_qty_en'                => $request->product_qty_en,
             'product_qty_bn'                => $request->product_qty_bn,
             'price_en'                      => $request->price_en,
@@ -403,5 +402,10 @@ class ProductController extends Controller
         $imageUrl       = $directory . $get_imageName;
         Image::make($file)->resize(700, 600)->save($imageUrl);
         return $imageUrl;
+    }
+
+    public function make_slug($string)
+    {
+        return preg_replace('/\s+/u', '-', trim($string));
     }
 }

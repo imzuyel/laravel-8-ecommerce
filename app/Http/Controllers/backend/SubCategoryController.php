@@ -14,7 +14,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         Gate::authorize('app.categories.index');
-        $subcategories = SubCategory::with('category')->latest()->get();
+        $subcategories = SubCategory::oldest('id')->get();
         return view('backend.subcategories.index', compact('subcategories'));
     }
 
@@ -22,8 +22,8 @@ class SubCategoryController extends Controller
     public function create()
     {
         Gate::authorize('app.categories.create');
-        $categories=Category::all();
-        return view('backend.subcategories.form',compact('categories'));
+        $categories = Category::latest('id')->get();
+        return view('backend.subcategories.form', compact('categories'));
     }
 
 
@@ -40,21 +40,21 @@ class SubCategoryController extends Controller
         SubCategory::create([
             'category_id'            => $request->category_id,
             'subcategory_name_en'    => $request->subcategory_name_en,
-            'subcategory_slug_en'    => Str::slug($request->subcategory_name_en),
+            'subcategory_slug_en'    => ($request->subcategory_name_en),
             'subcategory_name_bn'    => $request->subcategory_name_bn,
-            'subcategory_slug_bn'    => Str::slug($request->subcategory_name_bn),
+            'subcategory_slug_bn'    => $this->make_slug($request->subcategory_name_bn),
             'status'                 => $request->filled('status'),
         ]);
         toastr()->success('SubCategory added successfully');
-        return redirect()->route('app.subcategories.index');
+        return back();
     }
 
 
     public function edit(SubCategory $subcategory)
     {
         Gate::authorize('app.categories.edit');
-        $categories=Category::all();
-        return view('backend.subcategories.form', compact('subcategory','categories'));
+        $categories = Category::all();
+        return view('backend.subcategories.form', compact('subcategory', 'categories'));
     }
 
 
@@ -63,20 +63,19 @@ class SubCategoryController extends Controller
     {
         Gate::authorize('app.categories.edit');
         $this->validate($request, [
-            'subcategory_name_en'    => 'required|string|unique:sub_categories,subcategory_name_en,'.$subcategory->id,
-            'subcategory_name_bn'    => 'required|string|unique:sub_categories,subcategory_name_bn,'.$subcategory->id,
+            'subcategory_name_en'    => 'required|string|unique:sub_categories,subcategory_name_en,' . $subcategory->id,
+            'subcategory_name_bn'    => 'required|string|unique:sub_categories,subcategory_name_bn,' . $subcategory->id,
             'image'                  => 'nullable|image|mimes:jpg,png,jpeg,svg',
             'category_id'            => 'required',
         ]);
         $subcategory->update([
             'category_id'             => $request->category_id,
             'subcategory_name_en'     => $request->subcategory_name_en,
-            'subcategory_slug_en'     => Str::slug($request->subcategory_name_en),
+            'subcategory_slug_en'     => ($request->subcategory_name_en),
             'subcategory_name_bn'     => $request->subcategory_name_bn,
-            'subcategory_slug_bn'     => Str::slug($request->subcategory_name_bn),
+            'subcategory_slug_bn'     => $this->make_slug($request->subcategory_name_bn),
             'status'                  => $request->filled('status'),
-        ]);
-;
+        ]);;
         toastr()->success('SubCategory update successfully');
         return redirect()->route('app.subcategories.index');
     }
@@ -88,5 +87,9 @@ class SubCategoryController extends Controller
         $subcategory->delete();
         toastr()->success('SubCategory deleted successfully');
         return redirect()->route('app.subcategories.index');
+    }
+    public function make_slug($string)
+    {
+        return preg_replace('/\s+/u', '-', trim($string));
     }
 }

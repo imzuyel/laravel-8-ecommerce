@@ -23,8 +23,8 @@ class SubSubcategoryController extends Controller
     public function create()
     {
         Gate::authorize('app.categories.create');
-        $categories = Category::all();
-        $subcategories = SubCategory::all();
+        $categories = Category::latest('id')->get();
+        $subcategories = SubCategory::latest('id')->get();
         return view('backend.subsubcategories.form', compact('categories', 'subcategories'));
     }
 
@@ -40,11 +40,11 @@ class SubSubcategoryController extends Controller
         ]);
         SubSubCategory::create([
             'category_id'               => $request->category_id,
-            'subcategory_id'            => $request->subcategory_id,
+            'subcategory_id'            => $request->subcategory_id1,
             'subsubcategory_name_en'    => $request->subsubcategory_name_en,
             'subsubcategory_slug_en'    => Str::slug($request->subsubcategory_name_en),
             'subsubcategory_name_bn'    => $request->subsubcategory_name_bn,
-            'subsubcategory_slug_bn'    => Str::slug($request->subsubcategory_name_bn),
+            'subsubcategory_slug_bn'    => $this->make_slug($request->subsubcategory_name_bn),
             'status'                    => $request->filled('status'),
         ]);
         toastr()->success('Subsubcategory added successfully');
@@ -73,11 +73,11 @@ class SubSubcategoryController extends Controller
         ]);
         $subsubcategory->update([
             'category_id'               => $request->category_id,
-            'subcategory_id'            => $request->subcategory_id,
+            'subcategory_id'            => $request->subcategory_id1,
             'subsubcategory_name_en'    => $request->subsubcategory_name_en,
             'subsubcategory_slug_en'    => Str::slug($request->subsubcategory_name_en),
             'subsubcategory_name_bn'    => $request->subsubcategory_name_bn,
-            'subsubcategory_slug_bn'    => Str::slug($request->subsubcategory_name_bn),
+            'subsubcategory_slug_bn'    => $this->make_slug($request->subsubcategory_name_bn),
             'status'                    => $request->filled('status'),
         ]);;
         toastr()->success('Subsubcategory update successfully');
@@ -99,5 +99,9 @@ class SubSubcategoryController extends Controller
             $categorywithSubcategory = Category::where('id', $request->category_id)->with(['subcategories'])->first();
             return view('backend.subsubcategories.include', compact('categorywithSubcategory'));
         }
+    }
+    public function make_slug($string)
+    {
+        return preg_replace('/\s+/u', '-', trim($string));
     }
 }

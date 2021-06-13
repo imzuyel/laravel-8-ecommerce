@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         Gate::authorize('app.categories.index');
-        $categories = Category::latest()->get();
+        $categories = Category::latest('id')->get();
         return view('backend.categories.index', compact('categories'));
     }
 
@@ -36,9 +36,9 @@ class CategoryController extends Controller
         ]);
         $category = Category::create([
             'category_name_en'     => $request->category_name_en,
-            'category_slug_en'     => Str::slug($request->category_name_en),
+            'category_slug_en'     =>  Str::slug($request->category_name_en),
             'category_name_bn'     => $request->category_name_bn,
-            'category_slug_bn'     => Str::slug($request->category_name_bn),
+            'category_slug_bn'     =>  $this->make_slug($request->category_name_bn),
             'status'            => $request->filled('status'),
         ]);
         $file                   = $request->hasFile('image');
@@ -74,7 +74,7 @@ class CategoryController extends Controller
             'category_name_en'      => $request->category_name_en,
             'category_slug_en'      => Str::slug($request->category_name_en),
             'category_name_bn'      => $request->category_name_bn,
-            'category_slug_bn'      => Str::slug($request->category_name_bn),
+            'category_slug_bn'      => $this->make_slug($request->category_name_bn),
             'status'             => $request->filled('status'),
         ]);
         $file                    = $request->hasFile('image');
@@ -109,5 +109,10 @@ class CategoryController extends Controller
         $imageUrl       = $directory . $get_imageName;
         Image::make($file)->resize(600, 400)->save($imageUrl);
         return $imageUrl;
+    }
+
+    public function make_slug($string)
+    {
+        return preg_replace('/\s+/u', '-', trim($string));
     }
 }

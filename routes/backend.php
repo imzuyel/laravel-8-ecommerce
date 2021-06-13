@@ -60,7 +60,7 @@ Route::resource('/brands', BrandController::class)->except('show');
 Route::resource('/categories', CategoryController::class)->except('show');
 Route::resource('/subcategories', SubCategoryController::class)->except('show');
 Route::resource('/subsubcategories', SubSubCategoryController::class)->except('show');
-Route::post('/append/subcategory',[SubSubCategoryController::class, 'category']);
+Route::post('/append/subcategory', [SubSubCategoryController::class, 'category']);
 
 // ===================Product=======================
 Route::resource('/products', ProductController::class);
@@ -68,12 +68,11 @@ Route::post('/products/update-status', [ProductController::class, 'updateStatus'
 Route::get('/products/stock/{id}', [ProductController::class, 'updateStock'])->name('products.stock');
 Route::post('/products/stock/update', [ProductController::class, 'updateStockUpdate'])->name('products.stock.update');
 // Ajax get product data
-Route::post('/append/product/subcategory',[ProductController::class, 'category']);
-Route::post('/append/product/subsubcategory',[ProductController::class, 'subcategory']);
+Route::post('/append/product/subcategory', [ProductController::class, 'category']);
+Route::post('/append/product/subsubcategory', [ProductController::class, 'subcategory']);
 
 // Multi Image
-Route::get('/products/multi-image/{id}',[ProductController::class, 'updateMultiImage'])->name('products.edit.multi-image');
-Route::post('/products/multi-image/update/',[ProductController::class, 'updateMultiImageUpdate'])->name('products.update.multi-image');
-Route::get('/products/multi-image/delete/{id}',[ProductController::class, 'updateMultiImageDelete'])->name('products.update.multi-image.delete');
-Route::post('/products/multi-image/store',[ProductController::class, 'updateMultiImageStore'])->name('products.store.multiImage');
-
+Route::get('/products/multi-image/{id}', [ProductController::class, 'updateMultiImage'])->name('products.edit.multi-image');
+Route::post('/products/multi-image/update/', [ProductController::class, 'updateMultiImageUpdate'])->name('products.update.multi-image');
+Route::get('/products/multi-image/delete/{id}', [ProductController::class, 'updateMultiImageDelete'])->name('products.update.multi-image.delete');
+Route::post('/products/multi-image/store', [ProductController::class, 'updateMultiImageStore'])->name('products.store.multiImage');
