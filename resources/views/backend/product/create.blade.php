@@ -64,6 +64,7 @@
               <div class="form-group col-md-6">
                 <label class=" col-form-label">Category <span class="text-danger">*</span></label>
                 <select class="form-control single-select" name="category_id1" id="category_id1">
+                    <option value="">Select Category</option>
                   @foreach ($categories as $category)
                   <option value="{{ $category->id }}" @isset($product->id)
                     {{ $product->category_id == $category->id ? 'selected' : '' }}
@@ -124,7 +125,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">পরিমাণ <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5" required>
+                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn ?? old('product_qty_bn') }}" placeholder="পণ্যের পরিমাণ"  maxlength="5" required>
                 @error('product_qty_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -145,7 +146,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label class="col-form-label">দাম <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="{{ $product->price_bn ?? old('price_bn') }}" placeholder="পণ্যের দাম" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10" required>
+                <input type="text" class="form-control  @error('price_bn') is-invalid @enderror" name="price_bn" value="৭০০০০" placeholder="পণ্যের দাম"  maxlength="10" required>
                 @error('price_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -179,7 +180,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label class="col-form-label">Product tags <span class="text-danger">*</span></label>
-                <input type="text" data-role="tagsinput" class="form-control  @error('product_tags_en') is-invalid @enderror" name="product_tags_en" value="{{ $product->product_tags_en ?? old('product_tags_en') }}" placeholder="Product tags English" {{ !isset($product) ? '' : '' }}>
+                <input type="text" data-role="tagsinput" class="form-control  @error('product_tags_en') is-invalid @enderror" name="product_tags_en" value="Product tags" placeholder="Product tags English" {{ !isset($product) ? '' : '' }}>
                 @error('product_tags_en')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -190,7 +191,7 @@
             <div class="form-row">
               <div class="form-group col">
                 <label class="col-form-label">পণ্য ট্যাগ <span class="text-danger">*</span></label>
-                <input type="text" data-role="tagsinput" class="form-control  @error('product_tags_bn') is-invalid @enderror" name="product_tags_bn" value="{{ $product->product_tags_bn ?? old('product_tags_bn') }}" placeholder="বাংলায় পণ্য ট্যাগ" {{ !isset($product) ? '' : '' }}>
+                <input type="text" data-role="tagsinput" class="form-control  @error('product_tags_bn') is-invalid @enderror" name="product_tags_bn" value="পণ্য ট্যাগ" placeholder="বাংলায় পণ্য ট্যাগ" {{ !isset($product) ? '' : '' }}>
                 @error('product_tags_bn')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
@@ -201,7 +202,7 @@
 
             <div class="form-group">
               <label class="col-form-label">Short Description</label>
-              <textarea name="short_description_en" id="short_description_en" class="form-control  @error('short_description_en') is-invalid @enderror" placeholder="Short description">{{ $product->short_description_en ?? old('short_description_en') }}</textarea>
+              <textarea name="short_description_en" id="short_description_en" class="form-control  @error('short_description_en') is-invalid @enderror" placeholder="Short description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et</textarea>
               @error('short_description_en')
               <span class="text-danger" product="alert">
                 <strong>{{ $message }}</strong>
@@ -210,7 +211,7 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">সংক্ষিপ্ত বিবরণ </label>
-              <textarea name="short_description_bn" id="short_description_bn" class="form-control  @error('short_description_bn') is-invalid @enderror" placeholder="সংক্ষিপ্ত বিবরণ">{{ $product->short_description_bn ?? old('short_description_bn') }}</textarea>
+              <textarea name="short_description_bn" id="short_description_bn" class="form-control  @error('short_description_bn') is-invalid @enderror" placeholder="সংক্ষিপ্ত বিবরণ">আমার বাংলা নিয়ে প্রথম কাজ করবার সুযোগ তৈরি হয়েছিল অভ্র^ নামক এক যুগান্তকারী বাংলা সফ্‌টওয়্যার হাতে পাবার মধ্য দিয়ে। এর পর একে একে </textarea>
               @error('short_description_bn')
               <span class="text-danger" product="alert">
                 <strong>{{ $message }}</strong>
@@ -257,7 +258,7 @@
               <div class="col">
                 <div class="form-group">
                   <label class="col-form-label">Size</label>
-                  <input data-role="tagsinput" value="{{ isset($product->id) ? $product->size : 'S,M,L,XL'}}" type="text" class="form-control  @error('size') is-invalid @enderror" name="size" placeholder="Product size">
+                  <input data-role="tagsinput" type="text" class="form-control  @error('size') is-invalid @enderror" name="size" placeholder="Product size">
                   @error('size')
                   <span class="text-danger" product="alert">
                     <strong>{{ $message }}</strong>

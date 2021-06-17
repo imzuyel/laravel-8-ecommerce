@@ -98,8 +98,8 @@ All Products
                 width="45"
                 height="45">
                 <div class="media-body" style="flex: 0.5;">
-                  <p class="font-weight-bold mb-0">{{ $product->product_name_en }}</p>
-                  <p class="font-weight-bold mb-0">{{ $product->product_name_bn }}</p>
+                  <p class="font-weight-bold mb-0">{{ Str::limit( $product->product_name_en,20, '...') }}</p>
+                  <p class="font-weight-bold mb-0">{{ Str::limit( $product->product_name_bn, 20, '...') }}</p>
                 </div>
               </div>
             </td>
@@ -119,7 +119,6 @@ All Products
 
 @endsection
 @push('js')
-<!--Data Tables js-->
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('backend/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('backend/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

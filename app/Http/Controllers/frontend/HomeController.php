@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Slider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
     public function index()
     {
-       return view('frontend.index');
+        $data['sliders'] = Slider::where('status', true)->latest('id')->get();
+        return view('frontend.index', $data);
     }
     public function shop()
     {
-       return view('frontend.shop.index');
+        return view('frontend.shop.index');
     }
     public function details()
     {
-       return view('frontend.shop.details');
+        return view('frontend.shop.details');
     }
     public function category()
     {
-       return view('frontend.shop.category');
+        return view('frontend.shop.category');
     }
-
 }

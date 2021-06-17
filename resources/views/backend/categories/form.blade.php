@@ -61,13 +61,22 @@
               </span>
               @enderror
             </div>
+            <div class="form-group">
+                <label class="col-form-label">Icon class <span><a href="https://icons8.com/line-awesome" target="_blank">Line icon</a></span></label>
+                <input type="text" class="form-control  @error('icon') is-invalid @enderror" name="icon" value="{{ $category->icon ?? old('icon') }}" placeholder="icon" {{ !isset($category) ? 'required' : '' }}>
+                @error('icon')
+                <span class="text-danger" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-12 col-lg-4">
       <div class="card radius-15 border-lg-top-info">
-        <div class="card-header border-bottom-0">
+        <div class="card-header border-bottom-0 mb-4">
           <div class="d-flex align-items-center">
             <div>
               <h5 class="mb-0">Other info</h5>
@@ -79,7 +88,7 @@
             <div class="form-group">
               <label class="col-form-label">category image</label>
               <input type="file" name="image" class="dropify @error('image') is-invalid @enderror" data-max-file-size-preview="8M" @if (isset($category->image)) data-default-file="/{{ $category->image }}" @endif
-              {{ !isset($category->id) ? 'required' : '' }} data-height="95" data-allowed-file-extensions="jpg jpeg png "/>
+              {{ !isset($category->id) ? 'required' : '' }} data-height="160" data-allowed-file-extensions="jpg jpeg png "/>
               @error('image')
               <span class="text-danger" role="alert">
                 <strong>{{ $message }}</strong>

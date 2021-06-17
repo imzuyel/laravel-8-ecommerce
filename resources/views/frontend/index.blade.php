@@ -11,6 +11,46 @@ Happy to shop
     <div class="kalles-kids__wrap-slide kalles-section nt_section type_slideshow type_carousel">
       <div class="nt_full se_height_adapt nt_first">
         <div class="fade_flick_1 slideshow row no-gutters equal_nt nt_slider js_carousel prev_next_2 btn_owl_1 dot_owl_2 dot_color_1 btn_vi_2" data-flickity='{ "fade":0,"cellAlign": "center","imagesLoaded": 0,"lazyLoad": 0,"freeScroll": 0,"wrapAround": true,"autoPlay" : 8000,"pauseAutoPlayOnHover" : true, "rightToLeft": false, "prevNextButtons": true,"pageDots": false, "contain" : 1,"adaptiveHeight" : 1,"dragThreshold" : 5,"percentPosition": 1 }'>
+          @forelse ($sliders as $slider)
+          <div class="kalles-kids__slide-layout-01 col-12 slideshow__slide">
+            <div class="oh pr nt_img_txt bg-transparent">
+              <div class="js_full_ht4 img_slider_block dek_img_slide">
+                <div class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_zoom pa l__0 t__0 r__0 b__0" data-bgset="{{ $slider->slider_img }}"></div>
+              </div>
+              <div class="js_full_ht4 img_slider_block mb_img_slide">
+                <div class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_zoom pa l__0 t__0 r__0 b__0" data-bgset="{{ $slider->slider_img }}"></div>
+              </div>
+              <div class="caption-wrap caption-w-1 pe_none z_100 tl_md tl">
+                @if (session()->get('language')==='bangla')
+                <div class="pa_txts caption">
+                  <div class="right_left">
+                    <div class="kalles-kids__slide-layout-01__br-01 slt4_space"></div>
+                    <h3 class="kalles-kids__slide-layout-01__big-title slt4_h3 lh__1 mg__0">{{ $slider->title_bn }}
+                    </h3>
+                    <div class="kalles-kids__slide-layout-01__br-02 slt4_space"></div>
+                    <p class="kalles-kids__slide-layout-01__desc slt4_p mg__0 dn db_md">{{ $slider->description_bn }}</p>
+                    <div class="kalles-kids__slide-layout-01__br-03 slt4_space"></div>
+                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="shop-filter-options.html">এক্সপ্লোর করুন</a>
+                  </div>
+                </div>
+                @else
+                <div class="pa_txts caption">
+                  <div class="right_left">
+                    <div class="kalles-kids__slide-layout-01__br-01 slt4_space"></div>
+                    <h3 class="kalles-kids__slide-layout-01__big-title slt4_h3 lh__1 mg__0">{{ $slider->title_en }}
+                    </h3>
+                    <div class="kalles-kids__slide-layout-01__br-02 slt4_space"></div>
+                    <p class="kalles-kids__slide-layout-01__desc slt4_p mg__0 dn db_md">{{ $slider->description_en }}</p>
+                    <div class="kalles-kids__slide-layout-01__br-03 slt4_space"></div>
+                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="shop-filter-options.html">Explore Now</a>
+                  </div>
+                </div>
+                @endif
+              </div>
+              <a href="shop.html" class="pa t__0 l__0 b__0 r__0 pe_none"></a>
+            </div>
+          </div>
+          @empty
           <div class="kalles-kids__slide-layout-01 col-12 slideshow__slide">
             <div class="oh pr nt_img_txt bg-transparent">
               <div class="js_full_ht4 img_slider_block dek_img_slide">
@@ -36,31 +76,7 @@ Happy to shop
               <a href="shop.html" class="pa t__0 l__0 b__0 r__0 pe_none"></a>
             </div>
           </div>
-          <div class="kalles-kids__slide-layout-01 col-12 slideshow__slide">
-            <div class="oh pr nt_img_txt bg-transparent">
-              <div class="js_full_ht4 img_slider_block dek_img_slide">
-                <div class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_zoom pa l__0 t__0 r__0 b__0" data-bgset="{{ asset('/') }}frontend/assets/images/home-kids/slide-bg-02.jpg"></div>
-              </div>
-              <div class="js_full_ht4 img_slider_block mb_img_slide">
-                <div class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_zoom pa l__0 t__0 r__0 b__0" data-bgset="{{ asset('/') }}frontend/assets/images/home-kids/mb-slide-bg-02.jpg"></div>
-              </div>
-              <div class="caption-wrap caption-w-1 pe_none z_100 tl_md tl">
-                <div class="pa_txts caption">
-                  <div class="right_left">
-                    <h4 class="kalles-kids__slide-layout-01__sup-title slt4_h4 mg__0 lh__1 f_body">60% DISCOUNT AVAILABLE</h4>
-                    <div class="kalles-kids__slide-layout-01__br-01 slt4_space"></div>
-                    <h3 class="kalles-kids__slide-layout-01__big-title slt4_h3 lh__1 mg__0">SALE ON BOYS<br />& GIRL’S CLOTHING
-                    </h3>
-                    <div class="kalles-kids__slide-layout-01__br-02 slt4_space"></div>
-                    <p class="kalles-kids__slide-layout-01__desc slt4_p mg__0 dn db_md">Lightweight collection of apparels now!</p>
-                    <div class="kalles-kids__slide-layout-01__br-03 slt4_space"></div>
-                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="#">SHOP NOW</a>
-                  </div>
-                </div>
-              </div>
-              <a href="shop.html" class="pa t__0 l__0 b__0 r__0 pe_none"></a>
-            </div>
-          </div>
+          @endforelse
         </div>
       </div>
     </div>
@@ -106,11 +122,11 @@ Happy to shop
     <div class="kalles-section nt_section type_carousel type_collection_list">
       <div class="kalles-medical__category-block container">
         <div class="row al_center fl_center title_10">
-            <div class="col-auto col-md">
-              <h3 class="dib tc section-title fs__24">Category</h3>
-            </div>
-            <div class="col-auto"><a href="#">See all category</a></div>
+          <div class="col-auto col-md">
+            <h3 class="dib tc section-title fs__24">Category</h3>
           </div>
+          <div class="col-auto"><a href="#">See all category</a></div>
+        </div>
         <div class="mt__30 nt_cats_holder row fl_center equal_nt hoverz_true ratio1_1 cat_space_20 cat_design_5 nt_slider js_carousel prev_next_3 btn_owl_1 dot_owl_2 dot_color_3 btn_vi_2" data-flickity='{"imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": 1,"pageDots": false, "autoPlay" : 0, "pauseAutoPlayOnHover" : true, "rightToLeft": false }'>
 
 

@@ -292,5 +292,29 @@ class PermissionSeeder extends Seeder
             'slug'         => 'app.categories.destroy',
         ]);
 
+
+        // Slider management
+        $moduleAppSliders     = Module::updateOrCreate(['name' => 'Slider Management']);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppSliders->id,
+            'name'         => 'Access Slider',
+            'slug'         => 'app.sliders.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppSliders->id,
+            'name'         => 'Create Slider',
+            'slug'         => 'app.sliders.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppSliders->id,
+            'name'         => 'Edit Slider',
+            'slug'         => 'app.sliders.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppSliders->id,
+            'name'         => 'Delete Slider',
+            'slug'         => 'app.sliders.destroy',
+        ]);
+
     }
 }

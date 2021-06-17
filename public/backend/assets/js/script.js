@@ -70,8 +70,8 @@ $(document).ready(function () {
         });
     });
 
-     //Append for product Subcategory
-     $(document).on("change", "#subcategory_id", function (event) {
+    //Append for product Subcategory
+    $(document).on("change", "#subcategory_id", function (event) {
         var subcategory_id = $("#subcategory_id").val();
         $.ajax({
             type: "post",
@@ -102,10 +102,10 @@ $(document).ready(function () {
         });
     });
 
-     /**
+    /**
      * Product status update
      */
-      $(".updateProductStatus").click(function () {
+    $(".updateProductStatus").click(function () {
         var status = $(this).text();
         var product_id = $(this).attr("product_id");
         $.ajax({
@@ -143,4 +143,45 @@ $(document).ready(function () {
         });
     });
 
+    /**
+     * Slider status update
+     */
+
+    $(".updateSliderStatus").on('click',(function () {
+        var status = $(this).text();
+        var slider_id = $(this).attr("slider_id");
+        $.ajax({
+            type: "POST",
+            url: "/app/sliders/update-status",
+            data: {
+                status: status,
+                slider_id: slider_id,
+            },
+            beforeSend: function () {
+                $(".centered").css("visibility", "visible");
+            },
+            success: function (resp) {
+                toastr.options = {
+                    closeButton: true,
+                    closeHtml: "<button>&#xd7;</button>",
+                    progressBar: true,
+                    showMethod: "slideDown",
+                };
+                if (resp["status"] == false) {
+                    $("#slider-" + slider_id).html(
+                        "<a class='badge-warning updateSliderStatus'  href='javascript:void(0)'>Inactive</a>"
+                    );
+                    toastr["success"]("Slider inactive successfully!");
+                } else {
+                    $("#slider-" + slider_id).html(
+                        "<a class='badge-info updateSliderStatus'  href='javascript:void(0)'>Active</a>"
+                    );
+                    toastr["success"]("Slider active successfully!");
+                }
+            },
+            complete: function () {
+                $(".centered").css("visibility", "hidden");
+            },
+        });
+    });
 });

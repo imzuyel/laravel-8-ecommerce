@@ -7,6 +7,7 @@ use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\BackupController;
+use App\Http\Controllers\backend\SliderController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\ProfileController;
 use App\Http\Controllers\backend\SettingController;
@@ -70,9 +71,12 @@ Route::post('/products/stock/update', [ProductController::class, 'updateStockUpd
 // Ajax get product data
 Route::post('/append/product/subcategory', [ProductController::class, 'category']);
 Route::post('/append/product/subsubcategory', [ProductController::class, 'subcategory']);
-
 // Multi Image
 Route::get('/products/multi-image/{id}', [ProductController::class, 'updateMultiImage'])->name('products.edit.multi-image');
 Route::post('/products/multi-image/update/', [ProductController::class, 'updateMultiImageUpdate'])->name('products.update.multi-image');
 Route::get('/products/multi-image/delete/{id}', [ProductController::class, 'updateMultiImageDelete'])->name('products.update.multi-image.delete');
 Route::post('/products/multi-image/store', [ProductController::class, 'updateMultiImageStore'])->name('products.store.multiImage');
+
+// ===================Slider=======================
+Route::resource('/sliders', SliderController::class);
+Route::post('/sliders/update-status', [SliderController::class, 'updateStatus']);

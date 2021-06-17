@@ -17,7 +17,28 @@
   <link rel="stylesheet" href=" {{ asset('frontend/assets/css/home-medical.css') }}">
   <link rel="stylesheet" href=" {{ asset('frontend/assets/css/home-kids.css') }}">
   @stack('css')
+  <style>
+    .dropdown-submenu {
+      position: relative;
+    }
 
+    .dropdown-submenu>a:after {
+      content: ">";
+      float: right;
+    }
+
+    .dropdown-submenu>.dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-top: 0px;
+      margin-left: 0px;
+    }
+
+    .dropdown-submenu:hover>.dropdown-menu {
+      display: block;
+    }
+
+  </style>
 
 </head>
 <body class="lazy_icons zoom_tp_2 css_scrollbar template-index lazyload js_search_true cart_pos_side kalles_toolbar_true hover_img2 swatch_style_rounded swatch_list_size_small label_style_rounded wrapper_full_width header_full_true header_sticky_true hide_scrolld_true des_header_2 h_banner_true top_bar_true spcdt4_ js_search_type">
@@ -337,6 +358,28 @@
   <script src=" {{ asset('frontend/assets/js/lazysizes.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/js-cookie.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
+
+  <script>
+    $(document).ready(function() {
+      $('.dropdown-submenu a.test').on("click", function(e) {
+        $(this).next('ul').toggle();
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    });
+
+  </script>
+  <script>
+    $(".btn-group, .dropdown").hover(
+      function() {
+        $('>.dropdown-menu', this).stop(true, true).fadeIn("fast");
+        $(this).addClass('open');
+      }
+      , function() {
+        $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
+        $(this).removeClass('open');
+      });
+  </script>
   @stack('js')
   <script src=" {{ asset('frontend/assets/js/interface.js') }}"></script>
 

@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SubSubCategory;
 use App\Models\ProductMultiImage;
@@ -19,7 +20,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with('brand', 'category')->get();
+        $products = Product::latest('id')->with('brand', 'category')->get();
         return view('backend.product.index', compact('products'));
     }
 
@@ -43,18 +44,18 @@ class ProductController extends Controller
             'category_id1'                  => 'required|integer',
             'subcategory_id'                => 'nullable|integer',
             'subsubcategory_id'             => 'nullable|integer',
-            'product_name_en'               => 'required|string|unique:products',
-            'product_name_bn'               => 'required|string|unique:products',
-            'product_qty_en'                => 'required|integer',
-            'product_qty_bn'                => 'required|integer',
-            'price_en'                      => 'required|integer',
-            'price_bn'                      => 'required|integer',
-            'discount_en'                   => 'nullable|integer',
-            'discount_bn'                   => 'nullable|integer',
+            'product_name_en'               => 'required|string',
+            'product_name_bn'               => 'required|string',
+            'product_qty_en'                => 'required',
+            'product_qty_bn'                => 'required',
+            'price_en'                      => 'required',
+            'price_bn'                      => 'required',
+            'discount_en'                   => 'nullable',
+            'discount_bn'                   => 'nullable',
             'product_tags_en'               => 'required|string',
             'product_tags_bn'               => 'required|string',
-            'short_description_en'          => 'nullable|string',
-            'short_description_bn'          => 'nullable|string',
+            'short_description_en'          => 'nullable|string|max:190',
+            'short_description_bn'          => 'nullable|string|max:190',
             'long_description_en'           => 'required|min:3',
             'long_description_bn'           => 'required|min:3',
             'size'                          => 'nullable|string',
@@ -85,7 +86,7 @@ class ProductController extends Controller
             'subsubcategory_id'             => $request->subsubcategory_id,
             'product_name_en'               => $request->product_name_en,
             'product_name_bn'               => $request->product_name_bn,
-            'product_slug_en'               => $this->make_slug($request->product_name_en),
+            'product_slug_en'               => Str::slug($request->product_name_en),
             'product_slug_bn'               => $this->make_slug($request->product_name_bn),
             'product_qty_en'                => $request->product_qty_en,
             'product_qty_bn'                => $request->product_qty_bn,
@@ -127,7 +128,7 @@ class ProductController extends Controller
         if ($images) {
             foreach ($images as $img) {
                 $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-                Image::make($img)->resize(500, 400)->save('images/products/multi-image/' . $make_name);
+                Image::make($img)->resize(500, 380)->save('images/products/multi-image/' . $make_name);
                 $uploadPath = 'images/products/multi-image/' . $make_name;
                 ProductMultiImage::insert([
                     'product_id' => $product->id,
@@ -166,18 +167,18 @@ class ProductController extends Controller
             'category_id1'                  => 'required|integer',
             'subcategory_id'                => 'nullable|integer',
             'subsubcategory_id'             => 'nullable|integer',
-            'product_name_en'               => 'required|string|unique:products,product_name_en,' . $product->id,
-            'product_name_bn'               => 'required|string|unique:products,product_name_bn,' . $product->id,
-            'product_qty_en'                => 'required|integer',
-            'product_qty_bn'                => 'required|integer',
-            'price_en'                      => 'required|integer',
-            'price_bn'                      => 'required|integer',
-            'discount_en'                   => 'nullable|integer',
-            'discount_bn'                   => 'nullable|integer',
+            'product_name_en'               => 'required|string',
+            'product_name_bn'               => 'required|string',
+            'product_qty_en'                => 'required',
+            'product_qty_bn'                => 'required',
+            'price_en'                      => 'required',
+            'price_bn'                      => 'required',
+            'discount_en'                   => 'nullable',
+            'discount_bn'                   => 'nullable',
             'product_tags_en'               => 'required|string',
             'product_tags_bn'               => 'required|string',
-            'short_description_en'          => 'nullable|string',
-            'short_description_bn'          => 'nullable|string',
+            'short_description_en'          => 'nullable|max:190',
+            'short_description_bn'          => 'nullable|max:190',
             'long_description_en'           => 'required|min:3',
             'long_description_bn'           => 'required|min:3',
             'size'                          => 'nullable|string',
@@ -204,8 +205,8 @@ class ProductController extends Controller
             'subsubcategory_id'             => $request->subsubcategory_id,
             'product_name_en'               => $request->product_name_en,
             'product_name_bn'               => $request->product_name_bn,
-            'product_slug_en'               => $this->make_slug($request->product_name_en),
-            'product_slug_bn'               => $this->make_slug($request->product_name_en),
+            'product_slug_en'               => Str::slug($request->product_name_en),
+            'product_slug_bn'               => $this->make_slug($request->product_name_bn),
             'product_qty_en'                => $request->product_qty_en,
             'product_qty_bn'                => $request->product_qty_bn,
             'price_en'                      => $request->price_en,

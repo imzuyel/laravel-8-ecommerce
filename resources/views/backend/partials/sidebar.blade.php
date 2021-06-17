@@ -157,6 +157,33 @@
     <!--End product-->
 
 
+      <!--product-->
+      @if (Auth::user()->hasPermission('app.sliders.index') || Auth::user()->hasPermission('app.sliders.create'))
+      <li class="{{ Request::is('app/sliders/*') ? 'mm-active' : '' }}">
+        <a class="has-arrow" href="javascript:;">
+          <div class="parent-icon icon-color-2"><i class="bx bx-pyramid"></i>
+          </div>
+          <div class="menu-title">Slider</div>
+        </a>
+        <ul class="{{ Request::is('app/sliders*') ? 'mm-show' : '' }}">
+          @if (Auth::user()->hasPermission('app.sliders.create'))
+          <li class="{{ Request::is('app/sliders/create/') ? 'mm-active' : '' }}">
+            <a href="{{ route('app.sliders.create') }}"><i class="bx bx-plus"></i>
+              Create
+            </a>
+          </li>
+          @endif
+          @if (Auth::user()->hasPermission('app.sliders.index'))
+          <li class="{{ Request::is('app/sliders') ? 'mm-active' : '' }}{{ Request::is('app/sliders/*/edit') ? 'mm-active' : '' }} {{ Request::is('app/sliders/multi-image/*') ? 'mm-active' : '' }} {{ Request::is('app/sliders/stock/*') ? 'mm-active' : '' }}">
+            <a href="{{ route('app.sliders.index') }}"><i class="bx bx-star"></i>Manage</a>
+          </li>
+          @endif
+        </ul>
+      </li>
+      @endif
+      <!--End product-->
+
+
     <!--Static page-->
     @if (Auth::user()->hasPermission('app.pages.index'))
     <li class="menu-label">Static</li>
