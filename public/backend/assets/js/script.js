@@ -147,7 +147,7 @@ $(document).ready(function () {
      * Slider status update
      */
 
-    $(".updateSliderStatus").on('click',(function () {
+     $(".updateSliderStatus").click(function () {
         var status = $(this).text();
         var slider_id = $(this).attr("slider_id");
         $.ajax({

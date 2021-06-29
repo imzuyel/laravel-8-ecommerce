@@ -214,7 +214,7 @@
                     </a>
                     <div class="icon_cart pr">
                       <a class="push_side pr cb chp db" href="#" data-id="#nt_cart_canvas">
-                        <i class="las la-shopping-cart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc">3</span></i>
+                        <i class="las la-shopping-cart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc" id="cartQty"></span></i>
                       </a>
                     </div>
                   </div>

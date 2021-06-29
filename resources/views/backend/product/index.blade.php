@@ -104,8 +104,8 @@ All Products
               </div>
             </td>
             <td>{{ $product->product_code }}</td>
-            <td>{{ $product->price_en }} / {{ $product->price_bn }}</td>
-            <td>{{ $product->product_qty_en }} / {{ $product->product_qty_bn }}</td>
+            <td>{{ $product->price}}</td>
+            <td>{{ $product->product_qty}}</td>
             <td>{{ $product->brand->brand_name_bn }} / {{ $product->brand->brand_name_en }}</td>
             <td>{{ $product->category->category_name_bn }} / {{ $product->category->category_name_en }}</td>
 

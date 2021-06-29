@@ -4,8 +4,10 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\frontend\CustommerController;
@@ -33,15 +35,30 @@ Route::get('/user/dashboard', [CustommerController::class, 'index'])->middleware
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('frontend.shop');
-Route::get('/details', [HomeController::class, 'details'])->name('frontend.details');
+Route::get('/details/{id}/{slug}', [HomeController::class, 'details'])->name('frontend.details');
 Route::get('/category', [HomeController::class, 'category'])->name('frontend.category');
 
 
-//===========get Category in header====================/
-// Include Post here
+//Poduct View modal with ajax
+Route::get('/product/view/modal/{id}',[HomeController::class, 'viewProduct']);
+Route::post('/cart/data/store/{id}',[CartController::class, 'AddToCart']);
+Route::get('/product/cart/content/',[CartController::class, 'content']);
+
+// Remove mini cart
+Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+Route::get('/cart-increment/{rowId}', [CartController::class, 'CartIncrement']);
+Route::get('/cart-decrement/{rowId}', [CartController::class, 'CartDecrement']);
+
+
+
 view()->composer('frontend.partials.header', function ($view) {
     $categories = Category::where('status', 1)->latest('id')->get();
     $view->with('categories', $categories);
+});
+
+view()->composer('frontend.partials.minicart', function ($view) {
+    $carts = Cart::content();
+    $view->with('carts', $carts);
 });
 
 

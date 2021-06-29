@@ -95,7 +95,6 @@
   </script>
   @include('auth.toast')
 
-  @stack('js')
   {{-- Delete --}}
   <script src="{{ asset('backend/assets/js/sweetalert2.all.min.js') }}"></script>
 

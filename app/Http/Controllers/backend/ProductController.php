@@ -14,6 +14,7 @@ use App\Models\ProductMultiImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Intervention\Image\Facades\Image;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ProductController extends Controller
 {
@@ -46,12 +47,9 @@ class ProductController extends Controller
             'subsubcategory_id'             => 'nullable|integer',
             'product_name_en'               => 'required|string',
             'product_name_bn'               => 'required|string',
-            'product_qty_en'                => 'required',
-            'product_qty_bn'                => 'required',
-            'price_en'                      => 'required',
-            'price_bn'                      => 'required',
-            'discount_en'                   => 'nullable',
-            'discount_bn'                   => 'nullable',
+            'product_qty'                   => 'required',
+            'price'                         => 'required',
+            'discount'                      => 'nullable',
             'product_tags_en'               => 'required|string',
             'product_tags_bn'               => 'required|string',
             'short_description_en'          => 'nullable|string|max:190',
@@ -59,8 +57,7 @@ class ProductController extends Controller
             'long_description_en'           => 'required|min:3',
             'long_description_bn'           => 'required|min:3',
             'size'                          => 'nullable|string',
-            'product_color_en'              => 'nullable|string',
-            'product_color_bn'              => 'nullable|string',
+            'product_color'                 => 'nullable|string',
             'image'                         => 'required|image|mimes:jpg,png,jpeg,svg',
             'multiImage.*'                  => 'nullable|image|mimes:jpg,png,jpeg,svg',
             'meta_keywords_en'              => 'nullable|string',
@@ -72,11 +69,9 @@ class ProductController extends Controller
 
         ], [
             'product_name_bn.required'      => 'পণ্যটির নাম প্রয়োজন',
-            'product_qty_bn.required'       => 'পণ্যটির পরিমাণ প্রয়োজন',
             'product_tags_bn.required'      => 'পণ্যটির ট্যাগগুলি প্রয়োজনীয়',
             'short_description_bn.required' => 'পণ্যটির সংক্ষিপ্ত বিবরণ প্রয়োজন',
             'long_description_bn.required'  => 'পণ্যটির দীর্ঘ বিবরণ প্রয়োজন',
-            'price_bn.required'             => 'পণ্যটির মূল্য প্রয়োজন',
         ]);
 
         $product   = Product::create([
@@ -88,12 +83,9 @@ class ProductController extends Controller
             'product_name_bn'               => $request->product_name_bn,
             'product_slug_en'               => Str::slug($request->product_name_en),
             'product_slug_bn'               => $this->make_slug($request->product_name_bn),
-            'product_qty_en'                => $request->product_qty_en,
-            'product_qty_bn'                => $request->product_qty_bn,
-            'price_en'                      => $request->price_en,
-            'price_bn'                      => $request->price_bn,
-            'discount_en'                   => $request->discount_en,
-            'discount_bn'                   => $request->discount_bn,
+            'product_qty'                   => $request->product_qty,
+            'price'                         => $request->price,
+            'discount'                      => $request->discount,
             'product_tags_en'               => $request->product_tags_en,
             'product_tags_bn'               => $request->product_tags_bn,
             'short_description_en'          => $request->short_description_en,
@@ -101,13 +93,11 @@ class ProductController extends Controller
             'long_description_en'           => $request->long_description_en,
             'long_description_bn'           => $request->long_description_bn,
             'size'                          => $request->size,
-            'product_color_en'              => $request->product_color_en,
-            'product_color_bn'              => $request->product_color_bn,
+            'product_color'                 => $request->product_color,
             'meta_keywords_en'              => $request->meta_keywords_en,
             'meta_keywords_bn'              => $request->meta_keywords_bn,
             'meta_description_en'           => $request->meta_description_en,
             'meta_description_bn'           => $request->meta_description_bn,
-            'product_color_en'              => $request->product_color_en,
             'hot_deals'                     => $request->filled('hot_deals'),
             'featured'                      => $request->filled('featured'),
             'special_offer'                 => $request->filled('special_offer'),
@@ -128,7 +118,7 @@ class ProductController extends Controller
         if ($images) {
             foreach ($images as $img) {
                 $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-                Image::make($img)->resize(500, 380)->save('images/products/multi-image/' . $make_name);
+                Image::make($img)->resize(700, 600)->save('images/products/multi-image/' . $make_name);
                 $uploadPath = 'images/products/multi-image/' . $make_name;
                 ProductMultiImage::insert([
                     'product_id' => $product->id,
@@ -169,12 +159,9 @@ class ProductController extends Controller
             'subsubcategory_id'             => 'nullable|integer',
             'product_name_en'               => 'required|string',
             'product_name_bn'               => 'required|string',
-            'product_qty_en'                => 'required',
-            'product_qty_bn'                => 'required',
-            'price_en'                      => 'required',
-            'price_bn'                      => 'required',
-            'discount_en'                   => 'nullable',
-            'discount_bn'                   => 'nullable',
+            'product_qty'                   => 'required',
+            'price'                         => 'required',
+            'discount'                      => 'nullable',
             'product_tags_en'               => 'required|string',
             'product_tags_bn'               => 'required|string',
             'short_description_en'          => 'nullable|max:190',
@@ -182,8 +169,7 @@ class ProductController extends Controller
             'long_description_en'           => 'required|min:3',
             'long_description_bn'           => 'required|min:3',
             'size'                          => 'nullable|string',
-            'product_color_en'              => 'nullable|string',
-            'product_color_bn'              => 'nullable|string',
+            'product_color'                 => 'nullable|string',
             'image'                         => 'nullable|image|mimes:jpg,png,jpeg,svg',
             'multiImage.*'                  => 'nullable|image|mimes:jpg,png,jpeg,svg',
             'meta_keywords_en'              => 'nullable|string',
@@ -192,11 +178,9 @@ class ProductController extends Controller
             'meta_description_bn'           => 'nullable|string',
         ], [
             'product_name_bn.required'      => 'পণ্যটির নাম প্রয়োজন',
-            'product_qty_bn.required'       => 'পণ্যটির পরিমাণ প্রয়োজন',
             'product_tags_bn.required'      => 'পণ্যটির ট্যাগগুলি প্রয়োজনীয়',
             'short_description_bn.required' => 'পণ্যটির সংক্ষিপ্ত বিবরণ প্রয়োজন',
             'long_description_bn.required'  => 'পণ্যটির দীর্ঘ বিবরণ প্রয়োজন',
-            'price_bn.required'             => 'পণ্যটির মূল্য প্রয়োজন',
         ]);
         $product->update([
             'brand_id'                      => $request->brand_id,
@@ -207,12 +191,9 @@ class ProductController extends Controller
             'product_name_bn'               => $request->product_name_bn,
             'product_slug_en'               => Str::slug($request->product_name_en),
             'product_slug_bn'               => $this->make_slug($request->product_name_bn),
-            'product_qty_en'                => $request->product_qty_en,
-            'product_qty_bn'                => $request->product_qty_bn,
-            'price_en'                      => $request->price_en,
-            'price_bn'                      => $request->price_bn,
-            'discount_en'                   => $request->discount_en,
-            'discount_bn'                   => $request->discount_bn,
+            'product_qty'                   => $request->product_qty,
+            'price'                         => $request->price,
+            'discount'                      => $request->discount,
             'product_tags_en'               => $request->product_tags_en,
             'product_tags_bn'               => $request->product_tags_bn,
             'short_description_en'          => $request->short_description_en,
@@ -220,13 +201,11 @@ class ProductController extends Controller
             'long_description_en'           => $request->long_description_en,
             'long_description_bn'           => $request->long_description_bn,
             'size'                          => $request->size,
-            'product_color_en'              => $request->product_color_en,
-            'product_color_bn'              => $request->product_color_bn,
+            'product_color'                 => $request->product_color,
             'meta_keywords_en'              => $request->meta_keywords_en,
             'meta_keywords_bn'              => $request->meta_keywords_bn,
             'meta_description_en'           => $request->meta_description_en,
             'meta_description_bn'           => $request->meta_description_bn,
-            'product_color_en'              => $request->product_color_en,
             'product_code'                  => $this->generateProductCode($product->id),
             'hot_deals'                     => $request->filled('hot_deals'),
             'featured'                      => $request->filled('featured'),
@@ -290,7 +269,7 @@ class ProductController extends Controller
                 }
 
                 $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-                Image::make($img)->resize(500, 400)->save('images/products/multi-image/' . $make_name);
+                Image::make($img)->resize(700, 600)->save('images/products/multi-image/' . $make_name);
                 $uploadPath = 'images/products/multi-image/' . $make_name;
 
                 ProductMultiImage::where('id', $id)->update([
@@ -322,7 +301,7 @@ class ProductController extends Controller
         if ($images) {
             foreach ($images as $img) {
                 $make_name = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-                Image::make($img)->resize(500, 400)->save('images/products/multi-image/' . $make_name);
+                Image::make($img)->resize(700, 600)->save('images/products/multi-image/' . $make_name);
                 $uploadPath = 'images/products/multi-image/' . $make_name;
                 ProductMultiImage::insert([
                     'product_id' => $request->id,
@@ -347,8 +326,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($request->id);
         $product->update([
-            'product_qty_en'                => $request->product_qty_en,
-            'product_qty_bn'                => $request->product_qty_bn,
+            'product_qty'                => $request->product_qty,
         ]);
         toastr()->success('Product stock updated successfully');
         return back();
