@@ -558,7 +558,7 @@ Happy to shop
                   <div class="product-inner pr">
                     <div class="product-image pr oh lazyload">
                       <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
-                      <a class="d-block" href="{{ route('frontend.details',['id'=>$product->id,'slug'=>$product->product_slug_bn]) }}">
+                      <a class="d-block" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">
                         <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                       </a>
                       <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
@@ -577,7 +577,7 @@ Happy to shop
                     <div class="product-info mt__15">
                       <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_bn }}</a></div>
                       <h3 class="product-title pr fs__14 mg__0 fwm">
-                        <a class="cd chp" href="{{ route('frontend.details',['id'=>$product->id,'slug'=>$product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
+                        <a class="cd chp" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
                       </h3>
                       @if (isset($product->discount))
                       <p class="price_range" id="price_qv">
@@ -595,7 +595,7 @@ Happy to shop
                   <div class="product-inner pr">
                     <div class="product-image pr oh lazyload">
                       <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
-                      <a class="d-block" href="{{ route('frontend.details',['id'=>$product->id,'slug'=>$product->product_slug_en]) }}">
+                      <a class="d-block" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">
                         <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                       </a>
                       <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
@@ -615,7 +615,7 @@ Happy to shop
                     <div class="product-info mt__15">
                       <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_en }}</a></div>
                       <h3 class="product-title pr fs__14 mg__0 fwm">
-                        <a class="cd chp" href="{{ route('frontend.details',['id'=>$product->id,'slug'=>$product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
+                        <a class="cd chp" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
                       </h3>
                       @if (isset($product->discount))
                       <p class="price_range" id="price_qv">
@@ -642,7 +642,7 @@ Happy to shop
                   <div class="product-inner pr">
                     <div class="product-image pr oh lazyload">
                       <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '. $product->discount .' %'  : 'New' }}</span></span>
-                      <a class="d-block" href="product-detail-layout-01.html">
+                      <a class="d-block" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">
                         <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                       </a>
                       <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
@@ -661,7 +661,7 @@ Happy to shop
                     <div class="product-info mt__15">
                       <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_bn }}</a></div>
                       <h3 class="product-title pr fs__14 mg__0 fwm">
-                        <a class="cd chp" href="product-detail-layout-01.html">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
+                        <a class="cd chp" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
                       </h3>
                       @if (isset($product->discount))
                       <p class="price_range" id="price_qv">
@@ -679,7 +679,7 @@ Happy to shop
                   <div class="product-inner pr">
                     <div class="product-image pr oh lazyload">
                       <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '-'. $product->discount . ' %' : 'New' }}</span></span>
-                      <a class="d-block" href="product-detail-layout-01.html">
+                      <a class="d-block" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">
                         <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                       </a>
                       <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
@@ -699,7 +699,7 @@ Happy to shop
                     <div class="product-info mt__15">
                       <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_en }}</a></div>
                       <h3 class="product-title pr fs__14 mg__0 fwm">
-                        <a class="cd chp" href="product-detail-layout-01.html">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
+                        <a class="cd chp" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
                       </h3>
                       @if (isset($product->discount))
                       <p class="price_range" id="price_qv">

@@ -513,6 +513,14 @@
   <script src=" {{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/script.js') }}"></script>
 
+
+
+
+
+
+
+
+
   <script>
     $(document).ready(function() {
       $('.dropdown-submenu a.test').on("click", function(e) {
@@ -767,21 +775,6 @@
                       </div>
                     </div>
                     <a href="#"
-                      class="cart_ac_edit js__qs ttip_nt tooltip_top_right"><span class="tt_txt">Edit this item</span>
-                      <svg xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                      </svg>
-                    </a>
-                    <input type="hidden"
-                      value="${value.rowId}"
-                      id="rowId">
-                    <a href="#"
                       id="${value.rowId}"
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg style="width: 20px;
@@ -861,18 +854,7 @@
                         </button>
                       </div>
                     </div>
-                    <a href="#"
-                      class="cart_ac_edit js__qs ttip_nt tooltip_top_right"><span class="tt_txt">Edit this item</span>
-                      <svg xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                      </svg>
-                    </a>
+
                     <a href="#"
                       id="${value.rowId}"
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
@@ -984,7 +966,7 @@
 
   {{-- End ajax --}}
   @stack('js')
-  <script src=" {{ asset('frontend/assets/js/interface.js') }}"></script>
+  <script src="{{ asset('frontend/assets/js/interface.js') }}"></script>
 
 
 

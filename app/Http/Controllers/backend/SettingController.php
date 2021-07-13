@@ -195,7 +195,7 @@ class SettingController extends Controller
         $get_imageName  =  date('mdYHis') . uniqid() . $file->getClientOriginalName();
         $directory      = 'images/settings/logo/';
         $imageUrl       = $directory . $get_imageName;
-        Image::make($file)->resize(180, 35)->save($imageUrl);
+        Image::make($file)->save($imageUrl);
         return $imageUrl;
     }
 
@@ -205,7 +205,7 @@ class SettingController extends Controller
         $get_imageName  =  date('mdYHis') . uniqid() . $file->getClientOriginalName();
         $directory      = 'images/settings/favicon/';
         $imageUrl       = $directory . $get_imageName;
-        Image::make($file)->resize(32, 32)->save($imageUrl);
+        Image::make($file)->save($imageUrl);
         return $imageUrl;
     }
 }

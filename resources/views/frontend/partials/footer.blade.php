@@ -5,7 +5,7 @@
         <div class="container pr z_100">
           <div class="row">
             <div class="col-lg-3 col-md-6 col-12 mb__50 order-lg-1 order-1">
-              <div class="widget widget_text widget_logo">
+              <div class="widget widget_text widget_">
                 <h3 class="widget-title fwsb flex al_center fl_between fs__16 mg__0 mb__30 dn_md">
                   <span class="txt_title">Get in touch</span>
                   <span class="nav_link_icon ml__5"></span>
@@ -14,17 +14,17 @@
                   <div class="footer-contact">
                     <p>
                       <a class="d-block" href="index.html">
-                        <img class="w__100 mb__15 lazyload max-width__95px" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20220%2066%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" alt="Kalles Template" data-src="{{ asset('/') }}frontend/assets/images/svg/kalles.svg">
+                        <img class="w__100 mb__15 lazyload max-width__95px" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20220%2066%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" alt="Kalles Template" data-src="/{{setting('site_logo')}}">
                       </a>
                     </p>
                     <p>
-                      <i class="pegk pe-7s-map-marker"> </i><span>184 Main Rd E, St Albans <br>
-                        <span class="pl__30">VIC 3021, Australia</span></span>
+                      <i class="pegk pe-7s-map-marker"> </i><span>5100, Thakurgaon  <br>
+                        <span class="pl__30">Rangpur, Bangladesh</span></span>
                     </p>
                     <p><i class="pegk pe-7s-mail"></i>
-                      <span><a href="https://themes.the4.co/cdn-cgi/l/email-protection#56353938223735221635393b2637382f7835393b"><span class="__cf_email__" data-cfemail="2e4d41405a4f4d5a6e4d41435e4f4057004d4143">[email&#160;protected]</span></a></span>
+                      <span><a href="https://themes.the4.co/cdn-cgi/l/email-protection#56353938223735221635393b2637382f7835393b"><span class="__cf_email__" data-cfemail="2e4d41405a4f4d5a6e4d41435e4f4057004d4143">zuyel76@gmail.com</span></a></span>
                     </p>
-                    <p><i class="pegk pe-7s-call"></i> <span>+001 2233 456 </span></p>
+                    <p><i class="pegk pe-7s-call"></i> <span>+01312733791 </span></p>
                     <div class="nt-social">
                       <a href="https://www.facebook.com/" class="facebook cb ttip_nt tooltip_top">
                         <span class="tt_txt">Follow on Facebook</span>
@@ -171,23 +171,7 @@
         </div>
       </div>
     </div>
-    <div id="kalles-section-footer_bot" class="kalles-section footer__bot">
-      <div class="footer__bot_wrap pt__20 pb__20">
-        <div class="container pr tc">
-          <div class="row">
-            <div class="col-lg-6 col-md-12 col-12 col_1">Copyright © 2021
-              <span class="cp">Kalles</span> all rights reserved. Powered by<a href="#"> The4</a></div>
-            <div class="col-lg-6 col-md-12 col-12 col_2">
-              <ul id="footer-menu" class="clearfix">
-                <li class="menu-item"><a href="#">Shop</a></li>
-                <li class="menu-item"><a href="#">About Us</a></li>
-                <li class="menu-item"><a href="#">Contact</a></li>
-                <li class="menu-item"><a href="blog-grid.html">Blog</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+ 
     </div>
   </footer>
   <!-- end footer -->

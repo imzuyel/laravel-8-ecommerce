@@ -36,26 +36,33 @@
           </div>
           @if (session()->get('language') === 'bangla')
           <div class="col-auto flex al_center">
+
             @if (isset($previous_product))
-            <a href="{{ route('frontend.details',['id'=>$previous_product->id,'slug'=>$previous_product->product_slug_bn]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-left"></i><span class="tt_txt">
+            <a href="{{ route('frontend.detailsbn',['category'=>$previous_product->category->category_slug_bn,'slug'=>$previous_product->product_slug_bn]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-left"></i><span class="tt_txt">
                 {{ $previous_product->product_name_bn }}
               </span></a>
             @endif
-            <a href="" class="pl__5 pr__5 fs__20 cd chp ttip_nt tooltip_bottom_left"><i class="fwb iccl iccl-grid fs__15"></i><span class="tt_txt">{{ $previous_product->category->category_name_bn }}</span></a>
+
+            <a href="" class="pl__5 pr__5 fs__20 cd chp ttip_nt tooltip_bottom_left"><i class="fwb iccl iccl-grid fs__15"></i><span class="tt_txt">{{ $product->category->category_name_bn }}</span></a>
+
             @if (isset($next_product))
-            <a href="{{ route('frontend.details',['id'=>$previous_product->id,'slug'=>$next_product->product_slug_bn]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-right"></i><span class="tt_txt">{{ $next_product->product_name_bn }}</span></a>
+            <a href="{{ route('frontend.detailsbn',['category'=>$next_product->category->category_slug_bn,'slug'=>$next_product->product_slug_bn]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-right"></i><span class="tt_txt">{{ $next_product->product_name_bn }}</span></a>
             @endif
           </div>
           @else
           <div class="col-auto flex al_center">
+
             @if (isset($previous_product))
-            <a href="{{ route('frontend.details',['id'=>$previous_product->id,'slug'=>$previous_product->product_slug_en]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-left"></i><span class="tt_txt">
+            <a href="{{ route('frontend.detailsen',['category'=>$previous_product->category->category_slug_en,'slug'=>$previous_product->product_slug_en]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-left"></i><span class="tt_txt">
                 {{ $previous_product->product_name_en }}
               </span></a>
             @endif
+
             <a href="" class="pl__5 pr__5 fs__20 cd chp ttip_nt tooltip_bottom_left"><i class="fwb iccl iccl-grid fs__15"></i><span class="tt_txt">{{ $previous_product->category->category_name_en }}</span></a>
+
             @if (isset($next_product))
-            <a href="{{ route('frontend.details',['id'=>$previous_product->id,'slug'=>$next_product->product_slug_en]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-right"></i><span class="tt_txt">{{ $next_product->product_name_en }}</span></a>
+            <a href="{{ route('frontend.detailsen',['category'=>$next_product->category->category_slug_en,'slug'=>$next_product->product_slug_en]) }}" class="pl__5 pr__5 fs__18 cd chp ttip_nt tooltip_bottom_left"><i class="las la-angle-right"></i><span class="tt_txt">{{ $next_product->product_name_en }}</span></a>
+
             @endif
           </div>
           @endif
@@ -319,13 +326,6 @@
 
 
 @endsection
-
-
-
-
-
-
-
 
 
 

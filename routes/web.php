@@ -24,8 +24,8 @@ Route::group(['as' => 'login.', 'prefix' => 'login'], function () {
 
 
 //Multi language
-Route::get('language/english', [LanguageController::class,'English'])->name('language.english');
-Route::get('language/bangla',  [LanguageController::class,'Bangla'])->name('language.bangla');
+Route::get('language/english', [LanguageController::class, 'English'])->name('language.english');
+Route::get('language/bangla',  [LanguageController::class, 'Bangla'])->name('language.bangla');
 
 // Custommer
 Route::get('/user/login', [CustommerController::class, 'login'])->name('user.login');
@@ -35,20 +35,31 @@ Route::get('/user/dashboard', [CustommerController::class, 'index'])->middleware
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('frontend.shop');
-Route::get('/details/{id}/{slug}', [HomeController::class, 'details'])->name('frontend.details');
+Route::get('/bn/details/{category}/{slug}', [HomeController::class, 'detailsbn'])->name('frontend.detailsbn');
+Route::get('/en/details/{category}/{slug}', [HomeController::class, 'detailsen'])->name('frontend.detailsen');
 Route::get('/category', [HomeController::class, 'category'])->name('frontend.category');
 
 
 //Poduct View modal with ajax
-Route::get('/product/view/modal/{id}',[HomeController::class, 'viewProduct']);
-Route::post('/cart/data/store/{id}',[CartController::class, 'AddToCart']);
-Route::get('/product/cart/content/',[CartController::class, 'content']);
+Route::get('/product/view/modal/{id}', [HomeController::class, 'viewProduct']);
+Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+Route::get('/product/cart/content/', [CartController::class, 'content']);
 
-// Remove mini cart
+//  mini cart
 Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
 Route::get('/cart-increment/{rowId}', [CartController::class, 'CartIncrement']);
 Route::get('/cart-decrement/{rowId}', [CartController::class, 'CartDecrement']);
 
+//=========Category wise product===========//
+Route::get('/bn/{category}', [HomeController::class, 'categoryproductsbn'])->name('categoryproductsbn');
+Route::get('/en/{category}', [HomeController::class, 'categoryproductsen'])->name('categoryproductsen');
+
+// Subcategory wise product
+Route::get('/bn/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsbn'])->name('subcategoryproductsbn');
+Route::get('/en/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsen'])->name('subcategoryproductsen');
+// Subcategory wise product
+Route::get('/bn/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsbn'])->name('subsubcategoryproductsbn');
+Route::get('/en/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsen'])->name('subsubcategoryproductsen');
 
 
 view()->composer('frontend.partials.header', function ($view) {
@@ -66,5 +77,3 @@ view()->composer('frontend.partials.minicart', function ($view) {
 
 //Custome Page
 Route::get('{slug}', [PageController::class, 'index'])->name('page');
-
-

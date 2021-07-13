@@ -371,7 +371,7 @@
                         Menuoffsets    = $( '#nt_menu_id' ).find( ' > li.menu_has_offsets' ),
                         screenWidth    = $window.width(),
                         global_wrapper = $( '#nt_wrapper' ),
-                        bodyRight      = global_wrapper.outerWidth() + global_wrapper.offset().left,
+                        // bodyRight      = global_wrapper.outerWidth() + global_wrapper.offset().left,
                         viewportWidth  = ( body.hasClass( 'wrapper-boxed' ) || body.hasClass( 'wrapper-boxed-small' ) ) ? bodyRight : screenWidth;
 
                     let nav_dropdown = li.find( ' > .sub-menu' );

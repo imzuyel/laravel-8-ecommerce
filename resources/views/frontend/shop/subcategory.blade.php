@@ -1,6 +1,6 @@
 @extends('frontend.app')
 @section('title')
-  {{ $category->category_name_en }}
+  {{ $subcategory->subcategory_name_en }}
 @endsection
 @push('css')
   <link rel="stylesheet"
@@ -22,11 +22,15 @@
           <div class="col">
             @if (session()->get('language') === 'bangla')
               <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i>{{ $category->category_name_bn }}
+                <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i><a
+                  href="{{ route('categoryproductsbn', $subcategory->category->category_slug_bn) }}">{{ $subcategory->category->category_name_bn }}</a><i
+                  class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_bn }}</a>
               </nav>
             @else
               <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i>{{ $category->category_name_en }}
+                <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i><a
+                  href="{{ route('categoryproductsen', $subcategory->category->category_slug_en) }}">{{ $subcategory->category->category_name_en }}</a><i
+                  class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_en }}</a>
               </nav>
             @endif
 
@@ -35,25 +39,24 @@
       </div>
     </div>
     <!-- end breadcrumb -->
-    @if (count($category->products) <= 0)
-      <div class="kalles-section cat-shop pr tc p-5">
+    @if (count($subcategory->products)  <= 0)
+    <div class="kalles-section cat-shop pr tc p-5">
         <h1 class="text-center text-danger">
-          @if (session()->get('language') === 'bangla')
+            @if (session()->get('language') === 'bangla')
             শীঘ্রই আসছে !
-          @else
-            Comming Soon !
-          @endif
+            @else
+                Comming Soon !
+            @endif
         </h1>
         <button type="submit"
           data-time="6000"
           data-ani="shake"
-          class="button truncate  mt__20 order-4  animated "
-          onclick="location.href='{{ route('frontend.home') }}';">
+          class="button truncate  mt__20 order-4  animated " onclick="location.href='{{ route('frontend.home') }}';">
           <span>
             @if (session()->get('language') === 'bangla')
-              হোম
+            হোম
             @else
-              Home
+                Home
             @endif
           </span>
         </button>
@@ -427,9 +430,7 @@
               <!--products list-->
               <div
                 class="on_list_view_false products nt_products_holder row fl_center row_pr_1 cdt_des_1 round_cd_false nt_cover ratio_nt position_8 space_30 nt_default">
-
-
-                  @foreach ($category->products as $product)
+                  @foreach ($subcategory->products as $product)
                     <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
                       @if (session()->get('language') === 'bangla')
                         <div class="product-inner pr">
@@ -538,8 +539,6 @@
                       @endif
                     </div>
                   @endforeach
-
-
               </div>
               <!--end products list-->
 
