@@ -15,6 +15,7 @@
 
 @section('content')
   <div id="nt_content">
+      <input type="hidden" name="categoryId" value="{{$category->id}}" class="categoryId">
     <!-- breadcrumb -->
     <div class="bgbl pt__20 pb__20 lh__1">
       <div class="container">
@@ -22,11 +23,13 @@
           <div class="col">
             @if (session()->get('language') === 'bangla')
               <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i>{{ $category->category_name_bn }}
+                <a href="{{ route('frontend.home') }}">হোম</a><i
+                  class="facl facl-angle-right"></i>{{ $category->category_name_bn }}
               </nav>
             @else
               <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i>{{ $category->category_name_en }}
+                <a href="{{ route('frontend.home') }}">Home</a><i
+                  class="facl facl-angle-right"></i>{{ $category->category_name_en }}
               </nav>
             @endif
 
@@ -132,7 +135,7 @@
           <div class="cat_sortby cat_sortby_js col tr kalles_dropdown kalles_dropdown_container">
             <a class="in_flex fl_between al_center sortby_pick kalles_dropDown_label"
               href="#">
-              <span class="lbl-title sr_txt dn">Featured</span>
+              <span class="lbl-title sr_txt dn">Default</span>
               <span class="lbl-title sr_txt_mb">Sort by</span>
               <i class="ml__5 mr__5 facl facl-angle-down"></i>
             </a>
@@ -147,33 +150,29 @@
               <div class="h3 mg__0 tc cd tu ls__2 dn_lg db">Sort by<i class="pegk pe-7s-close fs__50 ml__5"></i>
               </div>
               <div class="nt_ajaxsortby wrap_sortby kalles_dropdown_options">
-                <a data-label="Featured"
-                  class="kalles_dropdown_option truncate selected"
-                  href="#">Featured</a>
-                <a data-label="Best selling"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Best
-                  selling</a>
+                <a data-label="Default"
+                  class="kalles_dropdown_option truncate default selected "
+                  href="#">Default</a>
                 <a data-label="Alphabetically, A-Z"
-                  class="kalles_dropdown_option truncate"
+                  class="kalles_dropdown_option truncate Alphabetically"
                   href="#">Alphabetically, A-Z</a>
                 <a data-label="Alphabetically, Z-A"
-                  class="kalles_dropdown_option truncate"
+                  class="kalles_dropdown_option truncate AlphabeticallyReverse"
                   href="#">Alphabetically, Z-A</a>
                 <a data-label="Price, low to high"
-                  class="kalles_dropdown_option truncate"
+                  class="kalles_dropdown_option truncate PriceLowtoHigh"
                   href="#">Price,
                   low to high</a>
                 <a data-label="Price, high to low"
-                  class="kalles_dropdown_option truncate"
+                  class="kalles_dropdown_option truncate PriceHightoLow"
                   href="#">Price,
                   high to low</a>
                 <a data-label="Date, old to new"
-                  class="kalles_dropdown_option truncate"
+                  class="kalles_dropdown_option truncate  Oldest"
                   href="#">Date, old
                   to new</a>
                 <a data-label="Date, new to old"
-                  class="kalles_dropdown_option truncate"
+                  class="kalles_dropdown_option truncate Latest"
                   href="#">Date, new
                   to old</a>
               </div>
@@ -426,120 +425,8 @@
 
               <!--products list-->
               <div
-                class="on_list_view_false products nt_products_holder row fl_center row_pr_1 cdt_des_1 round_cd_false nt_cover ratio_nt position_8 space_30 nt_default">
-
-
-                  @foreach ($category->products as $product)
-                    <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
-                      @if (session()->get('language') === 'bangla')
-                        <div class="product-inner pr">
-                          <div class="product-image pr oh lazyload">
-                            <span class="tc nt_labels pa pe_none cw"><span
-                                class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- ' . $product->discount . ' %' : 'New' }}</span></span>
-                            <a class="d-block"
-                              href="{{ route('frontend.detailsbn', ['category' => $product->category->category_slug_bn, 'slug' => $product->product_slug_bn]) }}">
-                              <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </a>
-                            <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                              <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </div>
-                            <div class="nt_add_w ts__03 pa ">
-                              <a href="#"
-                                class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">ইচ্ছেতালিকা</span><i
-                                  class="facl facl-heart-o"></i></a>
-                            </div>
-                            <div class="hover_button op__0 tc pa flex column ts__03">
-                              <a class=" pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView"
-                                href="#"
-                                product_id={{ $product->id }}><span class="tt_txt">এখনই কিনুন</span><i
-                                  class="iccl iccl-eye"></i><span>এখনই
-                                  কিনুন</span></a>
-                              <a class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView"
-                                href="#"
-                                product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i
-                                  class="iccl iccl-cart"></i><span>কার্টে যোগ
-                                  করুন</span></a>
-                            </div>
-                          </div>
-                          <div class="product-info mt__15">
-                            <h3 class="product-title pr fs__14 mg__0 fwm">
-                              <a class="cd chp"
-                                href="{{ route('frontend.detailsbn', ['category' => $product->category->category_slug_bn, 'slug' => $product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
-                            </h3>
-                            @if (isset($product->discount))
-                              <p class="price_range"
-                                id="price_qv">
-                                <del> ৳{{ $product->price }}</del>
-                                <ins>
-                                  ৳{{ round($product->price - ($product->discount * $product->price) / 100) }}</ins>
-                              </p>
-                            @else
-                              <span class="price dib mb__5"> ৳ {{ $product->price }} <span
-                                  class="text-danger"></span></span>
-                            @endif
-                          </div>
-                        </div>
-                      @else
-                        <div class="product-inner pr">
-                          <div class="product-image pr oh lazyload">
-                            <span class="tc nt_labels pa pe_none cw"><span
-                                class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- ' . $product->discount . ' %' : 'New' }}</span></span>
-                            <a class="d-block"
-                              href="{{ route('frontend.detailsen', ['category' => $product->category->category_slug_en, 'slug' => $product->product_slug_en]) }}">
-                              <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </a>
-                            <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                              <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </div>
-                            <div class="nt_add_w ts__03 pa ">
-                              <a href="#"
-                                class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
-                                  Wishlist</span><i class="facl facl-heart-o"></i></a>
-                            </div>
-                            <div class="hover_button op__0 tc pa flex column ts__03">
-                              <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView"
-                                href="#"
-                                product_id={{ $product->id }}><span class="tt_txt">Quick view</span><i
-                                  class="iccl iccl-eye"></i><span>Quick
-                                  view</span></a>
-                              <a href="#"
-                                class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView"
-                                product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i
-                                  class="iccl iccl-cart"></i><span>Add to
-                                  cart</span></a>
-                            </div>
-                          </div>
-                          <div class="product-info mt__15">
-                            <h3 class="product-title pr fs__14 mg__0 fwm">
-                              <a class="cd chp"
-                                href="{{ route('frontend.detailsen', ['category' => $product->category->category_slug_en, 'slug' => $product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
-                            </h3>
-                            @if (isset($product->discount))
-                              <p class="price_range"
-                                id="price_qv">
-                                <del> ৳{{ $product->price }}</del>
-                                <ins>
-                                  ৳{{ round($product->price - ($product->discount * $product->price) / 100) }}</ins>
-                              </p>
-                            @else
-                              <span class="price dib mb__5"> ৳ {{ $product->price }} <span
-                                  class="text-danger"></span></span>
-                            @endif
-                          </div>
-                        </div>
-                      @endif
-                    </div>
-                  @endforeach
-
-
+                class="on_list_view_false products nt_products_holder row fl_center row_pr_1 cdt_des_1 round_cd_false nt_cover ratio_nt position_8 space_30 nt_default filterOption" >
+                  @include('frontend.shop.listing')
               </div>
               <!--end products list-->
 

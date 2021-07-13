@@ -529,7 +529,6 @@
         e.preventDefault();
       });
     });
-
   </script>
   <script>
     $(".btn-group, .dropdown").hover(
@@ -541,7 +540,6 @@
         $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
         $(this).removeClass('open');
       });
-
   </script>
   @include('auth.toast')
 
@@ -555,10 +553,7 @@
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
       },
     });
-    /**
-     * Product  view on modal
-     */
-    $(".productView").click(function() {
+    $("body").on("click", ".productView", function() {
       var product_id = $(this).attr("product_id");
       $.ajax({
         type: "GET",
@@ -603,7 +598,7 @@
             new_price =
               data.product.price -
               (data.product.discount * data.product.price) / 100;
-            $("#new_price").text("$" + new_price);
+            $("#new_price").text("$" + Math.round(new_price));
             $("#price").text("$" + data.product.price);
             $("#discount_bg").addClass("bg-danger");
           } // end prodcut price
@@ -619,7 +614,7 @@
             new_price =
               data.product.price -
               (data.product.discount * data.product.price) / 100;
-            $("#new_price2").text("$" + new_price);
+            $("#new_price2").text("$" + Math.round(new_price));
             $("#price2").text("$" + data.product.price);
             $("#discount_bg2").addClass("bg-danger");
           } //All quick shop for id 2
@@ -663,7 +658,6 @@
         },
       });
     });
-    //  End  view on modal
 
     /**
      * Add to cart
@@ -777,9 +771,10 @@
                     <a href="#"
                       id="${value.rowId}"
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
-                      <svg style="width: 20px;
-                                            height: 20px;
-                                            stroke-width: 1.5;"
+                      <svg
+                        style="width: 20px;
+                                                                                                                                                          height: 20px;
+                                                                                                                                                          stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -827,7 +822,7 @@
                     <p class="cart_selling_plan"></p>
                     <div class="cart_meta_price price">
                       <div class="cart_price">
-                        $<ins>${value.price}</ins>
+                        $<ins>${Math.round(value.price)}</ins>
                       </div>
                     </div>
                   </div>
@@ -858,9 +853,10 @@
                     <a href="#"
                       id="${value.rowId}"
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
-                      <svg style="width: 20px;
-                                            height: 20px;
-                                            stroke-width: 1.5;"
+                      <svg
+                        style="width: 20px;
+                                                                                                                                                          height: 20px;
+                                                                                                                                                          stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -961,7 +957,165 @@
         }
       });
     }
+  </script>
 
+  <script>
+    //   AtoZ
+    $(".Alphabetically").on('click', function() {
+      var categoryId = $(".categoryId").val();
+      $.ajax({
+        type: 'GET',
+        url: "/categorydata/atoz/" + categoryId,
+        dataType: 'text',
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $('.Alphabetically').addClass('selected');
+          $('.default').removeClass('selected');
+          $('.AlphabeticallyReverse').removeClass('selected');
+          $('.PriceLowtoHigh').removeClass('selected');
+          $('.PriceHightoLow').removeClass('selected');
+          $('.Oldest').removeClass('selected');
+          $('.Latest').removeClass('selected');
+
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      });
+    });
+    //ZtoA
+    $(".AlphabeticallyReverse").on('click', function() {
+      var categoryId = $(".categoryId").val();
+      $.ajax({
+        type: 'GET',
+        url: "/categorydata/ztoa/" + categoryId,
+        dataType: 'text',
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $('.AlphabeticallyReverse').addClass('selected');
+          $('.Alphabetically').removeClass('selected');
+          $('.default').removeClass('selected');
+          $('.PriceLowtoHigh').removeClass('selected');
+          $('.PriceHightoLow').removeClass('selected');
+          $('.Oldest').removeClass('selected');
+          $('.Latest').removeClass('selected');
+
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      });
+    });
+    // Price low to high
+    $(".PriceLowtoHigh").on('click', function() {
+      var categoryId = $(".categoryId").val();
+      $.ajax({
+        type: 'GET',
+        url: "/categorydata/price-low-to-high/" + categoryId,
+        dataType: 'text',
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $('.AlphabeticallyReverse').removeClass('selected');
+          $('.Alphabetically').removeClass('selected');
+          $('.default').removeClass('selected');
+          $('.PriceLowtoHigh').addClass('selected');
+          $('.PriceHightoLow').removeClass('selected');
+          $('.Oldest').removeClass('selected');
+          $('.Latest').removeClass('selected');
+
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      });
+    });
+    // Price high to low
+    $(".PriceHightoLow").on('click', function() {
+      var categoryId = $(".categoryId").val();
+      $.ajax({
+        type: 'GET',
+        url: "/categorydata/price-high-to-low/" + categoryId,
+        dataType: 'text',
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $('.AlphabeticallyReverse').removeClass('selected');
+          $('.Alphabetically').removeClass('selected');
+          $('.default').removeClass('selected');
+          $('.PriceLowtoHigh').removeClass('selected');
+          $('.PriceHightoLow').addClass('selected');
+          $('.Oldest').removeClass('selected');
+          $('.Latest').removeClass('selected');
+
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      });
+    });
+    // Oldest
+    $(".Oldest").on('click', function() {
+      var categoryId = $(".categoryId").val();
+      $.ajax({
+        type: 'GET',
+        url: "/categorydata/oldest/" + categoryId,
+        dataType: 'text',
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $('.AlphabeticallyReverse').removeClass('selected');
+          $('.Alphabetically').removeClass('selected');
+          $('.default').removeClass('selected');
+          $('.PriceLowtoHigh').removeClass('selected');
+          $('.PriceHightoLow').removeClass('selected');
+          $('.Oldest').addClass('selected');
+          $('.Latest').removeClass('selected');
+
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      });
+    });
+    // Latest
+    $(".Latest").on('click', function() {
+      var categoryId = $(".categoryId").val();
+      $.ajax({
+        type: 'GET',
+        url: "/categorydata/latest/" + categoryId,
+        dataType: 'text',
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $('.AlphabeticallyReverse').removeClass('selected');
+          $('.Alphabetically').removeClass('selected');
+          $('.default').removeClass('selected');
+          $('.PriceLowtoHigh').removeClass('selected');
+          $('.PriceHightoLow').removeClass('selected');
+          $('.Oldest').removeClass('selected');
+          $('.Latest').addClass('selected');
+
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      });
+    });
   </script>
 
   {{-- End ajax --}}

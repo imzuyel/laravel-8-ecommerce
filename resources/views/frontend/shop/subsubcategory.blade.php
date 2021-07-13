@@ -30,7 +30,7 @@
               </nav>
             @else
               <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i><a
+                <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i><a
                 href="{{ route('categoryproductsen', $subsubcategory->category->category_slug_en) }}">{{ $subsubcategory->category->category_name_en }}</a>
               <i class="facl facl-angle-right"></i><a
                 href="{{ route('subcategoryproductsen', ['category' => $subsubcategory->category->category_slug_en, 'subcategory' => $subsubcategory->subcategory->subcategory_slug_en]) }}">{{ $subsubcategory->subcategory->subcategory_name_en }}</a>

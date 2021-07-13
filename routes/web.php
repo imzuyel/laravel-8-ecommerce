@@ -60,7 +60,13 @@ Route::get('/en/{category}/{subcategory}', [HomeController::class, 'subcategoryp
 // Subcategory wise product
 Route::get('/bn/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsbn'])->name('subsubcategoryproductsbn');
 Route::get('/en/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsen'])->name('subsubcategoryproductsen');
-
+// Ajax category
+Route::get('/categorydata/atoz/{categoryId}', [HomeController::class, 'categorydataAtoZ']);
+Route::get('/categorydata/ztoa/{categoryId}', [HomeController::class, 'categorydataZtoA']);
+Route::get('/categorydata/price-low-to-high/{categoryId}', [HomeController::class, 'categorydatapriceLowtoHigh']);
+Route::get('/categorydata/price-high-to-low/{categoryId}', [HomeController::class, 'categorydatapriceHightoLow']);
+Route::get('/categorydata/oldest/{categoryId}', [HomeController::class, 'categorydataOldest']);
+Route::get('/categorydata/latest/{categoryId}', [HomeController::class, 'categorydatapLatest']);
 
 view()->composer('frontend.partials.header', function ($view) {
     $categories = Category::where('status', 1)->latest('id')->get();
