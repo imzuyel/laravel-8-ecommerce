@@ -62,6 +62,7 @@
       transform: -moz-translate(-50%, -50%);
       transform: -ms-translate(-50%, -50%);
       color: darkred;
+      background: rgba(0, 0, 0, 0.5);
       z-index: 100;
       visibility: hidden;
     }
@@ -773,8 +774,8 @@
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg
                         style="width: 20px;
-                                                                                                                                                          height: 20px;
-                                                                                                                                                          stroke-width: 1.5;"
+                                                                                                                                                                                                                                                                                                                                                                      height: 20px;
+                                                                                                                                                                                                                                                                                                                                                                      stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -855,8 +856,8 @@
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg
                         style="width: 20px;
-                                                                                                                                                          height: 20px;
-                                                                                                                                                          stroke-width: 1.5;"
+                                                                                                                                                                                                                                                                                                                                                                      height: 20px;
+                                                                                                                                                                                                                                                                                                                                                                      stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -960,163 +961,145 @@
   </script>
 
   <script>
-    //   AtoZ
-    $(".Alphabetically").on('click', function() {
-      var categoryId = $(".categoryId").val();
+    $(".sort").on('change', function() {
+      var sort = $(this).val();
+      var url = window.location.pathname.split("/").pop();
+      var brand = $('.brand:checkbox:checked').val();
+      var color = $('.color:checkbox:checked').val();
+      var size = $('.size:checkbox:checked').val();
+
       $.ajax({
-        type: 'GET',
-        url: "/categorydata/atoz/" + categoryId,
-        dataType: 'text',
+        url: url,
         beforeSend: function() {
           $('.centered').css("visibility", "visible");
         },
+        data: {
+          color: color,
+          url: url,
+          sort: sort,
+          brand: brand,
+          size: size,
+
+        },
         success: function(resp) {
           $('.filterOption').html(resp);
-          $('.Alphabetically').addClass('selected');
-          $('.default').removeClass('selected');
-          $('.AlphabeticallyReverse').removeClass('selected');
-          $('.PriceLowtoHigh').removeClass('selected');
-          $('.PriceHightoLow').removeClass('selected');
-          $('.Oldest').removeClass('selected');
-          $('.Latest').removeClass('selected');
 
         },
         complete: function() {
           $('.centered').css("visibility", "hidden");
         }
-      });
+      })
     });
-    //ZtoA
-    $(".AlphabeticallyReverse").on('click', function() {
-      var categoryId = $(".categoryId").val();
-      $.ajax({
-        type: 'GET',
-        url: "/categorydata/ztoa/" + categoryId,
-        dataType: 'text',
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
-        success: function(resp) {
-          $('.filterOption').html(resp);
-          $('.AlphabeticallyReverse').addClass('selected');
-          $('.Alphabetically').removeClass('selected');
-          $('.default').removeClass('selected');
-          $('.PriceLowtoHigh').removeClass('selected');
-          $('.PriceHightoLow').removeClass('selected');
-          $('.Oldest').removeClass('selected');
-          $('.Latest').removeClass('selected');
 
-        },
-        complete: function() {
-          $('.centered').css("visibility", "hidden");
-        }
-      });
+    /**
+     * Filter Brand
+     */
+    $('.brand').on('change', function() {
+      var brand = ($(this).data("id"));
+      var url = window.location.pathname.split("/").pop();
+      $('.brand').not(this).prop('checked', false);
+
+      var sort = $(".sort option:selected").val();
+      var color = $('.color:checkbox:checked').val();
+      var size = $('.size:checkbox:checked').val();
+
+      if ($(this).is(":checked")) {
+        $.ajax({
+          url: url,
+          beforeSend: function() {
+            $('.centered').css("visibility", "visible");
+          },
+          data: {
+            url: url,
+            brand: brand,
+            color: color,
+            sort: sort,
+            size: size,
+          },
+          success: function(resp) {
+            $('.filterOption').html(resp);
+            $.magnificPopup.close();
+          },
+          complete: function() {
+            $('.centered').css("visibility", "hidden");
+          }
+        })
+      }
     });
-    // Price low to high
-    $(".PriceLowtoHigh").on('click', function() {
-      var categoryId = $(".categoryId").val();
-      $.ajax({
-        type: 'GET',
-        url: "/categorydata/price-low-to-high/" + categoryId,
-        dataType: 'text',
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
-        success: function(resp) {
-          $('.filterOption').html(resp);
-          $('.AlphabeticallyReverse').removeClass('selected');
-          $('.Alphabetically').removeClass('selected');
-          $('.default').removeClass('selected');
-          $('.PriceLowtoHigh').addClass('selected');
-          $('.PriceHightoLow').removeClass('selected');
-          $('.Oldest').removeClass('selected');
-          $('.Latest').removeClass('selected');
 
-        },
-        complete: function() {
-          $('.centered').css("visibility", "hidden");
-        }
-      });
+    /**
+     * Filter Color
+     */
+    $('.color').on('change', function() {
+      var color = ($(this).data("color"));
+      var url = window.location.pathname.split("/").pop();
+      $('.color').not(this).prop('checked', false);
+
+      var sort = $(".sort option:selected").val();
+      var brand = $('.brand:checkbox:checked').val();
+      var size = $('.size:checkbox:checked').val();
+      if ($(this).is(":checked")) {
+        $.ajax({
+          url: url,
+          beforeSend: function() {
+            $('.centered').css("visibility", "visible");
+          },
+          data: {
+            color: color,
+            url: url,
+            sort: sort,
+            brand: brand,
+            size: size,
+          },
+          success: function(resp) {
+            $('.filterOption').html(resp);
+            $.magnificPopup.close();
+          },
+          complete: function() {
+            $('.centered').css("visibility", "hidden");
+          }
+        })
+      }
     });
-    // Price high to low
-    $(".PriceHightoLow").on('click', function() {
-      var categoryId = $(".categoryId").val();
-      $.ajax({
-        type: 'GET',
-        url: "/categorydata/price-high-to-low/" + categoryId,
-        dataType: 'text',
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
-        success: function(resp) {
-          $('.filterOption').html(resp);
-          $('.AlphabeticallyReverse').removeClass('selected');
-          $('.Alphabetically').removeClass('selected');
-          $('.default').removeClass('selected');
-          $('.PriceLowtoHigh').removeClass('selected');
-          $('.PriceHightoLow').addClass('selected');
-          $('.Oldest').removeClass('selected');
-          $('.Latest').removeClass('selected');
 
-        },
-        complete: function() {
-          $('.centered').css("visibility", "hidden");
-        }
-      });
-    });
-    // Oldest
-    $(".Oldest").on('click', function() {
-      var categoryId = $(".categoryId").val();
-      $.ajax({
-        type: 'GET',
-        url: "/categorydata/oldest/" + categoryId,
-        dataType: 'text',
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
-        success: function(resp) {
-          $('.filterOption').html(resp);
-          $('.AlphabeticallyReverse').removeClass('selected');
-          $('.Alphabetically').removeClass('selected');
-          $('.default').removeClass('selected');
-          $('.PriceLowtoHigh').removeClass('selected');
-          $('.PriceHightoLow').removeClass('selected');
-          $('.Oldest').addClass('selected');
-          $('.Latest').removeClass('selected');
+    /**
+     * Filter Size
+     */
+    $('.size').on('change', function() {
+      var size = ($(this).data("size"));
+      var url = window.location.pathname.split("/").pop();
+      $('.size').not(this).prop('checked', false);
 
-        },
-        complete: function() {
-          $('.centered').css("visibility", "hidden");
-        }
-      });
-    });
-    // Latest
-    $(".Latest").on('click', function() {
-      var categoryId = $(".categoryId").val();
-      $.ajax({
-        type: 'GET',
-        url: "/categorydata/latest/" + categoryId,
-        dataType: 'text',
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
-        success: function(resp) {
-          $('.filterOption').html(resp);
-          $('.AlphabeticallyReverse').removeClass('selected');
-          $('.Alphabetically').removeClass('selected');
-          $('.default').removeClass('selected');
-          $('.PriceLowtoHigh').removeClass('selected');
-          $('.PriceHightoLow').removeClass('selected');
-          $('.Oldest').removeClass('selected');
-          $('.Latest').addClass('selected');
+      var sort = $(".sort option:selected").val();
+      var brand = $('.brand:checkbox:checked').val();
+      var color = $('.color:checkbox:checked').val();
+      if ($(this).is(":checked")) {
+        $.ajax({
+          url: url,
+          beforeSend: function() {
+            $('.centered').css("visibility", "visible");
+          },
+          data: {
+            size: size,
+            url: url,
+            color: color,
+            sort: sort,
+            brand: brand,
 
-        },
-        complete: function() {
-          $('.centered').css("visibility", "hidden");
-        }
-      });
+          },
+          success: function(resp) {
+            $('.filterOption').html(resp);
+            $.magnificPopup.close();
+          },
+          complete: function() {
+            $('.centered').css("visibility", "hidden");
+          }
+        })
+      }
     });
   </script>
+
+
 
   {{-- End ajax --}}
   @stack('js')

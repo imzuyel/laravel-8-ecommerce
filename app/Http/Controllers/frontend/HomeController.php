@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Models\Brand;
 use App\Models\Slider;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Http\Request;
 use App\Models\SubSubCategory;
 use App\Http\Controllers\Controller;
 
@@ -13,9 +15,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data['sliders']            = Slider::where('status', true)->latest('id')->get();
-        $data['products']           = Product::where('status', true)->latest('id')->take(15)->get();
-        $data['categories']         = Category::with('products')->where('status', true)->oldest('id')->get();
+
+        // return Product::whereIn('product_color',['red'])->where('status',1)->get();
+        $data['sliders']            = Slider::where('status', true)->latest('id')->where('status', 1)->get();
+        $data['products']           = Product::where('status', true)->latest('id')->take(15)->where('status', 1)->get();
+        $data['categories']         = Category::with('products')->where('status', true)->oldest('id')->where('status', 1)->get();
         return view('frontend.index', $data);
     }
     public function shop()
@@ -72,69 +76,122 @@ class HomeController extends Controller
             'category'          => $category,
         ));
     }
-    // Category wise products
-    public function categoryproductsbn($category)
+
+    public function categoryproductsen($category, Request $request)
     {
-        $category = Category::where('category_slug_bn', $category)->with('products')->firstOrFail();
-        return view('frontend.shop.category', compact('category'));
-    }
-    public function categoryproductsen($category)
-    {
-        $category = Category::where('category_slug_en', $category)->with('products')->firstOrFail();
-        return view('frontend.shop.category', compact('category'));
+        $colors = Product::productFilter()['colors'];
+        $sizes = Product::productFilter()['sizes'];
+        if ($request->ajax()) {
+            $data = $request->all();
+            $url = $data['url'];
+            $category = Category::where('category_slug_en', $url)->first();
+            $id = $category->id;
+            $products = Product::where('category_id', $id);
+            // Sort product
+            // If  brand filter option
+            if (isset($data['brand']) && !empty($data['brand'])) {
+                $products->where('brand_id', $data['brand']);
+            }
+            // If  Color filter option
+            if (isset($data['color']) && !empty($data['color'])) {
+                $color = $data['color'];
+                $products->where('product_color', 'LIKE', '%' . $color . "%");
+            }
+
+            // If  Size filter option
+            if (isset($data['size']) && !empty($data['size'])) {
+                $size = $data['size'];
+                $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+            // Sort product
+            if (isset($data['sort']) && !empty($data['sort'])) {
+                if ($data['sort'] == "product_latest") {
+                    $products->orderBy('id', 'desc');
+                } else if ($data['sort'] == "product_name_a_to_z") {
+                    $products->orderBy('product_name_en', 'Asc');
+                } else if ($data['sort'] == "product_name_z_to_a") {
+                    $products->orderBy('product_name_en', 'desc');
+                } else if ($data['sort'] == "price_low") {
+                    $products->orderBy('price', 'Asc');
+                } else if ($data['sort'] == "price_high") {
+                    $products->orderBy('price', 'desc');
+                } else {
+                    $products->orderBy('id', 'desc');
+                }
+            }
+
+            $products = $products->paginate(10);
+            return view('frontend.shop.listing')->with(compact('products'));
+        } else {
+            $category = Category::where('category_slug_en', $category)->with('products')->firstOrFail();
+            return view('frontend.shop.category', compact('category', 'colors', 'sizes'));
+        }
     }
 
-    // SubCategory wise products
-    public function subcategoryproductsbn($category, $subcategory)
+
+    public function subcategoryproductsen($category, $subcategory, Request $request)
     {
-        $subcategory = SubCategory::where('subcategory_slug_bn', $subcategory)->with('products')->firstOrFail();
-        return view('frontend.shop.subcategory', compact('subcategory'));
+        $colors = Product::productFilter()['colors'];
+        $sizes = Product::productFilter()['sizes'];
+        $brands = Brand::where('status', 1)->get();
+        if ($request->ajax()) {
+            $data = $request->all();
+            $url = $data['url'];
+
+                $subcategory = SubCategory::where('subcategory_slug_en', $url)->first();
+
+
+            $subcategory = SubCategory::where('subcategory_slug_en', $url)->first();
+            $id = $subcategory->id;
+            $products = Product::where('subcategory_id', $id);
+            // Sort product
+            // If  brand filter option
+            if (isset($data['brand']) && !empty($data['brand'])) {
+                $products->where('brand_id', $data['brand']);
+            }
+            // If  Color filter option
+            if (isset($data['color']) && !empty($data['color'])) {
+                $color = $data['color'];
+                $products->where('product_color', 'LIKE', '%' . $color . "%");
+            }
+
+            // If  Size filter option
+            if (isset($data['size']) && !empty($data['size'])) {
+                $size = $data['size'];
+                $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+            // Sort product
+            if (isset($data['sort']) && !empty($data['sort'])) {
+                if ($data['sort'] == "product_latest") {
+                    $products->orderBy('id', 'desc');
+                } else if ($data['sort'] == "product_name_a_to_z") {
+                    $products->orderBy('product_name_en', 'Asc');
+                } else if ($data['sort'] == "product_name_z_to_a") {
+                    $products->orderBy('product_name_en', 'desc');
+                } else if ($data['sort'] == "price_low") {
+                    $products->orderBy('price', 'Asc');
+                } else if ($data['sort'] == "price_high") {
+                    $products->orderBy('price', 'desc');
+                } else {
+                    $products->orderBy('id', 'desc');
+                }
+            }
+
+            $products = $products->paginate(10);
+            return view('frontend.shop.listing')->with(compact('products'));
+        } else {
+            $subcategory = SubCategory::where('subcategory_slug_en', $subcategory)->with('products')->firstOrFail();
+            return view('frontend.shop.subcategory', compact('subcategory', 'colors', 'sizes', 'brands'));
+        }
     }
-    public function subcategoryproductsen($category, $subcategory)
-    {
-        $subcategory = SubCategory::where('subcategory_slug_en', $subcategory)->with('products')->firstOrFail();
-        return view('frontend.shop.subcategory', compact('subcategory'));
-    }
-    // Sub-SubCategory wise products
-    public function subsubcategoryproductsbn($category, $subcategory, $subsubcategory)
-    {
-        $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $subsubcategory)->with('products')->firstOrFail();
-        return view('frontend.shop.subsubcategory', compact('subsubcategory'));
-    }
+
     public function subsubcategoryproductsen($category, $subcategory, $subsubcategory)
     {
         $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $subsubcategory)->with('products')->firstOrFail();
         return view('frontend.shop.subsubcategory', compact('subsubcategory'));
     }
-    public function categorydataAtoZ($categoryId)
-    {
-        $products = Product::where('category_id', $categoryId)->OrderBy('product_name_en')->get();
-        return view('frontend.shop.listing', compact('products'));
-    }
-    public function categorydataZtoA($categoryId)
-    {
-        $products = Product::where('category_id', $categoryId)->OrderBy('product_name_en', 'desc')->get();
-        return view('frontend.shop.listing', compact('products'));
-    }
-    public function categorydatapriceHightoLow($categoryId)
-    {
-        $products = Product::where('category_id', $categoryId)->orderByRaw('CAST(price as DECIMAL(8,2)) DESC')->get();
-        return view('frontend.shop.listing', compact('products'));
-    }
-    public function categorydatapriceLowtoHigh($categoryId)
-    {
-        $products = Product::where('category_id', $categoryId)->orderByRaw('CAST(price as DECIMAL(8,2))')->get();
-        return view('frontend.shop.listing', compact('products'));
-    }
-    public function categorydataOldest($categoryId)
-    {
-        $products = Product::where('category_id', $categoryId)->oldest('id')->get();
-        return view('frontend.shop.listing', compact('products'));
-    }
-    public function categorydatapLatest($categoryId)
-    {
-        $products = Product::where('category_id', $categoryId)->latest('id')->get();
-        return view('frontend.shop.listing', compact('products'));
-    }
+
+
+
 
 }

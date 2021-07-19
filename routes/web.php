@@ -11,8 +11,7 @@ use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\frontend\CustommerController;
-
-
+use App\Models\Brand;
 
 Auth::routes();
 Route::get('/clear', [DashboardController::class, 'cache'])->name('cache');
@@ -51,22 +50,17 @@ Route::get('/cart-increment/{rowId}', [CartController::class, 'CartIncrement']);
 Route::get('/cart-decrement/{rowId}', [CartController::class, 'CartDecrement']);
 
 //=========Category wise product===========//
-Route::get('/bn/{category}', [HomeController::class, 'categoryproductsbn'])->name('categoryproductsbn');
-Route::get('/en/{category}', [HomeController::class, 'categoryproductsen'])->name('categoryproductsen');
 
+Route::get('/category/{category}', [HomeController::class, 'categoryproductsen'])->name('categoryproductsen');
+Route::get('/category/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsen'])->name('subcategoryproductsen');
 // Subcategory wise product
-Route::get('/bn/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsbn'])->name('subcategoryproductsbn');
-Route::get('/en/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsen'])->name('subcategoryproductsen');
-// Subcategory wise product
-Route::get('/bn/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsbn'])->name('subsubcategoryproductsbn');
-Route::get('/en/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsen'])->name('subsubcategoryproductsen');
-// Ajax category
-Route::get('/categorydata/atoz/{categoryId}', [HomeController::class, 'categorydataAtoZ']);
-Route::get('/categorydata/ztoa/{categoryId}', [HomeController::class, 'categorydataZtoA']);
-Route::get('/categorydata/price-low-to-high/{categoryId}', [HomeController::class, 'categorydatapriceLowtoHigh']);
-Route::get('/categorydata/price-high-to-low/{categoryId}', [HomeController::class, 'categorydatapriceHightoLow']);
-Route::get('/categorydata/oldest/{categoryId}', [HomeController::class, 'categorydataOldest']);
-Route::get('/categorydata/latest/{categoryId}', [HomeController::class, 'categorydatapLatest']);
+Route::get('/category/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsen'])->name('subsubcategoryproductsen');
+
+
+//============ Filter ==============//
+// Brand
+Route::get('/products/brand/{brandid}', [HomeController::class, 'brandsProduct']);
+
 
 view()->composer('frontend.partials.header', function ($view) {
     $categories = Category::where('status', 1)->latest('id')->get();
@@ -76,6 +70,11 @@ view()->composer('frontend.partials.header', function ($view) {
 view()->composer('frontend.partials.minicart', function ($view) {
     $carts = Cart::content();
     $view->with('carts', $carts);
+});
+
+view()->composer('frontend.shop.category', function ($view) {
+    $brands = Brand::where('status',1)->get();
+    $view->with('brands', $brands);
 });
 
 

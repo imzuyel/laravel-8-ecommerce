@@ -26,4 +26,10 @@ class Product extends Model
     {
         return $this->hasMany(ProductMultiImage::class);
     }
+    public static function productFilter()
+    {
+        $productFilter['colors']=['red','black','white','blue','pink','navy'];
+        $productFilter['sizes']=['s','m','l','ml','xl','xxl','xxxl'];
+        return $productFilter;
+    }
 }

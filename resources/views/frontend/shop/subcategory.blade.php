@@ -10,53 +10,125 @@
   {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/home-default.css') }}"> --}}
   <link rel="stylesheet"
     href="{{ asset('frontend/assets/css/shop.css') }}">
+  <style>
+    /*General style*/
+    .custom-checkbox label,
+    .custom-radio label {
+      position: relative;
+      cursor: pointer;
+      color: #666;
+      font-size: 30px;
+    }
+
+    .custom-checkbox input[type="checkbox"],
+    .custom-radio input[type="radio"] {
+      position: absolute;
+      right: 9000px;
+    }
+
+    /*Custom checkboxes style*/
+    .custom-checkbox input[type="checkbox"]+.label-text:before {
+      content: "\f0c8";
+      font-family: "Font Awesome 5 Pro";
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      width: 1em;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .custom-checkbox input[type="checkbox"]:checked+.label-text:before {
+      content: "\f14a";
+      color: #2980b9;
+      animation: effect 250ms ease-in;
+    }
+
+    .custom-checkbox input[type="checkbox"]:disabled+.label-text {
+      color: #aaa;
+    }
+
+    .custom-checkbox input[type="checkbox"]:disabled+.label-text:before {
+      content: "\f0c8";
+      color: #ccc;
+    }
+
+    /*Custom checkboxes style*/
+    @keyframes effect {
+      0% {
+        transform: scale(0);
+      }
+
+      25% {
+        transform: scale(1.3);
+      }
+
+      75% {
+        transform: scale(1.4);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+  </style>
 
 @endpush
 
 @section('content')
   <div id="nt_content">
+    <input type="hidden"
+      name="subcategoryId"
+      value="{{ $subcategory->id }}"
+      class="categoryId">
     <!-- breadcrumb -->
     <div class="bgbl pt__20 pb__20 lh__1">
-      <div class="container">
-        <div class="row al_center">
-          <div class="col">
-            @if (session()->get('language') === 'bangla')
-              <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i><a
-                  href="{{ route('categoryproductsbn', $subcategory->category->category_slug_bn) }}">{{ $subcategory->category->category_name_bn }}</a><i
-                  class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_bn }}</a>
-              </nav>
-            @else
-              <nav class="sp-breadcrumb">
-                <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i><a
-                  href="{{ route('categoryproductsen', $subcategory->category->category_slug_en) }}">{{ $subcategory->category->category_name_en }}</a><i
-                  class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_en }}</a>
-              </nav>
-            @endif
+        <div class="container">
+          <div class="row al_center">
+            <div class="col">
+              @if (session()->get('language') === 'bangla')
+                <nav class="sp-breadcrumb">
+                  <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i><a
+                    href="{{ route('categoryproductsbn', $subcategory->category->category_slug_bn) }}">{{ $subcategory->category->category_name_bn }}</a><i
+                    class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_bn }}</a>
+                </nav>
+              @else
+                <nav class="sp-breadcrumb">
+                  <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i><a
+                    href="{{ route('categoryproductsen', $subcategory->category->category_slug_en) }}">{{ $subcategory->category->category_name_en }}</a><i
+                    class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_en }}</a>
+                </nav>
+              @endif
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
     <!-- end breadcrumb -->
-    @if (count($subcategory->products)  <= 0)
-    <div class="kalles-section cat-shop pr tc p-5">
+    @if (count($subcategory->products) <= 0)
+      <div class="kalles-section cat-shop pr tc p-5">
         <h1 class="text-center text-danger">
-            @if (session()->get('language') === 'bangla')
+          @if (session()->get('language') === 'bangla')
             শীঘ্রই আসছে !
-            @else
-                Comming Soon !
-            @endif
+          @else
+            Comming Soon !
+          @endif
         </h1>
         <button type="submit"
           data-time="6000"
           data-ani="shake"
-          class="button truncate  mt__20 order-4  animated " onclick="location.href='{{ route('frontend.home') }}';">
+          class="button truncate  mt__20 order-4  animated "
+          onclick="location.href='{{ route('frontend.home') }}';">
           <span>
             @if (session()->get('language') === 'bangla')
-            হোম
+              হোম
             @else
-                Home
+              Home
             @endif
           </span>
         </button>
@@ -64,7 +136,7 @@
     @else
 
 
-      <div class="container container_cat pop_default cat_wide mb__20">
+      <div class="container container_cat nt_pop_sidebar cat_default mb__20">
         <!--grid control-->
         <div class="cat_toolbar row fl_center al_center mt__30">
           <div class="cat_filter col op__0 pe_none">
@@ -133,54 +205,22 @@
             </div>
           </div>
           <div class="cat_sortby cat_sortby_js col tr kalles_dropdown kalles_dropdown_container">
-            <a class="in_flex fl_between al_center sortby_pick kalles_dropDown_label"
-              href="#">
-              <span class="lbl-title sr_txt dn">Featured</span>
-              <span class="lbl-title sr_txt_mb">Sort by</span>
-              <i class="ml__5 mr__5 facl facl-angle-down"></i>
-            </a>
-            <div class="nt_sortby dn">
-              <svg class="ic_triangle_svg"
-                viewBox="0 0 20 9"
-                role="presentation">
-                <path
-                  d="M.47108938 9c.2694725-.26871321.57077721-.56867841.90388257-.89986354C3.12384116 6.36134886 5.74788116 3.76338565 9.2467995.30653888c.4145057-.4095171 1.0844277-.40860098 1.4977971.00205122L19.4935156 9H.47108938z"
-                  fill="#ffffff"></path>
-              </svg>
-              <div class="h3 mg__0 tc cd tu ls__2 dn_lg db">Sort by<i class="pegk pe-7s-close fs__50 ml__5"></i>
-              </div>
-              <div class="nt_ajaxsortby wrap_sortby kalles_dropdown_options">
-                <a data-label="Featured"
-                  class="kalles_dropdown_option truncate selected"
-                  href="#">Featured</a>
-                <a data-label="Best selling"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Best
-                  selling</a>
-                <a data-label="Alphabetically, A-Z"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Alphabetically, A-Z</a>
-                <a data-label="Alphabetically, Z-A"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Alphabetically, Z-A</a>
-                <a data-label="Price, low to high"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Price,
-                  low to high</a>
-                <a data-label="Price, high to low"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Price,
-                  high to low</a>
-                <a data-label="Date, old to new"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Date, old
-                  to new</a>
-                <a data-label="Date, new to old"
-                  class="kalles_dropdown_option truncate"
-                  href="#">Date, new
-                  to old</a>
-              </div>
-            </div>
+            <select name="sort"
+              id="sort"
+              class="sort"
+              class="ml-auto">
+              <option value="">Default</option>
+              <option value="product_latest"
+                @if (isset($_GET['sort']) && $_GET['sort'] == 'product_latest') selected @endif>Latest Product</option>
+              <option value="product_name_a_to_z"
+                @if (isset($_GET['sort']) && $_GET['sort'] == 'product_name_a_to_z') selected @endif>Product name A - Z</option>
+              <option value="product_name_z_to_a"
+                @if (isset($_GET['sort']) && $_GET['sort'] == 'product_name_z_to_a') selected @endif>Product name Z - A</option>
+              <option value="price_low"
+                @if (isset($_GET['sort']) && $_GET['sort'] == 'price_low') selected @endif>Low to Highest price</option>
+              <option value="price_high"
+                @if (isset($_GET['sort']) && $_GET['sort'] == 'price_high') selected @endif>Highest to Low price</option>
+            </select>
           </div>
         </div>
         <!--end grid control-->
@@ -199,214 +239,76 @@
                     <div class="col-12 col-md-3 widget">
                       <h5 class="widget-title">By Color</h5>
                       <div class="loke_scroll">
-                        <ul class="nt_filter_block nt_filter_color css_ntbar"
-                          data-filter_condition="and">
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color black">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_black lazyload"></span>
-                              </div>
-                              black
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color cyan">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_cyan lazyload"></span>
-                              </div>
-                              cyan
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color green">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_green lazyload"></span>
-                              </div>
-                              green
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color grey">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_grey lazyload"></span>
-                              </div>
-                              grey
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color pink">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_pink lazyload"></span>
-                              </div>
-                              pink
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color pink clay">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_pink-clay lazyload"></span>
-                              </div>
-                              pink clay
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color sliver">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_sliver lazyload"></span>
-                              </div>
-                              sliver
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color white">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_white lazyload"></span>
-                              </div>
-                              white
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color white cream">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_white-cream lazyload"
-                                  data-bg="{{ asset('/') }}frontend/assets/images/shop/color-white-cream.jpg"></span>
-                              </div>
-                              white cream
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color beige">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_beige lazyload"></span>
-                              </div>
-                              beige
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color blue">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_blue lazyload"></span>
-                              </div>
-                              blue
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag color brown">
-                              <div class="filter-swatch">
-                                <span class="swatch__value bg_color_brown lazyload"></span>
-                              </div>
-                              brown
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-3 widget">
-                      <h5 class="widget-title">By Price</h5>
-                      <div class="loke_scroll">
-                        <ul class="nt_filter_block nt_filter_styleck css_ntbar"
-                          data-filter_condition="or">
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag price $50-$100">$50-$100</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag price $100-$150">$100-$150</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag price $150-$200">$150-$200</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag price $250-$300">$250-$300</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag price $350-$400">$350-$400</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag price $450-$500">$450-$500</a>
-                          </li>
+                        <ul class="">
+                          @foreach ($colors as $color)
+
+                            <div class="form-check">
+                              <input class="form-check-input color"
+                                type="checkbox"
+                                data-color="{{ $color }}"
+                                value="{{ $color }}"
+                                id="flexCheckDefault">
+                              <label class="form-check-label"
+                                for="flexCheckDefault">
+                                {{ $color }}
+                              </label>
+
+                            </div>
+                          @endforeach
                         </ul>
                       </div>
                     </div>
                     <div class="col-12 col-md-3 widget">
                       <h5 class="widget-title">By Size</h5>
                       <div class="loke_scroll">
-                        <ul class="nt_filter_block nt_filter_styleck css_ntbar"
-                          data-filter_condition="and">
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag size s">s</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag size m">m</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag size l">l</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag size xs">xs</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag size xl">xl</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag size xxl">xxl</a>
-                          </li>
+                        <ul class="">
+                          @foreach ($sizes as $size)
+                            <div>
+                              <input type="checkbox"
+                                class="size"
+                                value="{{ $size }}"
+                                data-size="{{ $size }}" /> {{ $size }}
+                            </div>
+                          @endforeach
                         </ul>
                       </div>
                     </div>
                     <div class="col-12 col-md-3 widget">
                       <h5 class="widget-title">By Brand</h5>
                       <div class="loke_scroll">
-                        <ul class="nt_filter_block nt_filter_styleck css_ntbar"
-                          data-filter_condition="and">
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag vendor ck">ck</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag vendor h&amp;m">h&amp;m</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag vendor kalles">kalles</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag vendor levi's">levi's</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag vendor monki">monki</a>
-                          </li>
-                          <li>
-                            <a href="#"
-                              aria-label="Narrow selection to products matching tag vendor nike">nike</a>
-                          </li>
+                        <ul class="">
+                          @foreach ($brands as $brand)
+                            <div>
+                              <input type="checkbox"
+                                class="brand"
+                                value="{{ $brand->id }}"
+                                data-id="{{ $brand->id }}" /> {{ $brand->brand_name_en }}
+                            </div>
+                          @endforeach
                         </ul>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-3 widget blockid_price">
+                      <h5 class="widget-title">By Price</h5>
+                      <div class="price_slider_wrapper mt__5">
+                        <div>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                id="">৳</span>
+                            </div>
+                            <input type="text"
+                              onkeypress="return event.charCode > 47 && event.charCode < 58;"
+                              pattern="[0-9]{5}"
+                              class="form-control"
+                              placeholder="Min">
+                            <input type="text"
+                              onkeypress="return event.charCode > 47 && event.charCode < 58;"
+                              pattern="[0-9]{5}"
+                              class="form-control"
+                              placeholder="Max">
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-12 tc mt__20 mb__20 dn">
@@ -429,116 +331,8 @@
 
               <!--products list-->
               <div
-                class="on_list_view_false products nt_products_holder row fl_center row_pr_1 cdt_des_1 round_cd_false nt_cover ratio_nt position_8 space_30 nt_default">
-                  @foreach ($subcategory->products as $product)
-                    <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
-                      @if (session()->get('language') === 'bangla')
-                        <div class="product-inner pr">
-                          <div class="product-image pr oh lazyload">
-                            <span class="tc nt_labels pa pe_none cw"><span
-                                class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- ' . $product->discount . ' %' : 'New' }}</span></span>
-                            <a class="d-block"
-                              href="{{ route('frontend.detailsbn', ['category' => $product->category->category_slug_bn, 'slug' => $product->product_slug_bn]) }}">
-                              <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </a>
-                            <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                              <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </div>
-                            <div class="nt_add_w ts__03 pa ">
-                              <a href="#"
-                                class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">ইচ্ছেতালিকা</span><i
-                                  class="facl facl-heart-o"></i></a>
-                            </div>
-                            <div class="hover_button op__0 tc pa flex column ts__03">
-                              <a class=" pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView"
-                                href="#"
-                                product_id={{ $product->id }}><span class="tt_txt">এখনই কিনুন</span><i
-                                  class="iccl iccl-eye"></i><span>এখনই
-                                  কিনুন</span></a>
-                              <a class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView"
-                                href="#"
-                                product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i
-                                  class="iccl iccl-cart"></i><span>কার্টে যোগ
-                                  করুন</span></a>
-                            </div>
-                          </div>
-                          <div class="product-info mt__15">
-                            <h3 class="product-title pr fs__14 mg__0 fwm">
-                              <a class="cd chp"
-                                href="{{ route('frontend.detailsbn', ['category' => $product->category->category_slug_bn, 'slug' => $product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
-                            </h3>
-                            @if (isset($product->discount))
-                              <p class="price_range"
-                                id="price_qv">
-                                <del> ৳{{ $product->price }}</del>
-                                <ins>
-                                  ৳{{ round($product->price - ($product->discount * $product->price) / 100) }}</ins>
-                              </p>
-                            @else
-                              <span class="price dib mb__5"> ৳ {{ $product->price }} <span
-                                  class="text-danger"></span></span>
-                            @endif
-                          </div>
-                        </div>
-                      @else
-                        <div class="product-inner pr">
-                          <div class="product-image pr oh lazyload">
-                            <span class="tc nt_labels pa pe_none cw"><span
-                                class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- ' . $product->discount . ' %' : 'New' }}</span></span>
-                            <a class="d-block"
-                              href="{{ route('frontend.detailsen', ['category' => $product->category->category_slug_en, 'slug' => $product->product_slug_en]) }}">
-                              <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </a>
-                            <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                              <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571"
-                                data-bgset="/{{ $product->image }}">
-                              </div>
-                            </div>
-                            <div class="nt_add_w ts__03 pa ">
-                              <a href="#"
-                                class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
-                                  Wishlist</span><i class="facl facl-heart-o"></i></a>
-                            </div>
-                            <div class="hover_button op__0 tc pa flex column ts__03">
-                              <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView"
-                                href="#"
-                                product_id={{ $product->id }}><span class="tt_txt">Quick view</span><i
-                                  class="iccl iccl-eye"></i><span>Quick
-                                  view</span></a>
-                              <a href="#"
-                                class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView"
-                                product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i
-                                  class="iccl iccl-cart"></i><span>Add to
-                                  cart</span></a>
-                            </div>
-                          </div>
-                          <div class="product-info mt__15">
-                            <h3 class="product-title pr fs__14 mg__0 fwm">
-                              <a class="cd chp"
-                                href="{{ route('frontend.detailsen', ['category' => $product->category->category_slug_en, 'slug' => $product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
-                            </h3>
-                            @if (isset($product->discount))
-                              <p class="price_range"
-                                id="price_qv">
-                                <del> ৳{{ $product->price }}</del>
-                                <ins>
-                                  ৳{{ round($product->price - ($product->discount * $product->price) / 100) }}</ins>
-                              </p>
-                            @else
-                              <span class="price dib mb__5"> ৳ {{ $product->price }} <span
-                                  class="text-danger"></span></span>
-                            @endif
-                          </div>
-                        </div>
-                      @endif
-                    </div>
-                  @endforeach
+                class="on_list_view_false products nt_products_holder row fl_center row_pr_1 cdt_des_1 round_cd_false nt_cover ratio_nt position_8 space_30 nt_default filterOption">
+                @include('frontend.shop.listing')
               </div>
               <!--end products list-->
 
