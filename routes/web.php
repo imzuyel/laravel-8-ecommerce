@@ -51,10 +51,13 @@ Route::get('/cart-decrement/{rowId}', [CartController::class, 'CartDecrement']);
 
 //=========Category wise product===========//
 
-Route::get('/category/{category}', [HomeController::class, 'categoryproductsen'])->name('categoryproductsen');
-Route::get('/category/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsen'])->name('subcategoryproductsen');
+Route::get('/en/{category}', [HomeController::class, 'categoryproductsen'])->name('categoryproductsen');
+Route::get('/bn/{category}', [HomeController::class, 'categoryproductsbn'])->name('categoryproductsbn');
+Route::get('/en/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsen'])->name('subcategoryproductsen');
+Route::get('/bn/{category}/{subcategory}', [HomeController::class, 'subcategoryproductsbn'])->name('subcategoryproductsbn');
 // Subcategory wise product
-Route::get('/category/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsen'])->name('subsubcategoryproductsen');
+Route::get('/en/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsen'])->name('subsubcategoryproductsen');
+Route::get('/bn/{category}/{subcategory}/{subsubcategory}', [HomeController::class, 'subsubcategoryproductsbn'])->name('subsubcategoryproductsbn');
 
 
 //============ Filter ==============//

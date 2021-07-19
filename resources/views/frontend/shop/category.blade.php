@@ -82,10 +82,19 @@
 
 @section('content')
   <div id="nt_content">
-    <input type="hidden"
-      name="categoryId"
-      value="{{ $category->id }}"
-      class="categoryId">
+    @if (session()->get('language') === 'bangla')
+      <input type="hidden"
+        class="url"
+        name="url"
+        value="{{ $category->category_slug_bn }}">
+
+    @else
+      <input type="hidden"
+        class="url"
+        name="url"
+        value="{{ $category->category_slug_en }}">
+    @endif
+
     <!-- breadcrumb -->
     <div class="bgbl pt__20 pb__20 lh__1">
       <div class="container">
@@ -298,14 +307,19 @@
                             <input type="text"
                               onkeypress="return event.charCode > 47 && event.charCode < 58;"
                               pattern="[0-9]{5}"
-                              class="form-control"
+                              class="form-control  min_price"
                               placeholder="Min">
                             <input type="text"
                               onkeypress="return event.charCode > 47 && event.charCode < 58;"
                               pattern="[0-9]{5}"
-                              class="form-control"
+                              class="form-control max_price"
                               placeholder="Max">
+                            <input type="submit"
+                              class="price"
+                              style=" border-radius:0; border:1px solid grey"
+                              value="Filter">
                           </div>
+
                         </div>
                       </div>
                     </div>

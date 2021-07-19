@@ -82,33 +82,41 @@
 
 @section('content')
   <div id="nt_content">
-    <input type="hidden"
-      name="subcategoryId"
-      value="{{ $subcategory->id }}"
-      class="categoryId">
+    @if (session()->get('language') === 'bangla')
+      <input type="hidden"
+        class="url"
+        name="url"
+        value="{{ $subcategory->subcategory_slug_bn }}">
+
+    @else
+      <input type="hidden"
+        class="url"
+        name="url"
+        value="{{ $subcategory->subcategory_slug_en }}">
+    @endif
     <!-- breadcrumb -->
     <div class="bgbl pt__20 pb__20 lh__1">
-        <div class="container">
-          <div class="row al_center">
-            <div class="col">
-              @if (session()->get('language') === 'bangla')
-                <nav class="sp-breadcrumb">
-                  <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i><a
-                    href="{{ route('categoryproductsbn', $subcategory->category->category_slug_bn) }}">{{ $subcategory->category->category_name_bn }}</a><i
-                    class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_bn }}</a>
-                </nav>
-              @else
-                <nav class="sp-breadcrumb">
-                  <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i><a
-                    href="{{ route('categoryproductsen', $subcategory->category->category_slug_en) }}">{{ $subcategory->category->category_name_en }}</a><i
-                    class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_en }}</a>
-                </nav>
-              @endif
+      <div class="container">
+        <div class="row al_center">
+          <div class="col">
+            @if (session()->get('language') === 'bangla')
+              <nav class="sp-breadcrumb">
+                <a href="{{ route('frontend.home') }}">হোম</a><i class="facl facl-angle-right"></i><a
+                  href="{{ route('categoryproductsbn', $subcategory->category->category_slug_bn) }}">{{ $subcategory->category->category_name_bn }}</a><i
+                  class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_bn }}</a>
+              </nav>
+            @else
+              <nav class="sp-breadcrumb">
+                <a href="{{ route('frontend.home') }}">Home</a><i class="facl facl-angle-right"></i><a
+                  href="{{ route('categoryproductsen', $subcategory->category->category_slug_en) }}">{{ $subcategory->category->category_name_en }}</a><i
+                  class="facl facl-angle-right"></i>{{ $subcategory->subcategory_name_en }}</a>
+              </nav>
+            @endif
 
-            </div>
           </div>
         </div>
       </div>
+    </div>
     <!-- end breadcrumb -->
     @if (count($subcategory->products) <= 0)
       <div class="kalles-section cat-shop pr tc p-5">
@@ -300,14 +308,19 @@
                             <input type="text"
                               onkeypress="return event.charCode > 47 && event.charCode < 58;"
                               pattern="[0-9]{5}"
-                              class="form-control"
+                              class="form-control  min_price"
                               placeholder="Min">
                             <input type="text"
                               onkeypress="return event.charCode > 47 && event.charCode < 58;"
                               pattern="[0-9]{5}"
-                              class="form-control"
+                              class="form-control max_price"
                               placeholder="Max">
+                            <input type="submit"
+                              class="price"
+                              style=" border-radius:0; border:1px solid grey"
+                              value="Filter">
                           </div>
+
                         </div>
                       </div>
                     </div>

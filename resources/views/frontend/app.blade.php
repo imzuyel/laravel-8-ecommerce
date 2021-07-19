@@ -774,8 +774,8 @@
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg
                         style="width: 20px;
-                                                                                                                                                                                                                                                                                                                                                                      height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                      stroke-width: 1.5;"
+                                                                                                                                                                                                                                                                                                                                                                                                                      height: 20px;
+                                                                                                                                                                                                                                                                                                                                                                                                                      stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -856,8 +856,8 @@
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg
                         style="width: 20px;
-                                                                                                                                                                                                                                                                                                                                                                      height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                      stroke-width: 1.5;"
+                                                                                                                                                                                                                                                                                                                                                                                                                      height: 20px;
+                                                                                                                                                                                                                                                                                                                                                                                                                      stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -963,10 +963,12 @@
   <script>
     $(".sort").on('change', function() {
       var sort = $(this).val();
-      var url = window.location.pathname.split("/").pop();
+      var url = $('.url').val();
       var brand = $('.brand:checkbox:checked').val();
       var color = $('.color:checkbox:checked').val();
       var size = $('.size:checkbox:checked').val();
+      var min_price = $('.min_price').val();
+      var max_price = $('.max_price').val();
 
       $.ajax({
         url: url,
@@ -979,6 +981,8 @@
           sort: sort,
           brand: brand,
           size: size,
+          min_price: min_price,
+          max_price: max_price,
 
         },
         success: function(resp) {
@@ -996,12 +1000,14 @@
      */
     $('.brand').on('change', function() {
       var brand = ($(this).data("id"));
-      var url = window.location.pathname.split("/").pop();
+      var url = $('.url').val();
       $('.brand').not(this).prop('checked', false);
 
       var sort = $(".sort option:selected").val();
       var color = $('.color:checkbox:checked').val();
       var size = $('.size:checkbox:checked').val();
+      var min_price = $('.min_price').val();
+      var max_price = $('.max_price').val();
 
       if ($(this).is(":checked")) {
         $.ajax({
@@ -1015,6 +1021,8 @@
             color: color,
             sort: sort,
             size: size,
+            min_price: min_price,
+            max_price: max_price,
           },
           success: function(resp) {
             $('.filterOption').html(resp);
@@ -1032,12 +1040,14 @@
      */
     $('.color').on('change', function() {
       var color = ($(this).data("color"));
-      var url = window.location.pathname.split("/").pop();
+      var url = $('.url').val();
       $('.color').not(this).prop('checked', false);
 
       var sort = $(".sort option:selected").val();
       var brand = $('.brand:checkbox:checked').val();
       var size = $('.size:checkbox:checked').val();
+      var min_price = $('.min_price').val();
+      var max_price = $('.max_price').val();
       if ($(this).is(":checked")) {
         $.ajax({
           url: url,
@@ -1050,6 +1060,8 @@
             sort: sort,
             brand: brand,
             size: size,
+            min_price: min_price,
+            max_price: max_price,
           },
           success: function(resp) {
             $('.filterOption').html(resp);
@@ -1067,12 +1079,14 @@
      */
     $('.size').on('change', function() {
       var size = ($(this).data("size"));
-      var url = window.location.pathname.split("/").pop();
+      var url = $('.url').val();
       $('.size').not(this).prop('checked', false);
 
       var sort = $(".sort option:selected").val();
       var brand = $('.brand:checkbox:checked').val();
       var color = $('.color:checkbox:checked').val();
+      var min_price = $('.min_price').val();
+      var max_price = $('.max_price').val();
       if ($(this).is(":checked")) {
         $.ajax({
           url: url,
@@ -1085,6 +1099,8 @@
             color: color,
             sort: sort,
             brand: brand,
+            min_price: min_price,
+            max_price: max_price,
 
           },
           success: function(resp) {
@@ -1096,6 +1112,44 @@
           }
         })
       }
+    });
+
+
+    $('.price').on('click', function() {
+      var min_price = $('.min_price').val();
+      var max_price = $('.max_price').val();
+      console.log(min_price);
+      console.log(max_price);
+      var url = $('.url').val();
+
+      var size = $('.size:checkbox:checked').val();
+      var url = $('.url').val();
+      var sort = $(".sort option:selected").val();
+      var brand = $('.brand:checkbox:checked').val();
+      var color = $('.color:checkbox:checked').val();
+      $.ajax({
+        url: url,
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        data: {
+          min_price: min_price,
+          max_price: max_price,
+          url: url,
+          size: size,
+          color: color,
+          sort: sort,
+          brand: brand,
+
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $.magnificPopup.close();
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      })
     });
   </script>
 

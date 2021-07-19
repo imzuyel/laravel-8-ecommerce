@@ -32,8 +32,8 @@ class HomeController extends Controller
         $id                         = $product->id;
         $data['product']            = $product;
 
-        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->first();
-        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->first();
+        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
+        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
         $color                      = $product->product_color;
         $data['product_color']      = explode(',', $color);
         $size                       = $product->size;
@@ -46,8 +46,8 @@ class HomeController extends Controller
         $id                         = $product->id;
         $data['product']            = $product;
 
-        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->first();
-        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->first();
+        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
+        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
         $color                      = $product->product_color;
         $data['product_color']      = explode(',', $color);
         $size                       = $product->size;
@@ -84,7 +84,12 @@ class HomeController extends Controller
         if ($request->ajax()) {
             $data = $request->all();
             $url = $data['url'];
-            $category = Category::where('category_slug_en', $url)->first();
+            if (session()->get('language') === 'bangla') {
+                $category = Category::where('category_slug_bn', $url)->firstOrFail();
+            } else {
+                $category = Category::where('category_slug_en', $url)->firstOrFail();
+            }
+
             $id = $category->id;
             $products = Product::where('category_id', $id);
             // Sort product
@@ -103,6 +108,16 @@ class HomeController extends Controller
                 $size = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
+            // Price option
+            if (isset($data['min_price']) && !empty($data['min_price'])) {
+                $min_price = $data['min_price'];
+                $products->where('price', '>=', $min_price);
+            }
+            if (isset($data['max_price']) && !empty($data['max_price'])) {
+                $max_price = $data['max_price'];
+                $products->where('price', '<=', $max_price);
+            }
+
             // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
                 if ($data['sort'] == "product_latest") {
@@ -120,10 +135,75 @@ class HomeController extends Controller
                 }
             }
 
-            $products = $products->paginate(10);
+            $products = $products->paginate(30);
             return view('frontend.shop.listing')->with(compact('products'));
         } else {
             $category = Category::where('category_slug_en', $category)->with('products')->firstOrFail();
+            return view('frontend.shop.category', compact('category', 'colors', 'sizes'));
+        }
+    }
+
+    public function categoryproductsbn($category, Request $request)
+    {
+        $colors = Product::productFilter()['colors'];
+        $sizes = Product::productFilter()['sizes'];
+        if ($request->ajax()) {
+            $data = $request->all();
+            $url = $data['url'];
+            if (session()->get('language') === 'bangla') {
+                $category = Category::where('category_slug_bn', $url)->firstOrFail();
+            } else {
+                $category = Category::where('category_slug_en', $url)->firstOrFail();
+            }
+
+            $id = $category->id;
+            $products = Product::where('category_id', $id);
+            // Sort product
+            // If  brand filter option
+            if (isset($data['brand']) && !empty($data['brand'])) {
+                $products->where('brand_id', $data['brand']);
+            }
+            // If  Color filter option
+            if (isset($data['color']) && !empty($data['color'])) {
+                $color = $data['color'];
+                $products->where('product_color', 'LIKE', '%' . $color . "%");
+            }
+
+            // If  Size filter option
+            if (isset($data['size']) && !empty($data['size'])) {
+                $size = $data['size'];
+                $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+            // Price option
+            if (isset($data['min_price']) && !empty($data['min_price'])) {
+                $min_price = $data['min_price'];
+                $products->where('price', '>=', $min_price);
+            }
+            if (isset($data['max_price']) && !empty($data['max_price'])) {
+                $max_price = $data['max_price'];
+                $products->where('price', '<=', $max_price);
+            }
+            // Sort product
+            if (isset($data['sort']) && !empty($data['sort'])) {
+                if ($data['sort'] == "product_latest") {
+                    $products->orderBy('id', 'desc');
+                } else if ($data['sort'] == "product_name_a_to_z") {
+                    $products->orderBy('product_name_en', 'Asc');
+                } else if ($data['sort'] == "product_name_z_to_a") {
+                    $products->orderBy('product_name_en', 'desc');
+                } else if ($data['sort'] == "price_low") {
+                    $products->orderBy('price', 'Asc');
+                } else if ($data['sort'] == "price_high") {
+                    $products->orderBy('price', 'desc');
+                } else {
+                    $products->orderBy('id', 'desc');
+                }
+            }
+
+            $products = $products->paginate(30);
+            return view('frontend.shop.listing')->with(compact('products'));
+        } else {
+            $category = Category::where('category_slug_bn', $category)->with('products')->firstOrFail();
             return view('frontend.shop.category', compact('category', 'colors', 'sizes'));
         }
     }
@@ -137,11 +217,11 @@ class HomeController extends Controller
         if ($request->ajax()) {
             $data = $request->all();
             $url = $data['url'];
-
-                $subcategory = SubCategory::where('subcategory_slug_en', $url)->first();
-
-
-            $subcategory = SubCategory::where('subcategory_slug_en', $url)->first();
+            if (session()->get('language') === 'bangla') {
+                $subcategory = SubCategory::where('subcategory_slug_bn', $url)->firstOrFail();
+            } else {
+                $subcategory = SubCategory::where('subcategory_slug_en', $url)->firstOrFail();
+            }
             $id = $subcategory->id;
             $products = Product::where('subcategory_id', $id);
             // Sort product
@@ -159,6 +239,16 @@ class HomeController extends Controller
             if (isset($data['size']) && !empty($data['size'])) {
                 $size = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+
+            // Price option
+            if (isset($data['min_price']) && !empty($data['min_price'])) {
+                $min_price = $data['min_price'];
+                $products->where('price', '>=', $min_price);
+            }
+            if (isset($data['max_price']) && !empty($data['max_price'])) {
+                $max_price = $data['max_price'];
+                $products->where('price', '<=', $max_price);
             }
             // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
@@ -184,14 +274,198 @@ class HomeController extends Controller
             return view('frontend.shop.subcategory', compact('subcategory', 'colors', 'sizes', 'brands'));
         }
     }
-
-    public function subsubcategoryproductsen($category, $subcategory, $subsubcategory)
+    public function subcategoryproductsbn($category, $subcategory, Request $request)
     {
-        $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $subsubcategory)->with('products')->firstOrFail();
-        return view('frontend.shop.subsubcategory', compact('subsubcategory'));
+        $colors = Product::productFilter()['colors'];
+        $sizes = Product::productFilter()['sizes'];
+        $brands = Brand::where('status', 1)->get();
+        if ($request->ajax()) {
+            $data = $request->all();
+            $url = $data['url'];
+            if (session()->get('language') === 'bangla') {
+                $subcategory = SubCategory::where('subcategory_slug_bn', $url)->firstOrFail();
+            } else {
+                $subcategory = SubCategory::where('subcategory_slug_en', $url)->firstOrFail();
+            }
+            $id = $subcategory->id;
+            $products = Product::where('subcategory_id', $id);
+            // Sort product
+            // If  brand filter option
+            if (isset($data['brand']) && !empty($data['brand'])) {
+                $products->where('brand_id', $data['brand']);
+            }
+            // If  Color filter option
+            if (isset($data['color']) && !empty($data['color'])) {
+                $color = $data['color'];
+                $products->where('product_color', 'LIKE', '%' . $color . "%");
+            }
+
+            // If  Size filter option
+            if (isset($data['size']) && !empty($data['size'])) {
+                $size = $data['size'];
+                $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+            // Price option
+            if (isset($data['min_price']) && !empty($data['min_price'])) {
+                $min_price = $data['min_price'];
+                $products->where('price', '>=', $min_price);
+            }
+            if (isset($data['max_price']) && !empty($data['max_price'])) {
+                $max_price = $data['max_price'];
+                $products->where('price', '<=', $max_price);
+            }
+            // Sort product
+            if (isset($data['sort']) && !empty($data['sort'])) {
+                if ($data['sort'] == "product_latest") {
+                    $products->orderBy('id', 'desc');
+                } else if ($data['sort'] == "product_name_a_to_z") {
+                    $products->orderBy('product_name_en', 'Asc');
+                } else if ($data['sort'] == "product_name_z_to_a") {
+                    $products->orderBy('product_name_en', 'desc');
+                } else if ($data['sort'] == "price_low") {
+                    $products->orderBy('price', 'Asc');
+                } else if ($data['sort'] == "price_high") {
+                    $products->orderBy('price', 'desc');
+                } else {
+                    $products->orderBy('id', 'desc');
+                }
+            }
+
+            $products = $products->paginate(10);
+            return view('frontend.shop.listing')->with(compact('products'));
+        } else {
+            $subcategory = SubCategory::where('subcategory_slug_bn', $subcategory)->with('products')->firstOrFail();
+            return view('frontend.shop.subcategory', compact('subcategory', 'colors', 'sizes', 'brands'));
+        }
     }
 
+    public function subsubcategoryproductsen($category, $subcategory, $subsubcategory, Request $request)
+    {
+        $colors = Product::productFilter()['colors'];
+        $sizes = Product::productFilter()['sizes'];
+        $brands = Brand::where('status', 1)->get();
+        if ($request->ajax()) {
+            $data = $request->all();
+            $url = $data['url'];
+            if (session()->get('language') === 'bangla') {
+                $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $url)->firstOrFail();
+            } else {
+                $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $url)->firstOrFail();
+            }
+            $id = $subsubcategory->id;
+            $products = Product::where('subsubcategory_id', $id);
+            // Sort product
+            // If  brand filter option
+            if (isset($data['brand']) && !empty($data['brand'])) {
+                $products->where('brand_id', $data['brand']);
+            }
+            // If  Color filter option
+            if (isset($data['color']) && !empty($data['color'])) {
+                $color = $data['color'];
+                $products->where('product_color', 'LIKE', '%' . $color . "%");
+            }
 
 
+            // If  Size filter option
+            if (isset($data['size']) && !empty($data['size'])) {
+                $size = $data['size'];
+                $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+            // Price option
+            if (isset($data['min_price']) && !empty($data['min_price'])) {
+                $min_price = $data['min_price'];
+                $products->where('price', '>=', $min_price);
+            }
+            if (isset($data['max_price']) && !empty($data['max_price'])) {
+                $max_price = $data['max_price'];
+                $products->where('price', '<=', $max_price);
+            }
+            // Sort product
+            if (isset($data['sort']) && !empty($data['sort'])) {
+                if ($data['sort'] == "product_latest") {
+                    $products->orderBy('id', 'desc');
+                } else if ($data['sort'] == "product_name_a_to_z") {
+                    $products->orderBy('product_name_en', 'Asc');
+                } else if ($data['sort'] == "product_name_z_to_a") {
+                    $products->orderBy('product_name_en', 'desc');
+                } else if ($data['sort'] == "price_low") {
+                    $products->orderBy('price', 'Asc');
+                } else if ($data['sort'] == "price_high") {
+                    $products->orderBy('price', 'desc');
+                } else {
+                    $products->orderBy('id', 'desc');
+                }
+            }
 
+            $products = $products->paginate(10);
+            return view('frontend.shop.listing')->with(compact('products'));
+        } else {
+            $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $subsubcategory)->with('products')->firstOrFail();
+            return view('frontend.shop.subsubcategory', compact('subsubcategory', 'brands', 'colors', 'sizes'));
+        }
+    }
+    public function subsubcategoryproductsbn($category, $subcategory, $subsubcategory, Request $request)
+    {
+        $colors = Product::productFilter()['colors'];
+        $sizes = Product::productFilter()['sizes'];
+        $brands = Brand::where('status', 1)->get();
+        if ($request->ajax()) {
+            $data = $request->all();
+            $url = $data['url'];
+            if (session()->get('language') === 'bangla') {
+                $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $url)->firstOrFail();
+            } else {
+                $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $url)->firstOrFail();
+            }
+            $id = $subsubcategory->id;
+            $products = Product::where('subsubcategory_id', $id);
+            // Sort product
+            // If  brand filter option
+            if (isset($data['brand']) && !empty($data['brand'])) {
+                $products->where('brand_id', $data['brand']);
+            }
+            // If  Color filter option
+            if (isset($data['color']) && !empty($data['color'])) {
+                $color = $data['color'];
+                $products->where('product_color', 'LIKE', '%' . $color . "%");
+            }
+
+            // If  Size filter option
+            if (isset($data['size']) && !empty($data['size'])) {
+                $size = $data['size'];
+                $products->where('size', 'LIKE', '%' . $size . "%");
+            }
+            // Price option
+            if (isset($data['min_price']) && !empty($data['min_price'])) {
+                $min_price = $data['min_price'];
+                $products->where('price', '>=', $min_price);
+            }
+            if (isset($data['max_price']) && !empty($data['max_price'])) {
+                $max_price = $data['max_price'];
+                $products->where('price', '<=', $max_price);
+            }
+            // Sort product
+            if (isset($data['sort']) && !empty($data['sort'])) {
+                if ($data['sort'] == "product_latest") {
+                    $products->orderBy('id', 'desc');
+                } else if ($data['sort'] == "product_name_a_to_z") {
+                    $products->orderBy('product_name_en', 'Asc');
+                } else if ($data['sort'] == "product_name_z_to_a") {
+                    $products->orderBy('product_name_en', 'desc');
+                } else if ($data['sort'] == "price_low") {
+                    $products->orderBy('price', 'Asc');
+                } else if ($data['sort'] == "price_high") {
+                    $products->orderBy('price', 'desc');
+                } else {
+                    $products->orderBy('id', 'desc');
+                }
+            }
+
+            $products = $products->paginate(10);
+            return view('frontend.shop.listing')->with(compact('products'));
+        } else {
+            $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $subsubcategory)->with('products')->firstOrFail();
+            return view('frontend.shop.subsubcategory', compact('subsubcategory', 'brands', 'colors', 'sizes'));
+        }
+    }
 }

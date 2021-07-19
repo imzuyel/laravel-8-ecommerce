@@ -316,7 +316,7 @@
                           @if (count($category->subcategories) > 0)
                             <li class="dropdown-submenu">
                               <a class="dropdown-item text-cyne"
-                                href="{{ route('categoryproductsen', $category->category_slug_en) }}"> <i
+                                href="{{ route('categoryproductsbn', $category->category_slug_bn) }}"> <i
                                   class="{{ $category->icon }}"
                                   style="font-size:18px;"></i><span
                                   class="px-2">{{ $category->category_name_bn }}</span></a>
@@ -326,13 +326,13 @@
                                   @if (count($subcategory->subsubcategories) > 0)
                                     <li class="dropdown-submenu">
                                       <a class="dropdown-item"
-                                        href="{{ route('subcategoryproductsen', ['category' => $category->category_slug_en, 'subcategory' => $subcategory->subcategory_slug_en]) }}">
+                                        href="{{ route('subcategoryproductsbn', ['category' => $category->category_slug_bn, 'subcategory' => $subcategory->subcategory_slug_bn]) }}">
                                         {{ $subcategory->subcategory_name_bn }}
                                       </a>
                                       <ul class="dropdown-menu">
                                         @foreach ($subcategory->subsubcategories as $subsubcategory)
                                         <li><a class="dropdown-item"
-                                            href="{{ route('subsubcategoryproductsen', ['category' => $category->category_slug_en, 'subcategory' => $subcategory->subcategory_slug_en, 'subsubcategory' => $subsubcategory->subsubcategory_slug_en]) }}">{{ $subsubcategory->subsubcategory_name_bn }}</a>
+                                            href="{{ route('subsubcategoryproductsbn', ['category' => $category->category_slug_bn, 'subcategory' => $subcategory->subcategory_slug_bn, 'subsubcategory' => $subsubcategory->subsubcategory_slug_bn]) }}">{{ $subsubcategory->subsubcategory_name_bn }}</a>
                                         </li>
                                       @endforeach
 
@@ -341,7 +341,7 @@
                                   @else
                                     <li><a class="dropdown-item"
                                         tabindex="-1"
-                                        href="{{ route('subcategoryproductsen', ['category' => $category->category_slug_en, 'subcategory' => $subcategory->subcategory_slug_en]) }}">{{ $subcategory->subcategory_name_bn }}</a></li>
+                                        href="{{ route('subcategoryproductsbn', ['category' => $category->category_slug_bn, 'subcategory' => $subcategory->subcategory_slug_bn]) }}">{{ $subcategory->subcategory_name_bn }}</a></li>
                                   @endif
                                 @endforeach
                               </ul>
@@ -349,7 +349,7 @@
                           @else
                             <li class="cat_menu-0">
                               <a class="lh__1 flex al_center pr"
-                                href="{{ route('categoryproductsen', $category->category_slug_en) }}"><i class="las la-mobile"></i>{{ $category->category_name_bn }}</a>
+                                href="{{ route('categoryproductsbn', $category->category_slug_bn) }}"><i class="las la-mobile"></i>{{ $category->category_name_bn }}</a>
                             </li>
                           @endif
                         @endforeach
