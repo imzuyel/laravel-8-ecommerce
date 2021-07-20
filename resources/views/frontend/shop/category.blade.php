@@ -246,36 +246,34 @@
                     <div class="col-12 col-md-3 widget">
                       <h5 class="widget-title">By Color</h5>
                       <div class="loke_scroll">
-                        <ul class="">
+                        <ul class="nt_filter_block nt_filter_color css_ntbar"
+                          data-filter_condition="or">
                           @foreach ($colors as $color)
-
-                            <div class="form-check">
-                              <input class="form-check-input color"
-                                type="checkbox"
-                                data-color="{{ $color }}"
-                                value="{{ $color }}"
-                                id="flexCheckDefault">
-                              <label class="form-check-label"
-                                for="flexCheckDefault">
-                                {{ $color }}
-                              </label>
-
-                            </div>
+                            <li class="color"
+                              id="color"
+                              data-color="{{ $color }}">
+                              <a href="#"
+                                aria-label="Narrow selection to products matching tag color {{ $color }}">
+                                <div class="filter-swatch">
+                                  <span class="swatch__value bg_color_{{ $color }} lazyloaded"></span>
+                                </div>
+                                <span id="scolor">{{ $color }}</span>
+                              </a>
+                            </li>
                           @endforeach
+
                         </ul>
                       </div>
                     </div>
                     <div class="col-12 col-md-3 widget">
                       <h5 class="widget-title">By Size</h5>
                       <div class="loke_scroll">
-                        <ul class="">
+                        <ul class="nt_filter_block nt_filter_styleck css_ntbar"
+                          data-filter_condition="or">
                           @foreach ($sizes as $size)
-                            <div>
-                              <input type="checkbox"
-                                class="size"
-                                value="{{ $size }}"
-                                data-size="{{ $size }}" /> {{ $size }}
-                            </div>
+                            <li class="size"
+                              data-size="{{ $size }}"><a href="#"
+                                aria-label="{{ $size }}"><span id="s_size">{{ $size }}</span></a></li>
                           @endforeach
                         </ul>
                       </div>
@@ -283,15 +281,16 @@
                     <div class="col-12 col-md-3 widget">
                       <h5 class="widget-title">By Brand</h5>
                       <div class="loke_scroll">
-                        <ul class="">
-                          @foreach ($brands as $brand)
-                            <div>
-                              <input type="checkbox"
-                                class="brand"
-                                value="{{ $brand->id }}"
-                                data-id="{{ $brand->id }}" /> {{ $brand->brand_name_en }}
-                            </div>
-                          @endforeach
+                        <ul class="nt_filter_block nt_filter_styleck css_ntbar"
+                          data-filter_condition="or">
+                          @forelse ($brands as $brand)
+                            <li class="brand"
+                              data-brand="{{ $brand->id }}"><a href="#"
+                                aria-label="{{ $brand->brand_name_en }}"> {{ $brand->brand_name_en }} <span
+                                  id="brand_id"
+                                  style="display:none;">{{ $brand->id }}</span> </a></li>
+                          @empty
+                          @endforelse
                         </ul>
                       </div>
                     </div>
@@ -323,10 +322,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-12 tc mt__20 mb__20 dn">
-                      <a class="button clear_filter_js"
-                        href="#">Clear All Filter</a>
-                    </div>
+
                   </div>
                 </div>
               </div>

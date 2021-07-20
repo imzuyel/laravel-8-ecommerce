@@ -28,7 +28,7 @@ class Product extends Model
     }
     public static function productFilter()
     {
-        $productFilter['colors']=['red','black','white','blue','pink','navy'];
+        $productFilter['colors']=['red','black','white','blue','pink','navy','green','yellow'];
         $productFilter['sizes']=['s','m','l','ml','xl','xxl','xxxl'];
         return $productFilter;
     }

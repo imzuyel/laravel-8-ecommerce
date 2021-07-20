@@ -235,105 +235,101 @@
 
         <!--filter panel area-->
         <div class="filter_area_js filter_area lazyload">
-          <div id="kalles-section-nt_filter"
-            class="kalles-section nt_ajaxFilter section_nt_filter">
-            <div class="h3 mg__0 tu bgb cw visible-sm fs__16 pr">Filter<i
-                class="close_pp pegk pe-7s-close fs__40 ml__5"></i>
-            </div>
-            <div class="cat_shop_wrap">
-              <div class="cat_fixcl-scroll">
-                <div class="cat_fixcl-scroll-content css_ntbar">
-                  <div class="row wrap_filter">
-                    <div class="col-12 col-md-3 widget">
-                      <h5 class="widget-title">By Color</h5>
-                      <div class="loke_scroll">
-                        <ul class="">
-                          @foreach ($colors as $color)
+            <div id="kalles-section-nt_filter"
+              class="kalles-section nt_ajaxFilter section_nt_filter">
+              <div class="h3 mg__0 tu bgb cw visible-sm fs__16 pr">Filter<i
+                  class="close_pp pegk pe-7s-close fs__40 ml__5"></i>
+              </div>
+              <div class="cat_shop_wrap">
+                <div class="cat_fixcl-scroll">
+                  <div class="cat_fixcl-scroll-content css_ntbar">
+                    <div class="row wrap_filter">
+                      <div class="col-12 col-md-3 widget">
+                        <h5 class="widget-title">By Color</h5>
+                        <div class="loke_scroll">
+                          <ul class="nt_filter_block nt_filter_color css_ntbar"
+                            data-filter_condition="or">
+                            @foreach ($colors as $color)
+                              <li class="color"
+                                id="color"
+                                data-color="{{ $color }}">
+                                <a href="#"
+                                  aria-label="Narrow selection to products matching tag color {{ $color }}">
+                                  <div class="filter-swatch">
+                                    <span class="swatch__value bg_color_{{ $color }} lazyloaded"></span>
+                                  </div>
+                                  <span id="scolor">{{ $color }}</span>
+                                </a>
+                              </li>
+                            @endforeach
 
-                            <div class="form-check">
-                              <input class="form-check-input color"
-                                type="checkbox"
-                                data-color="{{ $color }}"
-                                value="{{ $color }}"
-                                id="flexCheckDefault">
-                              <label class="form-check-label"
-                                for="flexCheckDefault">
-                                {{ $color }}
-                              </label>
-
-                            </div>
-                          @endforeach
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-3 widget">
-                      <h5 class="widget-title">By Size</h5>
-                      <div class="loke_scroll">
-                        <ul class="">
-                          @foreach ($sizes as $size)
-                            <div>
-                              <input type="checkbox"
-                                class="size"
-                                value="{{ $size }}"
-                                data-size="{{ $size }}" /> {{ $size }}
-                            </div>
-                          @endforeach
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-3 widget">
-                      <h5 class="widget-title">By Brand</h5>
-                      <div class="loke_scroll">
-                        <ul class="">
-                          @foreach ($brands as $brand)
-                            <div>
-                              <input type="checkbox"
-                                class="brand"
-                                value="{{ $brand->id }}"
-                                data-id="{{ $brand->id }}" /> {{ $brand->brand_name_en }}
-                            </div>
-                          @endforeach
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-3 widget blockid_price">
-                      <h5 class="widget-title">By Price</h5>
-                      <div class="price_slider_wrapper mt__5">
-                        <div>
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"
-                                id="">৳</span>
-                            </div>
-                            <input type="text"
-                              onkeypress="return event.charCode > 47 && event.charCode < 58;"
-                              pattern="[0-9]{5}"
-                              class="form-control  min_price"
-                              placeholder="Min">
-                            <input type="text"
-                              onkeypress="return event.charCode > 47 && event.charCode < 58;"
-                              pattern="[0-9]{5}"
-                              class="form-control max_price"
-                              placeholder="Max">
-                            <input type="submit"
-                              class="price"
-                              style=" border-radius:0; border:1px solid grey"
-                              value="Filter">
-                          </div>
-
+                          </ul>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-12 tc mt__20 mb__20 dn">
-                      <a class="button clear_filter_js"
-                        href="#">Clear All Filter</a>
+                      <div class="col-12 col-md-3 widget">
+                        <h5 class="widget-title">By Size</h5>
+                        <div class="loke_scroll">
+                          <ul class="nt_filter_block nt_filter_styleck css_ntbar"
+                            data-filter_condition="or">
+                            @foreach ($sizes as $size)
+                              <li class="size"
+                                data-size="{{ $size }}"><a href="#"
+                                  aria-label="{{ $size }}"><span id="s_size">{{ $size }}</span></a></li>
+                            @endforeach
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-3 widget">
+                        <h5 class="widget-title">By Brand</h5>
+                        <div class="loke_scroll">
+                          <ul class="nt_filter_block nt_filter_styleck css_ntbar"
+                            data-filter_condition="or">
+                            @forelse ($brands as $brand)
+                              <li class="brand"
+                                data-brand="{{ $brand->id }}"><a href="#"
+                                  aria-label="{{ $brand->brand_name_en }}"> {{ $brand->brand_name_en }} <span
+                                    id="brand_id"
+                                    style="display:none;">{{ $brand->id }}</span> </a></li>
+                            @empty
+                            @endforelse
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-3 widget blockid_price">
+                        <h5 class="widget-title">By Price</h5>
+                        <div class="price_slider_wrapper mt__5">
+                          <div>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  id="">৳</span>
+                              </div>
+                              <input type="text"
+                                onkeypress="return event.charCode > 47 && event.charCode < 58;"
+                                pattern="[0-9]{5}"
+                                class="form-control  min_price"
+                                placeholder="Min">
+                              <input type="text"
+                                onkeypress="return event.charCode > 47 && event.charCode < 58;"
+                                pattern="[0-9]{5}"
+                                class="form-control max_price"
+                                placeholder="Max">
+                              <input type="submit"
+                                class="price"
+                                style=" border-radius:0; border:1px solid grey"
+                                value="Filter">
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         <!--end filter panel area-->
 
         <!--product container-->
