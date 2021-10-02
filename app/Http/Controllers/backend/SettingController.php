@@ -25,9 +25,9 @@ class SettingController extends Controller
     {
         Gate::authorize('app.settings.general');
         $this->validate($request, [
-            'site_title'        => 'required|string|min:2:max:100',
-            'site_description'  => 'nullable',
-            'site_address'      => 'nullable',
+            'site_title'                => 'required|string|min:2:max:100',
+            'site_description'          => 'nullable',
+            'site_address'              => 'nullable',
         ]);
 
         Setting::updateOrCreate(['name' => 'site_title'], ['value' => $request->get('site_title')]);

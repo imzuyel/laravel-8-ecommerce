@@ -125,10 +125,10 @@
   <!--discount promotion popup-->
   <div id="kalles-section-promo_pr_pp"
     class="kalles-section mfp-hide dn">
-    <div class="js_lz_pppr popup_prpr_wrap container bgw mfp-with-anim"
+    <div class="container js_lz_pppr popup_prpr_wrap bgw mfp-with-anim"
       data-stt='{ "pp_version": 1,"day_next": 1 }'>
       <div class="wrap_title">
-        <h3 class="section-title tc pr flex fl_center al_center fs__24 title_2">
+        <h3 class="flex section-title tc pr fl_center al_center fs__24 title_2">
           <span class="mr__10 ml__10">Wait! Can't find what you're looking for?</span>
         </h3>
         <span class="dn tt_divider"><span></span><i class="dn clprfalse title_2 la-gem"></i><span></span></span><span
@@ -158,7 +158,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -197,7 +197,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -236,7 +236,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -289,7 +289,7 @@
                   <i class="facl facl-heart-o"></i>
                 </a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -339,7 +339,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -360,11 +360,13 @@
               <span class="price dib mb__5">$68.00</span>
               <div class="swatch__list_js swatch__list lh__1 nt_swatches_on_grid">
                 <span data-bgset="{{ asset('/') }}frontend/assets/images/products/pr-15.jpg"
-                  class="nt_swatch_on_bg swatch__list--item pr ttip_nt tooltip_top_right"><span class="tt_txt">White
+                  class="nt_swatch_on_bg swatch__list--item pr ttip_nt tooltip_top_right"><span
+                    class="tt_txt">White
                     Cream</span><span class="swatch__value bg_color_white-cream lazyload"
                     data-bgset="{{ asset('/') }}frontend/assets/images/products/dot-01.jpg"></span></span>
                 <span data-bgset="{{ asset('/') }}frontend/assets/images/products/pr-14.jpg"
-                  class="nt_swatch_on_bg swatch__list--item pr ttip_nt tooltip_top_right"><span class="tt_txt">Heart
+                  class="nt_swatch_on_bg swatch__list--item pr ttip_nt tooltip_top_right"><span
+                    class="tt_txt">Heart
                     Dotted</span><span class="swatch__value bg_color_heart-dotted lazyload"
                     data-bgset="{{ asset('/') }}frontend/assets/images/products/dot-02.jpg"></span></span>
               </div>
@@ -389,7 +391,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -413,10 +415,12 @@
               <div class="swatch__list_js swatch__list lh__1 nt_swatches_on_grid">
                 <span data-bgset="{{ asset('/') }}frontend/assets/images/products/pr-27.jpg"
                   class="nt_swatch_on_bg swatch__list--item pr ttip_nt tooltip_top_right"><span
-                    class="tt_txt">Pink</span><span class="swatch__value bg_color_pink lazyload"></span></span>
+                    class="tt_txt">Pink</span><span
+                    class="swatch__value bg_color_pink lazyload"></span></span>
                 <span data-bgset="{{ asset('/') }}frontend/assets/images/products/pr-35.jpg"
                   class="nt_swatch_on_bg swatch__list--item pr ttip_nt tooltip_top_right"><span
-                    class="tt_txt">Black</span><span class="swatch__value bg_color_black lazyload"></span></span>
+                    class="tt_txt">Black</span><span
+                    class="swatch__value bg_color_black lazyload"></span></span>
               </div>
             </div>
           </div>
@@ -438,7 +442,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -474,7 +478,7 @@
                   class="wishlistadd cb chp ttip_nt tooltip_right"><span class="tt_txt">Add to
                     Wishlist</span><i class="facl facl-heart-o"></i></a>
               </div>
-              <div class="hover_button op__0 tc pa flex column ts__03">
+              <div class="flex hover_button op__0 tc pa column ts__03">
                 <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left"
                   href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
                     view</span></a>
@@ -513,14 +517,6 @@
   <script src=" {{ asset('frontend/assets/js/js-cookie.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/script.js') }}"></script>
-
-
-
-
-
-
-
-
 
   <script>
     $(document).ready(function() {
@@ -720,7 +716,7 @@
             }
             @if (session()->get('language') === 'bangla')
               miniCart += `
-              <div class="mini_cart_item js_cart_item flex al_center pr oh">
+              <div class="flex mini_cart_item js_cart_item al_center pr oh">
                 <div class="ld_cart_bar"></div>
                 <a href="product-detail-layout-01.html"
                   class="mini_cart_img">
@@ -733,7 +729,7 @@
                 </a>
                 <div class="mini_cart_info">
                   <a href=""
-                    class="mini_cart_title truncate">
+                    class="truncate mini_cart_title">
                     ${value.options.name_bn}
                   </a>
                   <div class="mini_cart_meta">
@@ -774,8 +770,8 @@
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg
                         style="width: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                              stroke-width: 1.5;"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 20px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                          stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -801,7 +797,7 @@
               `;
             @else
               miniCart += `
-              <div class="mini_cart_item js_cart_item flex al_center pr oh">
+              <div class="flex mini_cart_item js_cart_item al_center pr oh">
                 <div class="ld_cart_bar"></div>
                 <a href="product-detail-layout-01.html"
                   class="mini_cart_img">
@@ -814,7 +810,7 @@
                 </a>
                 <div class="mini_cart_info">
                   <a href=""
-                    class="mini_cart_title truncate">
+                    class="truncate mini_cart_title">
 
                     ${value.name}
                   </a>
@@ -856,8 +852,8 @@
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
                       <svg
                         style="width: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                              height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                              stroke-width: 1.5;"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 20px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                          stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -925,7 +921,7 @@
         dataType: "json",
         success: function(data) {
           miniCart();
-          toastr["success"]("Successfully added remove from cart!");
+          toastr["success"]("Successfully product remove from cart!");
         },
         error: function(xhr, status, error) {
           var err = eval("(" + xhr.responseText + ")");
@@ -942,10 +938,21 @@
         dataType: 'json',
         success: function(data) {
           miniCart();
-          toastr["success"]("Succesfully added more product to your cart");
+          toastr.options = {
+            closeButton: true,
+            closeHtml: "<button>&#xd7;</button>",
+            progressBar: true,
+            showMethod: "slideDown",
+          };
+          if (data.is_true) {
+            toastr["error"]("Add less than " + data.product_qty + " to your cart");
+          } else {
+            toastr["success"]("Successfully added successfully!");
+          }
         }
       });
     }
+
 
     function cartDecrement(rowId) {
       $.ajax({
@@ -953,8 +960,18 @@
         url: "/cart-decrement/" + rowId,
         dataType: 'json',
         success: function(data) {
-          miniCart();
-          toastr["success"]("Succesfully remove more product to your cart");
+            miniCart();
+          toastr.options = {
+            closeButton: true,
+            closeHtml: "<button>&#xd7;</button>",
+            progressBar: true,
+            showMethod: "slideDown",
+          };
+          if (data.is_true) {
+            toastr["error"]("Do not decrease product less than 1");
+          } else {
+            toastr["success"]("Successfully remove product form cart!");
+          }
         }
       });
     }
@@ -1005,28 +1022,28 @@
       var size = $('li .size,.active a #s_size').text();
       var min_price = $('.min_price').val();
       var max_price = $('.max_price').val();
-        $.ajax({
+      $.ajax({
+        url: url,
+        beforeSend: function() {
+          $('.centered').css("visibility", "visible");
+        },
+        data: {
           url: url,
-          beforeSend: function() {
-            $('.centered').css("visibility", "visible");
-          },
-          data: {
-            url: url,
-            brand: brand,
-            color: color,
-            sort: sort,
-            size: size,
-            min_price: min_price,
-            max_price: max_price,
-          },
-          success: function(resp) {
-            $('.filterOption').html(resp);
-            $.magnificPopup.close();
-          },
-          complete: function() {
-            $('.centered').css("visibility", "hidden");
-          }
-        })
+          brand: brand,
+          color: color,
+          sort: sort,
+          size: size,
+          min_price: min_price,
+          max_price: max_price,
+        },
+        success: function(resp) {
+          $('.filterOption').html(resp);
+          $.magnificPopup.close();
+        },
+        complete: function() {
+          $('.centered').css("visibility", "hidden");
+        }
+      })
     });
 
     /**
@@ -1139,9 +1156,8 @@
     });
   </script>
 
-
-
   {{-- End ajax --}}
+
   @stack('js')
   <script src="{{ asset('frontend/assets/js/interface.js') }}"></script>
 

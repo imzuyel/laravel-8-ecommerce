@@ -32,8 +32,8 @@ class HomeController extends Controller
         $id                         = $product->id;
         $data['product']            = $product;
 
-        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
-        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
+        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->first();
+        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->first();
         $color                      = $product->product_color;
         $data['product_color']      = explode(',', $color);
         $size                       = $product->size;
@@ -46,8 +46,8 @@ class HomeController extends Controller
         $id                         = $product->id;
         $data['product']            = $product;
 
-        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
-        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->firstOrFail();
+        $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->first();
+        $data['next_product']       = Product::where('id', '>', $id)->where('status', 1)->orderBy('id', 'desc')->first();
         $color                      = $product->product_color;
         $data['product_color']      = explode(',', $color);
         $size                       = $product->size;

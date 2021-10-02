@@ -23,8 +23,8 @@ class SubSubcategoryController extends Controller
     public function create()
     {
         Gate::authorize('app.categories.create');
-        $categories = Category::latest('id')->get();
-        $subcategories = SubCategory::latest('id')->get();
+        $categories     = Category::latest('id')->get();
+        $subcategories  = SubCategory::latest('id')->get();
         return view('backend.subsubcategories.form', compact('categories', 'subcategories'));
     }
 
