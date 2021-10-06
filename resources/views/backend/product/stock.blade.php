@@ -39,24 +39,16 @@ Product stock update
           <input type="hidden" name="id" value="{{$product->id}}">
           <div class="form-body">
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                 <label class="col-form-label">Quantity <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('product_qty_en') is-invalid @enderror" name="product_qty_en" value="{{ $product->product_qty_en  }}" placeholder="Product quantity" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5" required>
-                @error('product_qty_en')
+                <input type="text" class="form-control  @error('product_qty_en') is-invalid @enderror" name="product_qty" value="{{ $product->product_qty  }}" placeholder="Product quantity" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5" required>
+                @error('product_qty')
                 <span class="text-danger" product="alert">
                   <strong>{{ $message }}</strong>
                 </span>
                 @enderror
               </div>
-              <div class="form-group col-md-6">
-                <label class="col-form-label">পরিমাণ <span class="text-danger">*</span></label>
-                <input type="text" class="form-control  @error('product_qty_bn') is-invalid @enderror" name="product_qty_bn" value="{{ $product->product_qty_bn }}" placeholder="পণ্যের পরিমাণ" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="5" required>
-                @error('product_qty_bn')
-                <span class="text-danger" product="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-              </div>
+
             </div>
             <div class="float-right">
               <div class="btn-group">

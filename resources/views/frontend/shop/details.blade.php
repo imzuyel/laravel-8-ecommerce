@@ -79,7 +79,7 @@
                 <a href=""
                   class="pl__5 pr__5 fs__20 cd chp ttip_nt tooltip_bottom_left"><i
                     class="fwb iccl iccl-grid fs__15"></i><span
-                    class="tt_txt">{{ $previous_product->category->category_name_en }}</span></a>
+                    class="tt_txt">{{ $product->category->category_name_en }}</span></a>
 
                 @if (isset($next_product))
                   <a href="{{ route('frontend.detailsen', ['category' => $next_product->category->category_slug_en, 'slug' => $next_product->product_slug_en]) }}"
@@ -193,7 +193,8 @@
                         id="price_qv">
                         @if (isset($product->discount))
                           <del id="price">${{ $product->price }}</del>
-                          <ins id="new_price">${{ $product->price - ($product->discount * $product->price) / 100 }}</ins>
+                          <ins
+                            id="new_price">${{ $product->price - ($product->discount * $product->price) / 100 }}</ins>
                         @else
                           <ins id="price">${{ $product->price }}</ins>
                         @endif
@@ -277,12 +278,36 @@
                                   </button>
                                 </div>
                               </div>
-                              <div class="nt_add_w ts__03 pa order-3">
-                                <a href="#"
-                                  class="wishlistadd cb chp ttip_nt tooltip_top_left">
-                                  <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                                </a>
-                              </div>
+                              @guest
+                                <div id="lostclass"
+                                  class="nt_add_w ts__03 pa order-3">
+                                  <a href="#"
+                                    class="cb chp ttip_nt tooltip_top_left "  onclick="addToWishlist()">
+                                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
+                                  </a>
+                                </div>
+                              @endguest
+
+                              @auth
+
+                                @if (Auth::user()->itemOnWishlist($product->id))
+                                  <div class="nt_add_w ts__03 pa order-3 wis_added">
+                                    <a href="#"
+                                      class="cb chp ttip_nt tooltip_top_left "
+                                      onclick="addToWishlist()">
+                                      <span class="tt_txt">Wishlist</span><i class="facl facl-heart-o"></i>
+                                    </a>
+                                  </div>
+                                @else
+                                  <div class="nt_add_w ts__03 pa order-3">
+                                    <a href="#"
+                                      class="cb chp ttip_nt tooltip_top_left"
+                                      onclick="addToWishlist()">
+                                      <span class="tt_txt">Wishlist</span><i class="facl facl-heart-o"></i>
+                                    </a>
+                                  </div>
+                                @endif
+                              @endauth
                               <input type="hidden"
                                 value="{{ $product->id }}"
                                 id="product_id">

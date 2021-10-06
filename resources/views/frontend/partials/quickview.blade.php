@@ -17,9 +17,9 @@
             <div class="kalles-section-pr_summary kalles-section summary entry-summary mt__30">
               <h1 class="product_title entry-title fs__16">
                 @if (session()->get('language')==='bangla')
-                <a id="product_name_bn" href="product-detail-layout-01.html product_name"></a>
+                <a id="product_name_bn" href=" product_name"></a>
                 @else
-                <a id="product_name_en" href="product-detail-layout-01.html product_name"></a>
+                <a id="product_name_en" href=" product_name"></a>
                 @endif
 
               </h1>
@@ -28,7 +28,7 @@
                   <del id="price"></del>
                   <ins id="new_price"></ins>
                 </p>
-                <a href="product-detail-layout-01.html" class="rating_sp_kl dib">
+                <a href="" class="rating_sp_kl dib">
                   <div class="kalles-rating-result">
                     <span class="kalles-rating-result__pipe">
                       <span class="kalles-rating-result__start"></span>
@@ -83,16 +83,10 @@
                         </div>
                         <input type="hidden" id="product_id">
                         @if (session()->get('language')==='bangla')
-                        <div class="nt_add_w ts__03 pa order-3">
-                          <a href="#" class="wishlistadd cb chp ttip_nt tooltip_top_left"><span class="tt_txt">ইচ্ছেতালিকা</span><i class="facl facl-heart-o"></i></a>
-                        </div>
                         <button type="submit" data-time='6000' data-ani='shake' class="single_add_to_cart_button button truncate js_frm_cart w__100 mt__20 order-4"  onclick="addToCart()">
                           <span class="txt_add ">কার্টে যোগ করুন</span>
                         </button>
                         @else
-                        <div class="nt_add_w ts__03 pa order-3">
-                          <a href="#" class="wishlistadd cb chp ttip_nt tooltip_top_left"><span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i></a>
-                        </div>
                         <button type="submit" data-time='6000' data-ani='shake' class="single_add_to_cart_button button truncate js_frm_cart w__100 mt__20 order-4" onclick="addToCart()">
                           <span class="txt_add ">Add to cart</span>
                         </button>

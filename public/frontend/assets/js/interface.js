@@ -2847,7 +2847,6 @@
         btn$.addClass("loading");
         setTimeout(() => {
             btn$.removeClass("loading");
-            wrap$.toggleClass("wis_added");
         }, 500);
     });
 
@@ -3461,11 +3460,6 @@
     /**********************************************
      * Remove product in wishlist
      * ********************************************/
-    body.on("click", ".wis_remove", function () {
-        let $product = $(this).closest(".product");
-        $product.addClass("kalles-hidden-product");
-        setTimeout(() => $product.remove(), 500);
-    });
 
     /**********************************************
      * Change reset and login form

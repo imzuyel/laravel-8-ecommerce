@@ -324,6 +324,7 @@ class ProductController extends Controller
     }
     public function updateStockUpdate(Request $request)
     {
+
         $product = Product::findOrFail($request->id);
         $product->update([
             'product_qty'                => $request->product_qty,
@@ -364,7 +365,7 @@ class ProductController extends Controller
             return response()->json(['status' => $status, 'product_id' => $data['product_id']]);
         }
     }
-    //End get data by Ajax
+
 
     // Code Generator
     protected function generateProductCode($id)

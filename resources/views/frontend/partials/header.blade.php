@@ -283,8 +283,13 @@
                         data-id="#nt_login_canvas"><i class="las la-user"></i></a>
                     </div>
                     <a class="icon_like cb chp pr dn db_md js_link_wis"
-                      href="#">
-                      <i class="lar la-heart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc">5</span></i>
+                      href="{{ route('user.wishlistdata') }}">
+                   @auth
+                   <i class="lar la-heart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc" id="wishQty"></span></i>
+                   @endauth
+                   @guest
+                   <i class="lar la-heart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc" >0</span></i>
+                   @endguest
                     </a>
                     <div class="icon_cart pr">
                       <a class="push_side pr cb chp db"

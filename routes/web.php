@@ -30,6 +30,10 @@ Route::get('language/bangla',  [LanguageController::class, 'Bangla'])->name('lan
 Route::get('/user/login', [CustommerController::class, 'login'])->name('user.login');
 Route::get('/user/register', [CustommerController::class, 'register'])->name('user.register');
 Route::get('/user/dashboard', [CustommerController::class, 'index'])->middleware('auth')->name('user.index');
+Route::get('/user/wishlist', [CustommerController::class, 'wishlistdata'])->name('user.wishlistdata')->middleware('auth');
+Route::post('/user/wishlist/data', [CustommerController::class, 'wishlistdataget'])->name('user.wishlistdataget')->middleware('auth');
+Route::post('/user/wishlist/store/{product_id}', [CustommerController::class, 'wishlist'])->name('user.wishlist');
+Route::post('/wishlist/product-remove/{product_id}', [CustommerController::class, 'RemoveWishlist'])->middleware('auth');
 
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');

@@ -11,6 +11,7 @@ class CartController extends Controller
 {
     public function AddToCart(Request $request, $id)
     {
+
         $product                    = Product::findOrFail($id);
         if ($product->product_qty < $request->quantity) {
             $product_qty            = $product->product_qty;
@@ -84,7 +85,7 @@ class CartController extends Controller
             $product_qty            = $product->product_qty;
             return response()->json(['error' => 'Add less than ' . $product->product_qty, 'product_qty'=> $product_qty, 'is_true' => $is_true]);
         }
-    } // end mehtod
+    }
 
 
     // Cart Decrement
@@ -98,6 +99,6 @@ class CartController extends Controller
             Cart::update($rowId, $row->qty - 1);
             return response()->json('Decrement');
         }
-    } // end mehtod
+    }
 
 }

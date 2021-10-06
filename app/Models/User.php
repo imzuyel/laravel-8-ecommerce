@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Models\Wishlist;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,4 +46,15 @@ class User extends Authenticatable
     {
         return $this->role->permissions()->where('slug', $permission)->first() ? true : false;
     }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+  public function itemOnWishlist($product_id)
+    {
+        return $this->wishlist->where('product_id', $product_id)->count() > 0;
+    }
+
 }

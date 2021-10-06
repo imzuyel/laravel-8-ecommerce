@@ -768,10 +768,7 @@
                     <a href="#"
                       id="${value.rowId}"
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
-                      <svg
-                        style="width: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                          stroke-width: 1.5;"
+                      <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -811,7 +808,6 @@
                 <div class="mini_cart_info">
                   <a href=""
                     class="truncate mini_cart_title">
-
                     ${value.name}
                   </a>
                   <div class="mini_cart_meta">
@@ -850,10 +846,7 @@
                     <a href="#"
                       id="${value.rowId}"
                       class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
-                      <svg
-                        style="width: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                          height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                          stroke-width: 1.5;"
+                      <svg style="width: 20px;height: 20px; stroke-width: 1.5;"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -909,7 +902,6 @@
         },
       });
     }
-
     // Call mini
     miniCart();
 
@@ -960,7 +952,7 @@
         url: "/cart-decrement/" + rowId,
         dataType: 'json',
         success: function(data) {
-            miniCart();
+          miniCart();
           toastr.options = {
             closeButton: true,
             closeHtml: "<button>&#xd7;</button>",
@@ -975,6 +967,200 @@
         }
       });
     }
+
+
+
+    // Wishlish
+    function wishlist() {
+
+      $.ajax({
+        type: "POST",
+        url: "/user/wishlist/data",
+        success: function(data) {
+          if (data.wishQty.toString().length > 0) {
+            $("#wishQty").text(data.wishQty);
+          } else {
+            var zero = 0;
+            $("#wishQty").text(zero);
+          }
+          var wishlist = "";
+          if (data.wishQty == 0) {
+
+            wishlist += `
+            <div class="kalles-section cat-shop pr tc p-5">
+        <h1 class="text-center text-danger">
+          @if (session()->get('language') === 'bangla')
+            আপনার ইচ্ছার তালিকায় কোন পণ্য নেই
+          @else
+            No product in your wishlist !
+          @endif
+        </h1>
+        <button type="submit"
+          data-time="6000"
+          data-ani="shake"
+          class="button truncate  mt__20 order-4  animated "
+          onclick="location.href='{{ route('frontend.home') }}';">
+          <span>
+            @if (session()->get('language') === 'bangla')
+              হোম
+            @else
+              Home
+            @endif
+          </span>
+        </button>
+      </div>
+              `;
+          } else {
+            $.each(data.wishlists, function(key, value) {
+
+              @if (session()->get('language') === 'bangla')
+                wishlist += `
+                <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
+                  <div class="product-inner pr">
+
+                    <div class="product-image pr oh lazyload">
+                      <span class="tc nt_labels pa pe_none cw">
+
+                        <p class="price_range">
+                          ${value.product.discount==null
+                          ? `<span class="nt_label new text-light">New</span>`
+                          : `<span class="nt_label bg-danger text-light">${ value.product.discount + "%"}</span>`
+                          }
+                        </p>
+                      </span>
+                      <a class="d-block"
+                        href="/bn/details/${value.product.category_id}/${value.product.product_slug_bn}">
+                        <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571"
+                          data-bgset="/${value.product.image}"></div>
+                      </a>
+                      <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
+                        <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571"
+                          data-bgset="/${value.product.image}"></div>
+                      </div>
+                      <div class="nt_add_w ts__03 pa ">
+                        <a href="#"
+                          class="cb chp ttip_nt tooltip_right wis_remove removeWishlist"
+                          product_id=${
+                          value.product.id
+                          }><span class="tt_txt">Remove Wishlist</span><i class="facl facl-heart-o"></i></a>
+                      </div>
+                      <div class="hover_button op__0 tc pa flex column ts__03">
+                        <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView"
+                          product_id=${
+                          value.product.id
+                          }
+                          href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span></a>
+
+
+                        <a href="#"
+                          class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView"
+                          product_id=${
+                          value.product.id
+                          }><span class="tt_txt">Quick Shop</span><i class="iccl iccl-cart"></i><span>Quick Shop</span></a>
+                      </div>
+                    </div>
+                    <div class="product-info mt__15">
+                      <h3 class="product-title pr fs__14 mg__0 fwm">
+                        <a class="cd chp"
+                          href="product-detail-layout-01.html">
+                          ${value.product.product_name_bn}</a>
+                      </h3>
+
+                      <p class="price_range">
+                        ${value.product.discount==null
+                        ? `<span class="price dib mb__5">${value.product.price}</span>`
+                        : `<del>${value.product.price}</del><ins>
+                          ${Math.round(value.product.price -(value.product.discount * value.product.price) / 100)}
+                        </ins>`
+                        }
+                      </p>
+
+                    </div>
+
+                  </div>
+                </div>
+                `;
+
+
+              @else
+                wishlist += `
+                <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
+                  <div class="product-inner pr">
+                    <div id="wishlist">
+                      <div class="product-image pr oh lazyload">
+                        <span class="tc nt_labels pa pe_none cw">
+
+                          <p class="price_range">
+                            ${value.product.discount==null
+                            ? `<span class="nt_label new text-light">New</span>`
+                            : `<span class="nt_label bg-danger text-light">${ value.product.discount + "%"}</span>`
+                            }
+                          </p>
+
+
+                        </span>
+                        <a class="d-block"
+                          href="/en/details/${value.product.category_id}/${value.product.product_slug_en}">
+                          <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571"
+                            data-bgset="/${value.product.image}"></div>
+                        </a>
+                        <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
+                          <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571"
+                            data-bgset="/${value.product.image}"></div>
+                        </div>
+                        <div class="nt_add_w ts__03 pa ">
+                          <a href="#"
+                            class="cb chp ttip_nt tooltip_right wis_remove wishlist_remove"
+                            product_id=${
+                            value.product.id
+                            }><span class="tt_txt">Remove Wishlist</span><i class="facl facl-heart-o"></i></a>
+                        </div>
+                        <div class="hover_button op__0 tc pa flex column ts__03">
+                          <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView"
+                            product_id=${
+                            value.product.id
+                            }
+                            href="#"><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span></a>
+
+
+                          <a href="#"
+                            class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView"
+                            product_id=${
+                            value.product.id
+                            }><span class="tt_txt">Quick Shop</span><i class="iccl iccl-cart"></i><span>Quick Shop</span></a>
+                        </div>
+                      </div>
+                      <div class="product-info mt__15">
+                        <h3 class="product-title pr fs__14 mg__0 fwm">
+                          <a class="cd chp"
+                            href="product-detail-layout-01.html">
+                            ${value.product.product_name_en}</a>
+                        </h3>
+
+                        <p class="price_range">
+                          ${value.product.discount==null
+                          ? `<span class="price dib mb__5">${value.product.price}</span>`
+                          : `<del>${value.product.price}</del><ins>
+                            ${Math.round(value.product.price -(value.product.discount * value.product.price) / 100)}
+                          </ins>`
+                          }
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
+
+              @endif
+            });
+          }
+          $("#wishlist").html(wishlist);
+        },
+      });
+    }
+    // Call wishlist
+    wishlist();
   </script>
 
   <script>
@@ -1154,7 +1340,83 @@
         }
       })
     });
+
+
+
+
+    /**
+     * Add to Wishlist
+     */
+    window.addToWishlist = function() {
+      var id = $("#product_id").val();
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {
+          id: id,
+        },
+        url: "/user/wishlist/store/" + id,
+        success: function(data) {
+          wishlist();
+          if (data.is_true == "added") {
+            toastr["success"]("Succesfully added to wishlist");
+            $(".nt_add_w").addClass("wis_added");
+          } else if (data.is_true == "remove") {
+            $(".wis_added").removeClass("wis_added");
+            toastr["success"]("Succesfully remove form to wishlist");
+
+          } else {
+            toastr["error"]("Login first");
+          }
+
+
+          // End Message
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          // alert(err.message);
+          toastr["error"](err.message);
+        },
+
+      });
+    };
+    // End add to cart
   </script>
+  <script>
+    const body = $("body"),
+      $window = $(window),
+      rtl_mode = body.hasClass("rtl"),
+      $ld = $("#ld_cl_bar"),
+      window_w = $window.width(),
+      is_smaller_768 = window_w < 768,
+      mask = $(".mask-overlay"),
+      html = $("html"),
+      touchevents = Modernizr.touchevents;
+
+    body.on("click", ".wis_remove", function() {
+
+      let $product = $(this).closest(".product");
+
+      $product.addClass("kalles-hidden-product");
+      setTimeout(() => $product.remove(), 500);
+
+      var product_id = $(this).attr("product_id");
+      $.ajax({
+        type: "POST",
+        url: "/wishlist/product-remove/" + product_id,
+        dataType: "json",
+        success: function(data) {
+          wishlist();
+          toastr["success"]("Successfully product remove from wishlist!");
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          toastr["error"](err.message);
+        },
+      });
+    });
+  </script>
+
 
   {{-- End ajax --}}
 
