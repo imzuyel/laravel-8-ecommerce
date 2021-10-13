@@ -204,7 +204,7 @@ class PermissionSeeder extends Seeder
             'name'          => 'Access Dashboard',
             'slug'          => 'app.dashboard'
         ]);
-         //CacheClear
+        //CacheClear
         $moduleAppCacheClear = Module::updateOrCreate(['name' => 'Admin CacheClear']);
         Permission::updateOrCreate([
             'module_id'     => $moduleAppCacheClear->id,
@@ -224,28 +224,28 @@ class PermissionSeeder extends Seeder
             'slug'          => 'app.custommerprofile.password',
         ]);
 
-         // Product management
-         $moduleAppProduct     = Module::updateOrCreate(['name' => 'Product Management']);
-         Permission::updateOrCreate([
-             'module_id'    => $moduleAppProduct->id,
-             'name'         => 'Access Product',
-             'slug'         => 'app.products.index',
-         ]);
-         Permission::updateOrCreate([
-             'module_id'    => $moduleAppProduct->id,
-             'name'         => 'Create Product',
-             'slug'         => 'app.products.create',
-         ]);
-         Permission::updateOrCreate([
-             'module_id'    => $moduleAppProduct->id,
-             'name'         => 'Edit Product',
-             'slug'         => 'app.products.edit',
-         ]);
-         Permission::updateOrCreate([
-             'module_id'    => $moduleAppProduct->id,
-             'name'         => 'Delete Product',
-             'slug'         => 'app.products.destroy',
-         ]);
+        // Product management
+        $moduleAppProduct     = Module::updateOrCreate(['name' => 'Product Management']);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppProduct->id,
+            'name'         => 'Access Product',
+            'slug'         => 'app.products.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppProduct->id,
+            'name'         => 'Create Product',
+            'slug'         => 'app.products.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppProduct->id,
+            'name'         => 'Edit Product',
+            'slug'         => 'app.products.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppProduct->id,
+            'name'         => 'Delete Product',
+            'slug'         => 'app.products.destroy',
+        ]);
         // brand management
         $moduleAppBrand     = Module::updateOrCreate(['name' => 'Brand Management']);
         Permission::updateOrCreate([
@@ -291,6 +291,55 @@ class PermissionSeeder extends Seeder
             'name'         => 'Delete Category',
             'slug'         => 'app.categories.destroy',
         ]);
+        // Shipping management
+        $moduleAppShippings     = Module::updateOrCreate(['name' => 'Shipping Management']);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppShippings->id,
+            'name'         => 'Access Shipping',
+            'slug'         => 'app.shippings.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppShippings->id,
+            'name'         => 'Create Shipping',
+            'slug'         => 'app.shippings.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppShippings->id,
+            'name'         => 'Edit Shipping',
+            'slug'         => 'app.shippings.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppShippings->id,
+            'name'         => 'Delete Shipping',
+            'slug'         => 'app.shippings.destroy',
+        ]);
+
+
+
+        // Category management
+        $moduleAppCoupons     = Module::updateOrCreate(['name' => 'Coupon Management']);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppCoupons->id,
+            'name'         => 'Access Coupon',
+            'slug'         => 'app.coupons.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppCoupons->id,
+            'name'         => 'Create Coupon',
+            'slug'         => 'app.coupons.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppCoupons->id,
+            'name'         => 'Edit Coupon',
+            'slug'         => 'app.coupons.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id'    => $moduleAppCoupons->id,
+            'name'         => 'Delete Coupon',
+            'slug'         => 'app.coupons.destroy',
+        ]);
+
+
 
 
         // Slider management
@@ -315,6 +364,5 @@ class PermissionSeeder extends Seeder
             'name'         => 'Delete Slider',
             'slug'         => 'app.sliders.destroy',
         ]);
-
     }
 }

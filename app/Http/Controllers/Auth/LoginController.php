@@ -42,29 +42,29 @@ class LoginController extends Controller
 
     public function redirectToProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-        $existingUser = User::whereEmail($user->getEmail())->first();
+        $user                       = Socialite::driver($provider)->user();
+        $existingUser               = User::whereEmail($user->getEmail())->first();
         if ($existingUser) {
             Auth::login($existingUser);
         } else {
             // Create new user.
             $newUser = User::create([
-                'role_id' => Role::where('slug', 'user')->first()->id,
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'status' => true,
-                'password' => 'password'
+                'role_id'           => Role::where('slug', 'user')->first()->id,
+                'name'              => $user->getName(),
+                'email'             => $user->getEmail(),
+                'status'            => true,
+                'password'          => 'password'
             ]);
             if ($user->getAvatar()) {
                 $path = $user->getAvatar();
                 $filename_from_url = parse_url($path);
                 $ext = pathinfo($filename_from_url['path'], PATHINFO_EXTENSION);
                 // $filename = basename($path);
-                $get_imageName  =  date('mdYHis') . uniqid() . $ext;
-                $directory      = 'images/users/';
-                $imageUrl       = $directory . $get_imageName;
+                $get_imageName      =  date('mdYHis') . uniqid() . $ext;
+                $directory          = 'images/users/';
+                $imageUrl           = $directory . $get_imageName;
                 Image::make($path)->save($imageUrl);
-                $newUser->image = $imageUrl;
+                $newUser->image     = $imageUrl;
                 $newUser->save();
             }
             Auth::login($newUser);

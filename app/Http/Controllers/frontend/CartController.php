@@ -12,40 +12,44 @@ class CartController extends Controller
     public function AddToCart(Request $request, $id)
     {
 
-        $product                    = Product::findOrFail($id);
+        $product                            = Product::findOrFail($id);
         if ($product->product_qty < $request->quantity) {
-            $product_qty            = $product->product_qty;
-            $is_true                = true;
-            return response()->json(['error' => 'Add less than ' . $product->product_qty, 'product_qty'             => $product_qty, 'is_true' => $is_true]);
+            $product_qty                    = $product->product_qty;
+            $is_true                        = true;
+            return response()->json(['error'=> 'Add less than ' . $product->product_qty, 'product_qty'                   => $product_qty, 'is_true' => $is_true]);
         }
         if ($product->discount == NULL) {
             Cart::add([
-                'id'                => $id,
-                'name'              => $product->product_name_en,
-                'qty'               => $request->quantity,
-                'price'             => $product->price,
-                'weight'            => 1,
-                'options'           => [
-                    'image'         => $product->image,
-                    'color'         => $request->color,
-                    'size'          => $request->size,
-                    'name_bn'       => $product->product_name_bn,
+                'id'                        => $id,
+                'name'                      => $product->product_name_en,
+                'qty'                       => $request->quantity,
+                'price'                     => $product->price,
+                'weight'                    => 1,
+                'options'                   => [
+                    'image'                 => $product->image,
+                    'color'                 => $request->color,
+                    'size'                  => $request->size,
+                    'name_bn'               => $product->product_name_bn,
                 ],
             ]);
-            return response()->json(['success' => 'Successfully Added on Your Cart']);
+            return response()->json(['success'=> 'Successfully Added on Your Cart']);
         } else {
 
             Cart::add([
-                'id'                => $id,
-                'name'              => $product->product_name_en,
-                'qty'               => $request->quantity,
-                'price'             => $product->price - (($product->discount * $product->price) / 100),
-                'weight'            => 1,
-                'options'           => [
-                    'image'         => $product->image,
-                    'color'         => $request->color,
-                    'size'          => $request->size,
-                    'name_bn'       => $product->product_name_bn,
+                'id'                        => $id,
+                'name'                      => $product->product_name_en,
+                'qty'                       => $request->quantity,
+                'price'                     => $product->price - (($product->discount * $product->price) / 100),
+                'weight'                    => 1,
+                'options'                   => [
+                    'image'                 => $product->image,
+                    'color'                 => $request->color,
+                    'size'                  => $request->size,
+                    'name_en'               => $product->product_name_en,
+                    'name_bn'               => $product->product_name_bn,
+                    'product_slug_en'       => $product->product_slug_en,
+                    'product_slug_bn'       => $product->product_slug_bn,
+
                 ],
             ]);
             return response()->json(['success' => 'Successfully Added on Your Cart']);
@@ -54,6 +58,7 @@ class CartController extends Controller
 
     public function content()
     {
+
         $carts                      = Cart::content();
         $cartQty                    = Cart::count();
         $cartTotal                  = Cart::total();
@@ -62,6 +67,7 @@ class CartController extends Controller
             'cartQty'               => $cartQty,
             'cartTotal'             => $cartTotal,
         ));
+
     }
 
     public function RemoveMiniCart($rowId)
@@ -100,5 +106,11 @@ class CartController extends Controller
             return response()->json('Decrement');
         }
     }
+    // My Cart content
+    public function myCart()
+    {
+      return view('frontend.custommer.myCart');
+    }
+
 
 }

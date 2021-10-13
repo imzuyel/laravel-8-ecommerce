@@ -26,27 +26,25 @@ class CustommerController extends Controller
     public function wishlistdata()
     {
 
-            return view('frontend.custommer.wishlistdata');
-
+        return view('frontend.custommer.wishlistdata');
     }
     public function wishlistdataget()
     {
         if (Auth::check()) {
             $wishQty                    = Wishlist::where('user_id', Auth::id())->count();
-            $wishlists=Wishlist::with('product')->where('user_id', Auth::id())->latest()->get();
+            $wishlists = Wishlist::with('product')->where('user_id', Auth::id())->latest()->get();
             return response()->json(array(
                 'wishlists'               => $wishlists,
                 'wishQty'                 => $wishQty,
             ));
         }
-
     }
 
 
     public function wishlist($product_id)
     {
         if (Auth::check()) {
-            if (Wishlist::where('product_id', $product_id)->first()) {
+            if (Wishlist::where(['product_id' => $product_id, 'user_id' => Auth::id()])->first()) {
                 Wishlist::where('user_id', Auth::id())->where('product_id', $product_id)->delete();
                 $is_true = "remove";
                 return response()->json(['is_true' => $is_true]);
@@ -68,5 +66,4 @@ class CustommerController extends Controller
         Wishlist::where('user_id', Auth::id())->where('product_id', $product_id)->delete();
         return response()->json(['success' => 'Product Remove from Cart']);
     }
-
 }

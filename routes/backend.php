@@ -1,17 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\backend\MenuController;
+
+
 use App\Http\Controllers\backend\PageController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\BrandController;
+use App\Http\Controllers\backend\ZillaController;
 use App\Http\Controllers\backend\BackupController;
+use App\Http\Controllers\backend\CouponController;
 use App\Http\Controllers\backend\SliderController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\ProfileController;
 use App\Http\Controllers\backend\SettingController;
+use App\Http\Controllers\backend\UpzillaController;
 use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\DivisionController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\SubSubCategoryController;
@@ -63,6 +68,8 @@ Route::resource('/subcategories', SubCategoryController::class)->except('show');
 Route::resource('/subsubcategories', SubSubCategoryController::class)->except('show');
 Route::post('/append/subcategory', [SubSubCategoryController::class, 'category']);
 
+// Coupon
+Route::resource('/coupons', CouponController::class)->except('show');
 // ===================Product=======================
 Route::resource('/products', ProductController::class);
 Route::post('/products/update-status', [ProductController::class, 'updateStatus']);
@@ -80,3 +87,12 @@ Route::post('/products/multi-image/store', [ProductController::class, 'updateMul
 // ===================Slider=======================
 Route::resource('/sliders', SliderController::class);
 Route::post('/sliders/update-status', [SliderController::class, 'updateStatus']);
+
+
+// Place Routes
+Route::group(['prefix' => 'place'], function () {
+    Route::resource('/division', DivisionController::class);
+    Route::resource('/zilla', ZillaController::class);
+    Route::resource('/upzilla', UpzillaController::class);
+    Route::post('append/zillas', [UpzillaController::class, 'zillas']);
+});

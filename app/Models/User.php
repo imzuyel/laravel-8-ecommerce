@@ -40,7 +40,7 @@ class User extends Authenticatable
     ];
     public function role()
     {
-       return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class);
     }
     public function hasPermission($permission): bool
     {
@@ -52,9 +52,8 @@ class User extends Authenticatable
         return $this->hasMany(Wishlist::class);
     }
 
-  public function itemOnWishlist($product_id)
+    public function itemOnWishlist($product_id)
     {
         return $this->wishlist->where('product_id', $product_id)->count() > 0;
     }
-
 }

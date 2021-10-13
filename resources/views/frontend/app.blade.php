@@ -913,6 +913,7 @@
         dataType: "json",
         success: function(data) {
           miniCart();
+          cartContent();
           toastr["success"]("Successfully product remove from cart!");
         },
         error: function(xhr, status, error) {
@@ -930,6 +931,7 @@
         dataType: 'json',
         success: function(data) {
           miniCart();
+          cartContent();
           toastr.options = {
             closeButton: true,
             closeHtml: "<button>&#xd7;</button>",
@@ -953,6 +955,7 @@
         dataType: 'json',
         success: function(data) {
           miniCart();
+          cartContent();
           toastr.options = {
             closeButton: true,
             closeHtml: "<button>&#xd7;</button>",
@@ -970,9 +973,229 @@
 
 
 
+    // Cart Content
+    function cartContent() {
+
+      $.ajax({
+        type: "GET",
+        url: "/product/cart/content/",
+        success: function(data) {
+          var cartItem = "";
+
+          $.each(data.carts, function(key, value) {
+            if (data.carts.toString().length > 0) {
+              $("#cartQty").text(data.cartQty);
+              $("#cart_tot_price").text(data.cartTotal);
+              $(".js_cart_footer").css("display", "");
+            }
+            @if (session()->get('language') === 'bangla')
+              cartItem += `
+              <div class="cart_item js_cart_item">
+                <div class="ld_cart_bar"></div>
+                <div class="row al_center">
+                  <div class="col-12 col-md-12 col-lg-5">
+                    <div class="page_cart_info flex al_center">
+                      <a href="/bn/details/${value.id}/${value.options.product_slug_bn}">
+                        <img class="lazyload w__100 lz_op_ef "
+                        style="height: 100px;width: 100px;"
+                          src="/${value.options.image}"
+                          data-src="/${value.options.image}"
+                          alt="">
+                      </a>
+                      <div class="mini_cart_body ml__15">
+                        <h5 class="mini_cart_title mg__0 mb__5"><a href="/bn/details/${value.id}/${value.options.product_slug_bn}">
+                            ${value.options.name_bn}</a></h5>
+                        <div class="mini_cart_meta">
+                          <p class="cart_selling_plan"></p>
+                        </div>
+                        <div class="mini_cart_tool mt__10">
+                            <a href="#"
+                      id="${value.rowId}"
+                      class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
+                      <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10"
+                          y1="11"
+                          x2="10"
+                          y2="17"></line>
+                        <line x1="14"
+                          y1="11"
+                          x2="14"
+                          y2="17"></line>
+                      </svg>
+                    </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4 col-lg-3 tc__ tc_lg">
+                    <div class="cart_meta_prices price">
+                      <div class="cart_price">${Math.round(value.price)}</div>
+                    </div>
+                  </div>
+                  <div class="mini_cart_actions">
+                    <div class="quantity pr mr__10 qty__true">
+                      <input type="number"
+                        class="input-text qty text tc qty_cart_js"
+                        step="1"
+                        min="0"
+                        max="9999"
+                        value="${value.qty}">
+                      <div class="qty tc fs__14">
+                        <button type="button"
+                          class="plus db cb pa pd__0 pr__15 tr r__0"
+                          id="${value.rowId}"
+                          onclick="cartIncrement(this.id)">
+                          <i class="facl facl-plus"></i>
+                        </button>
+                        <button type="button"
+                          class="minus db cb pa pd__0 pl__15 tl l__0 qty_1"
+                          id="${value.rowId}"
+                          onclick="cartDecrement(this.id)">
+                          <i class="facl facl-minus"></i>
+                        </button>
+
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-12 col-md-4 col-lg-2 tc__ tr_lg">
+                    <span class="cart-item-price fwm cd js_tt_price_it">${Math.round(value.price*value.qty)}</span>
+                  </div>
+                </div>
+              </div>
+            <hr>
+              `;
+            @else
+              cartItem += `
+              <div class="cart_item js_cart_item">
+                <div class="ld_cart_bar"></div>
+                <div class="row al_center">
+                  <div class="col-12 col-md-12 col-lg-5">
+                    <div class="page_cart_info flex al_center">
+                      <a href="/en/details/${value.id}/${value.options.product_slug_en}">
+                        <img class="lazyload w__100 lz_op_ef "
+                        style="height: 100px;width: 100px;"
+                          src="/${value.options.image}"
+                          data-src="/${value.options.image}"
+                          alt="">
+                      </a>
+                      <div class="mini_cart_body ml__15">
+                        <h5 class="mini_cart_title mg__0 mb__5"><a href="/en/details/${value.id}/${value.options.product_slug_en}">
+                            ${value.options.name_en}</a></h5>
+                        <div class="mini_cart_meta">
+                          <p class="cart_selling_plan"></p>
+                        </div>
+                        <div class="mini_cart_tool mt__10">
+                            <a href="#"
+                      id="${value.rowId}"
+                      class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
+                      <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10"
+                          y1="11"
+                          x2="10"
+                          y2="17"></line>
+                        <line x1="14"
+                          y1="11"
+                          x2="14"
+                          y2="17"></line>
+                      </svg>
+                    </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4 col-lg-3 tc__ tc_lg">
+                    <div class="cart_meta_prices price">
+                      <div class="cart_price">${Math.round(value.price)}</div>
+                    </div>
+                  </div>
+                  <div class="mini_cart_actions">
+                    <div class="quantity pr mr__10 qty__true">
+                      <input type="number"
+                        class="input-text qty text tc qty_cart_js"
+                        step="1"
+                        min="0"
+                        max="9999"
+                        value="${value.qty}">
+                      <div class="qty tc fs__14">
+                        <button type="button"
+                          class="plus db cb pa pd__0 pr__15 tr r__0"
+                          id="${value.rowId}"
+                          onclick="cartIncrement(this.id)">
+                          <i class="facl facl-plus"></i>
+                        </button>
+                        <button type="button"
+                          class="minus db cb pa pd__0 pl__15 tl l__0 qty_1"
+                          id="${value.rowId}"
+                          onclick="cartDecrement(this.id)">
+                          <i class="facl facl-minus"></i>
+                        </button>
+
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-12 col-md-4 col-lg-2 tc__ tr_lg">
+                    <span class="cart-item-price fwm cd js_tt_price_it">${Math.round(value.price*value.qty)}</span>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              `;
+            @endif
+          });
+          if (data.carts.toString().length <= 0) {
+            @if (session()->get('language') === 'bangla')
+              cartItem += `
+              <div class="empty tc mt__40 "><i class="las la-shopping-bag pr mb__10"></i>
+                <p>আপনার কার্ট </p>
+                <p class="return-to-shop mb__15">
+                  <a class="button button_primary tu js_add_ld"
+                    href="/">Return To Shop</a>
+                </p>
+              </div>
+              `;
+            @else
+              cartItem += `
+              <div class="empty tc mt__40 "><i class="las la-shopping-bag pr mb__10"></i>
+                <p>Your cart is empty.</p>
+                <p class="return-to-shop mb__15">
+                  <a class="button button_primary tu js_add_ld"
+                    href="/">Return To Shop</a>
+                </p>
+              </div>
+              `;
+            @endif
+            var zero = 0;
+            $("#cartQty").text(zero);
+            $(".js_cart_footer").css("display", "none");
+          }
+          $("#cartItem").html(cartItem);
+        },
+      });
+    }
+    cartContent();
+
+
+
     // Wishlish
     function wishlist() {
-
       $.ajax({
         type: "POST",
         url: "/user/wishlist/data",
@@ -988,13 +1211,13 @@
 
             wishlist += `
             <div class="kalles-section cat-shop pr tc p-5">
-        <h1 class="text-center text-danger">
-          @if (session()->get('language') === 'bangla')
-            আপনার ইচ্ছার তালিকায় কোন পণ্য নেই
-          @else
-            No product in your wishlist !
-          @endif
-        </h1>
+            <h1 class="text-center text-danger">
+            @if (session()->get('language') === 'bangla')
+              আপনার ইচ্ছার তালিকায় কোন পণ্য নেই
+            @else
+              No product in your wishlist !
+            @endif
+            </h1>
         <button type="submit"
           data-time="6000"
           data-ani="shake"
@@ -1160,7 +1383,10 @@
       });
     }
     // Call wishlist
+    @auth
     wishlist();
+    @endauth
+
   </script>
 
   <script>
@@ -1362,7 +1588,7 @@
             toastr["success"]("Succesfully added to wishlist");
             $(".nt_add_w").addClass("wis_added");
           } else if (data.is_true == "remove") {
-            $(".wis_added").removeClass("wis_added");
+            $(".nt_add_w").removeClass("wis_added");
             toastr["success"]("Succesfully remove form to wishlist");
 
           } else {

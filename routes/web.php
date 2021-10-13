@@ -13,6 +13,8 @@ use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\frontend\CustommerController;
 use App\Models\Brand;
 
+
+
 Auth::routes();
 Route::get('/clear', [DashboardController::class, 'cache'])->name('cache');
 //socialite
@@ -53,6 +55,10 @@ Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMi
 Route::get('/cart-increment/{rowId}', [CartController::class, 'CartIncrement']);
 Route::get('/cart-decrement/{rowId}', [CartController::class, 'CartDecrement']);
 
+
+// MyCart
+Route::get('/shop/cart', [CartController::class, 'myCart'])->name('myCart');
+
 //=========Category wise product===========//
 
 Route::get('/en/{category}', [HomeController::class, 'categoryproductsen'])->name('categoryproductsen');
@@ -80,7 +86,7 @@ view()->composer('frontend.partials.minicart', function ($view) {
 });
 
 view()->composer('frontend.shop.category', function ($view) {
-    $brands = Brand::where('status',1)->get();
+    $brands = Brand::where('status', 1)->get();
     $view->with('brands', $brands);
 });
 

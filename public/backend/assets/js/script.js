@@ -147,7 +147,7 @@ $(document).ready(function () {
      * Slider status update
      */
 
-     $(".updateSliderStatus").click(function () {
+    $(".updateSliderStatus").click(function () {
         var status = $(this).text();
         var slider_id = $(this).attr("slider_id");
         $.ajax({
@@ -178,6 +178,100 @@ $(document).ready(function () {
                     );
                     toastr["success"]("Slider active successfully!");
                 }
+            },
+            complete: function () {
+                $(".centered").css("visibility", "hidden");
+            },
+        });
+    });
+
+    //Apppend Zilla
+    $("#division_id").on("change", function () {
+        var division_id = $("#division_id").val();
+        $.ajax({
+            type: "post",
+            url: "/app/place/append/zillas",
+            data: {
+                division_id: division_id,
+            },
+            beforeSend: function () {
+                $(".centered").css("visibility", "visible");
+            },
+            success: function (resp) {
+                $(".centered").css("visibility", "visible");
+                $("#appendZillas").html(resp);
+                $("#zilla_id").select2({
+                    theme: "bootstrap4",
+                    width: $(this).data("width")
+                        ? $(this).data("width")
+                        : $(this).hasClass("w-100")
+                        ? "100%"
+                        : "style",
+                    placeholder: $(this).data("placeholder"),
+                    allowClear: Boolean($(this).data("allow-clear")),
+                });
+            },
+            complete: function () {
+                $(".centered").css("visibility", "hidden");
+            },
+        });
+    });
+
+    $("#division_id2").on("change", function () {
+        var division_id = $("#division_id2").val();
+        $.ajax({
+            type: "post",
+            url: "/app/append/zillas",
+            data: {
+                division_id: division_id,
+            },
+            beforeSend: function () {
+                $(".centered").css("visibility", "visible");
+            },
+            success: function (resp) {
+                $(".centered").css("visibility", "visible");
+                $("#appendZillas1").html(resp);
+                $("#zilla_id").select2({
+                    theme: "bootstrap4",
+                    width: $(this).data("width")
+                        ? $(this).data("width")
+                        : $(this).hasClass("w-100")
+                        ? "100%"
+                        : "style",
+                    placeholder: $(this).data("placeholder"),
+                    allowClear: Boolean($(this).data("allow-clear")),
+                });
+            },
+            complete: function () {
+                $(".centered").css("visibility", "hidden");
+            },
+        });
+    });
+
+    $(document).on("change", "#zilla_id", function (event) {
+        var zilla_id = $("#zilla_id").val();
+        $.ajax({
+            type: "post",
+            url: "/app/append/upzillas",
+            data: {
+                zilla_id: zilla_id,
+            },
+            beforeSend: function () {
+                $(".centered").css("visibility", "visible");
+            },
+            success: function (resp) {
+                $(".centered").css("visibility", "visible");
+                $("#appendUpZillas").html(resp);
+                $("#upzilla_id").select2({
+                    theme: "bootstrap4",
+                    width: $(this).data("width")
+                        ? $(this).data("width")
+                        : $(this).hasClass("w-100")
+                        ? "100%"
+                        : "style",
+                    placeholder: $(this).data("placeholder"),
+                    allowClear: Boolean($(this).data("allow-clear")),
+                });
             },
             complete: function () {
                 $(".centered").css("visibility", "hidden");

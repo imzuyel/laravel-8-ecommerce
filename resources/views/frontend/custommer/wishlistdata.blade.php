@@ -23,63 +23,6 @@
     <div id="kalles-section-wishlist_page"
       class="container container_cat pop_default cat_default mb__20">
 
-      <!--grid control-->
-      <div class="cat_toolbar row fl_center al_center mt__30">
-        <div class="cat_view col-auto">
-          <div class="dn dev_desktop">
-            <a href="#"
-              data-mode="grid"
-              data-dev="dk"
-              data-col="6"
-              class="pr mr__10 cat_view_page view_6"></a>
-            <a href="#"
-              data-mode="grid"
-              data-dev="dk"
-              data-col="4"
-              class="pr mr__10 cat_view_page view_4"></a>
-            <a href="#"
-              data-mode="grid"
-              data-dev="dk"
-              data-col="3"
-              class="pr mr__10 cat_view_page view_3 active"></a>
-            <a href="#"
-              data-mode="grid"
-              data-dev="dk"
-              data-col="15"
-              class="pr mr__10 cat_view_page view_15"></a>
-            <a href="#"
-              data-mode="grid"
-              data-dev="dk"
-              data-col="2"
-              class="pr cat_view_page view_2"></a>
-          </div>
-          <div class="dn dev_tablet dev_view_cat">
-            <a href="#"
-              data-dev="tb"
-              data-col="6"
-              class="pr mr__10 cat_view_page view_6"></a>
-            <a href="#"
-              data-dev="tb"
-              data-col="4"
-              class="pr mr__10 cat_view_page view_4"></a>
-            <a href="#"
-              data-dev="tb"
-              data-col="3"
-              class="pr cat_view_page view_3"></a>
-          </div>
-          <div class="flex dev_mobile dev_view_cat">
-            <a href="#"
-              data-dev="mb"
-              data-col="12"
-              class="pr mr__10 cat_view_page view_12"></a>
-            <a href="#"
-              data-dev="mb"
-              data-col="6"
-              class="pr cat_view_page view_6"></a>
-          </div>
-        </div>
-      </div>
-      <!--end grid control-->
 
       <!--product section-->
       <div class="row">

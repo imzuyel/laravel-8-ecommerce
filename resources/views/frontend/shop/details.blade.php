@@ -280,9 +280,9 @@
                               </div>
                               @guest
                                 <div id="lostclass"
-                                  class="nt_add_w ts__03 pa order-3">
+                                  class="nt_add_w ts__03 pa order-3" onclick="addToWishlist()">
                                   <a href="#"
-                                    class="cb chp ttip_nt tooltip_top_left "  onclick="addToWishlist()">
+                                    class="cb chp ttip_nt tooltip_top_left " >
                                     <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
                                   </a>
                                 </div>
@@ -291,18 +291,18 @@
                               @auth
 
                                 @if (Auth::user()->itemOnWishlist($product->id))
-                                  <div class="nt_add_w ts__03 pa order-3 wis_added">
+                                  <div  class="nt_add_w ts__03 pa order-3 wis_added" onclick="addToWishlist()">
                                     <a href="#"
                                       class="cb chp ttip_nt tooltip_top_left "
-                                      onclick="addToWishlist()">
+                                      >
                                       <span class="tt_txt">Wishlist</span><i class="facl facl-heart-o"></i>
                                     </a>
                                   </div>
                                 @else
-                                  <div class="nt_add_w ts__03 pa order-3">
+                                  <div class="nt_add_w ts__03 pa order-3" onclick="addToWishlist()">
                                     <a href="#"
                                       class="cb chp ttip_nt tooltip_top_left"
-                                      onclick="addToWishlist()">
+                                      >
                                       <span class="tt_txt">Wishlist</span><i class="facl facl-heart-o"></i>
                                     </a>
                                   </div>
