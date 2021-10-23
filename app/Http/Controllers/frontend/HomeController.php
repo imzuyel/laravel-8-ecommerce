@@ -16,7 +16,6 @@ class HomeController extends Controller
     public function index()
     {
 
-        // return Product::whereIn('product_color',['red'])->where('status',1)->get();
         $data['sliders']            = Slider::where('status', true)->latest('id')->where('status', 1)->get();
         $data['products']           = Product::where('status', true)->latest('id')->take(15)->where('status', 1)->get();
         $data['categories']         = Category::with('products')->where('status', true)->oldest('id')->where('status', 1)->get();
@@ -79,46 +78,40 @@ class HomeController extends Controller
 
     public function categoryproductsen($category, Request $request)
     {
-        $colors = Product::productFilter()['colors'];
-        $sizes = Product::productFilter()['sizes'];
+        $colors             = Product::productFilter()['colors'];
+        $sizes              = Product::productFilter()['sizes'];
         if ($request->ajax()) {
-            $data = $request->all();
-            $url = $data['url'];
+            $data           = $request->all();
+            $url            = $data['url'];
             if (session()->get('language') === 'bangla') {
-                $category = Category::where('category_slug_bn', $url)->firstOrFail();
+                $category   = Category::where('category_slug_bn', $url)->firstOrFail();
             } else {
-                $category = Category::where('category_slug_en', $url)->firstOrFail();
+                $category   = Category::where('category_slug_en', $url)->firstOrFail();
             }
 
-            $id = $category->id;
-            $products = Product::where('category_id', $id);
-            // Sort product
-            // If  brand filter option
+            $id             = $category->id;
+            $products       = Product::where('category_id', $id);
             if (isset($data['brand']) && !empty($data['brand'])) {
                 $products->where('brand_id', $data['brand']);
             }
-            // If  Color filter option
             if (isset($data['color']) && !empty($data['color'])) {
-                $color = $data['color'];
+                $color      = $data['color'];
                 $products->where('product_color', 'LIKE', '%' . $color . "%");
             }
 
-            // If  Size filter option
             if (isset($data['size']) && !empty($data['size'])) {
-                $size = $data['size'];
+                $size       = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
-            // Price option
             if (isset($data['min_price']) && !empty($data['min_price'])) {
-                $min_price = $data['min_price'];
+                $min_price  = $data['min_price'];
                 $products->where('price', '>=', $min_price);
             }
             if (isset($data['max_price']) && !empty($data['max_price'])) {
-                $max_price = $data['max_price'];
+                $max_price  = $data['max_price'];
                 $products->where('price', '<=', $max_price);
             }
 
-            // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
                 if ($data['sort'] == "product_latest") {
                     $products->orderBy('id', 'desc');
@@ -145,36 +138,31 @@ class HomeController extends Controller
 
     public function categoryproductsbn($category, Request $request)
     {
-        $colors = Product::productFilter()['colors'];
-        $sizes = Product::productFilter()['sizes'];
+        $colors             = Product::productFilter()['colors'];
+        $sizes              = Product::productFilter()['sizes'];
         if ($request->ajax()) {
-            $data = $request->all();
-            $url = $data['url'];
+            $data       = $request->all();
+            $url            = $data['url'];
             if (session()->get('language') === 'bangla') {
-                $category = Category::where('category_slug_bn', $url)->firstOrFail();
+                $category   = Category::where('category_slug_bn', $url)->firstOrFail();
             } else {
-                $category = Category::where('category_slug_en', $url)->firstOrFail();
+                $category   = Category::where('category_slug_en', $url)->firstOrFail();
             }
 
-            $id = $category->id;
-            $products = Product::where('category_id', $id);
-            // Sort product
-            // If  brand filter option
+            $id             = $category->id;
+            $products       = Product::where('category_id', $id);
             if (isset($data['brand']) && !empty($data['brand'])) {
                 $products->where('brand_id', $data['brand']);
             }
-            // If  Color filter option
             if (isset($data['color']) && !empty($data['color'])) {
-                $color = $data['color'];
+                $color      = $data['color'];
                 $products->where('product_color', 'LIKE', '%' . $color . "%");
             }
 
-            // If  Size filter option
             if (isset($data['size']) && !empty($data['size'])) {
-                $size = $data['size'];
+                $size       = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
-            // Price option
             if (isset($data['min_price']) && !empty($data['min_price'])) {
                 $min_price = $data['min_price'];
                 $products->where('price', '>=', $min_price);
@@ -183,7 +171,6 @@ class HomeController extends Controller
                 $max_price = $data['max_price'];
                 $products->where('price', '<=', $max_price);
             }
-            // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
                 if ($data['sort'] == "product_latest") {
                     $products->orderBy('id', 'desc');
@@ -211,46 +198,39 @@ class HomeController extends Controller
 
     public function subcategoryproductsen($category, $subcategory, Request $request)
     {
-        $colors = Product::productFilter()['colors'];
-        $sizes = Product::productFilter()['sizes'];
-        $brands = Brand::where('status', 1)->get();
+        $colors                 = Product::productFilter()['colors'];
+        $sizes                  = Product::productFilter()['sizes'];
+        $brands                 = Brand::where('status', 1)->get();
         if ($request->ajax()) {
-            $data = $request->all();
-            $url = $data['url'];
+            $data               = $request->all();
+            $url                = $data['url'];
             if (session()->get('language') === 'bangla') {
-                $subcategory = SubCategory::where('subcategory_slug_bn', $url)->firstOrFail();
+                $subcategory    = SubCategory::where('subcategory_slug_bn', $url)->firstOrFail();
             } else {
-                $subcategory = SubCategory::where('subcategory_slug_en', $url)->firstOrFail();
+                $subcategory    = SubCategory::where('subcategory_slug_en', $url)->firstOrFail();
             }
-            $id = $subcategory->id;
-            $products = Product::where('subcategory_id', $id);
-            // Sort product
-            // If  brand filter option
+            $id                 = $subcategory->id;
+            $products           = Product::where('subcategory_id', $id);
             if (isset($data['brand']) && !empty($data['brand'])) {
                 $products->where('brand_id', $data['brand']);
             }
-            // If  Color filter option
             if (isset($data['color']) && !empty($data['color'])) {
-                $color = $data['color'];
+                $color          = $data['color'];
                 $products->where('product_color', 'LIKE', '%' . $color . "%");
             }
-
-            // If  Size filter option
             if (isset($data['size']) && !empty($data['size'])) {
-                $size = $data['size'];
+                $size           = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
 
-            // Price option
             if (isset($data['min_price']) && !empty($data['min_price'])) {
-                $min_price = $data['min_price'];
+                $min_price      = $data['min_price'];
                 $products->where('price', '>=', $min_price);
             }
             if (isset($data['max_price']) && !empty($data['max_price'])) {
-                $max_price = $data['max_price'];
+                $max_price      = $data['max_price'];
                 $products->where('price', '<=', $max_price);
             }
-            // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
                 if ($data['sort'] == "product_latest") {
                     $products->orderBy('id', 'desc');
@@ -267,7 +247,7 @@ class HomeController extends Controller
                 }
             }
 
-            $products = $products->paginate(10);
+            $products   = $products->paginate(10);
             return view('frontend.shop.listing')->with(compact('products'));
         } else {
             $subcategory = SubCategory::where('subcategory_slug_en', $subcategory)->with('products')->firstOrFail();
@@ -276,45 +256,39 @@ class HomeController extends Controller
     }
     public function subcategoryproductsbn($category, $subcategory, Request $request)
     {
-        $colors = Product::productFilter()['colors'];
-        $sizes = Product::productFilter()['sizes'];
-        $brands = Brand::where('status', 1)->get();
+        $colors             = Product::productFilter()['colors'];
+        $sizes              = Product::productFilter()['sizes'];
+        $brands             = Brand::where('status', 1)->get();
         if ($request->ajax()) {
-            $data = $request->all();
-            $url = $data['url'];
+            $data           = $request->all();
+            $url            = $data['url'];
             if (session()->get('language') === 'bangla') {
-                $subcategory = SubCategory::where('subcategory_slug_bn', $url)->firstOrFail();
+                $subcategory= SubCategory::where('subcategory_slug_bn', $url)->firstOrFail();
             } else {
-                $subcategory = SubCategory::where('subcategory_slug_en', $url)->firstOrFail();
+                $subcategory= SubCategory::where('subcategory_slug_en', $url)->firstOrFail();
             }
-            $id = $subcategory->id;
-            $products = Product::where('subcategory_id', $id);
-            // Sort product
-            // If  brand filter option
+            $id             = $subcategory->id;
+            $products       = Product::where('subcategory_id', $id);
             if (isset($data['brand']) && !empty($data['brand'])) {
                 $products->where('brand_id', $data['brand']);
             }
-            // If  Color filter option
             if (isset($data['color']) && !empty($data['color'])) {
-                $color = $data['color'];
+                $color      = $data['color'];
                 $products->where('product_color', 'LIKE', '%' . $color . "%");
             }
 
-            // If  Size filter option
             if (isset($data['size']) && !empty($data['size'])) {
-                $size = $data['size'];
+                $size       = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
-            // Price option
             if (isset($data['min_price']) && !empty($data['min_price'])) {
-                $min_price = $data['min_price'];
+                $min_price  = $data['min_price'];
                 $products->where('price', '>=', $min_price);
             }
             if (isset($data['max_price']) && !empty($data['max_price'])) {
                 $max_price = $data['max_price'];
                 $products->where('price', '<=', $max_price);
             }
-            // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
                 if ($data['sort'] == "product_latest") {
                     $products->orderBy('id', 'desc');
@@ -341,37 +315,30 @@ class HomeController extends Controller
 
     public function subsubcategoryproductsen($category, $subcategory, $subsubcategory, Request $request)
     {
-        $colors = Product::productFilter()['colors'];
-        $sizes = Product::productFilter()['sizes'];
-        $brands = Brand::where('status', 1)->get();
+        $colors         = Product::productFilter()['colors'];
+        $sizes          = Product::productFilter()['sizes'];
+        $brands         = Brand::where('status', 1)->get();
         if ($request->ajax()) {
-            $data = $request->all();
-            $url = $data['url'];
+            $data       = $request->all();
+            $url        = $data['url'];
             if (session()->get('language') === 'bangla') {
                 $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $url)->firstOrFail();
             } else {
                 $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $url)->firstOrFail();
             }
-            $id = $subsubcategory->id;
-            $products = Product::where('subsubcategory_id', $id);
-            // Sort product
-            // If  brand filter option
+            $id         = $subsubcategory->id;
+            $products   = Product::where('subsubcategory_id', $id);
             if (isset($data['brand']) && !empty($data['brand'])) {
                 $products->where('brand_id', $data['brand']);
             }
-            // If  Color filter option
             if (isset($data['color']) && !empty($data['color'])) {
-                $color = $data['color'];
+                $color  = $data['color'];
                 $products->where('product_color', 'LIKE', '%' . $color . "%");
             }
-
-
-            // If  Size filter option
             if (isset($data['size']) && !empty($data['size'])) {
                 $size = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
-            // Price option
             if (isset($data['min_price']) && !empty($data['min_price'])) {
                 $min_price = $data['min_price'];
                 $products->where('price', '>=', $min_price);
@@ -380,7 +347,6 @@ class HomeController extends Controller
                 $max_price = $data['max_price'];
                 $products->where('price', '<=', $max_price);
             }
-            // Sort product
             if (isset($data['sort']) && !empty($data['sort'])) {
                 if ($data['sort'] == "product_latest") {
                     $products->orderBy('id', 'desc');
@@ -406,36 +372,30 @@ class HomeController extends Controller
     }
     public function subsubcategoryproductsbn($category, $subcategory, $subsubcategory, Request $request)
     {
-        $colors = Product::productFilter()['colors'];
-        $sizes = Product::productFilter()['sizes'];
-        $brands = Brand::where('status', 1)->get();
+        $colors         = Product::productFilter()['colors'];
+        $sizes          = Product::productFilter()['sizes'];
+        $brands         = Brand::where('status', 1)->get();
         if ($request->ajax()) {
-            $data = $request->all();
-            $url = $data['url'];
+            $data       = $request->all();
+            $url        = $data['url'];
             if (session()->get('language') === 'bangla') {
                 $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $url)->firstOrFail();
             } else {
                 $subsubcategory = SubSubCategory::where('subsubcategory_slug_en', $url)->firstOrFail();
             }
-            $id = $subsubcategory->id;
-            $products = Product::where('subsubcategory_id', $id);
-            // Sort product
-            // If  brand filter option
+            $id         = $subsubcategory->id;
+            $products   = Product::where('subsubcategory_id', $id);
             if (isset($data['brand']) && !empty($data['brand'])) {
                 $products->where('brand_id', $data['brand']);
             }
-            // If  Color filter option
             if (isset($data['color']) && !empty($data['color'])) {
-                $color = $data['color'];
+                $color  = $data['color'];
                 $products->where('product_color', 'LIKE', '%' . $color . "%");
             }
-
-            // If  Size filter option
             if (isset($data['size']) && !empty($data['size'])) {
-                $size = $data['size'];
+                $size   = $data['size'];
                 $products->where('size', 'LIKE', '%' . $size . "%");
             }
-            // Price option
             if (isset($data['min_price']) && !empty($data['min_price'])) {
                 $min_price = $data['min_price'];
                 $products->where('price', '>=', $min_price);

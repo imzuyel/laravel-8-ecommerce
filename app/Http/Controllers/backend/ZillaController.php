@@ -18,8 +18,8 @@ class ZillaController extends Controller
 
     public function create()
     {
-        $title='Add zilla';
-        $divisions=Division::all();
+        $title              ='Add zilla';
+        $divisions          =Division::all();
         return view('backend.place.zilla.add_edit',compact('title','divisions'));
     }
 
@@ -27,12 +27,12 @@ class ZillaController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'division_id'=>'required',
-            'name'=>'required|string|unique:zillas',
+            'division_id'   =>'required',
+            'name'          =>'required|string|unique:zillas',
         ]);
-        $zilla=new Zilla();
-        $zilla->division_id=$request->division_id;
-        $zilla->name=$request->name;
+        $zilla              =new Zilla();
+        $zilla->division_id =$request->division_id;
+        $zilla->name        =$request->name;
         $zilla->save();
         toastr()->success('Zilla added Succesfully !');
         return redirect()->back();
@@ -41,8 +41,8 @@ class ZillaController extends Controller
 
     public function edit(Zilla $zilla)
     {
-        $title='Edit zilla';
-        $divisions=Division::all();
+        $title              ='Edit zilla';
+        $divisions          =Division::all();
         return view('backend.place.zilla.add_edit',compact('title','zilla','divisions'));
 
     }
@@ -51,12 +51,12 @@ class ZillaController extends Controller
     public function update(Request $request, Zilla $zilla)
     {
         $this->validate($request,[
-            'division_id'=>'required',
-            'name'=>'required|string|unique:zillas,name,'.$zilla->id,
+            'division_id'   =>'required',
+            'name'          =>'required|string|unique:zillas,name,'.$zilla->id,
         ]);
-        $zilla=new Zilla();
-        $zilla->division_id=$request->division_id;
-        $zilla->name=$request->name;
+        $zilla              =new Zilla();
+        $zilla->division_id =$request->division_id;
+        $zilla->name        =$request->name;
         $zilla->save();
         toastr()->success('Zilla updated Succesfully !');
         return redirect()->route('app.zilla.index');

@@ -29,7 +29,7 @@
       <li class="{{ Request::is('app/brands/*') ? 'mm-active' : '' }}">
         <a class="has-arrow"
           href="javascript:;">
-          <div class="parent-icon icon-color-2"><i class="bx bx-pyramid"></i>
+          <div class="parent-icon icon-color-3"><i class="bx bx-envelope"></i>
           </div>
           <div class="menu-title">Brands</div>
         </a>
@@ -244,7 +244,7 @@
       <li class="{{ Request::is('app/products/*') ? 'mm-active' : '' }}">
         <a class="has-arrow"
           href="javascript:;">
-          <div class="parent-icon icon-color-2"><i class="bx bx-pyramid"></i>
+          <div class="parent-icon icon-color-7"><i class="bx bx-archive"></i>
           </div>
           <div class="menu-title">Product</div>
         </a>
@@ -273,7 +273,7 @@
       <li class="{{ Request::is('app/sliders/*') ? 'mm-active' : '' }}">
         <a class="has-arrow"
           href="javascript:;">
-          <div class="parent-icon icon-color-2"><i class="bx bx-pyramid"></i>
+          <div class="parent-icon icon-color-11"><i class="bx bx-repeat"></i>
           </div>
           <div class="menu-title">Slider</div>
         </a>

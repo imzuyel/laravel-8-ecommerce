@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
     public function AddToCart(Request $request, $id)
     {
-
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
         $product                            = Product::findOrFail($id);
         if ($product->product_qty < $request->quantity) {
+
             $product_qty                    = $product->product_qty;
             $is_true                        = true;
-            return response()->json(['error'=> 'Add less than ' . $product->product_qty, 'product_qty'                   => $product_qty, 'is_true' => $is_true]);
+            return response()->json(['error' => 'Add less than ' . $product->product_qty, 'product_qty'                   => $product_qty, 'is_true' => $is_true]);
         }
         if ($product->discount == NULL) {
             Cart::add([
@@ -32,7 +37,7 @@ class CartController extends Controller
                     'name_bn'               => $product->product_name_bn,
                 ],
             ]);
-            return response()->json(['success'=> 'Successfully Added on Your Cart']);
+            return response()->json(['success' => 'Successfully Added on Your Cart']);
         } else {
 
             Cart::add([
@@ -55,7 +60,6 @@ class CartController extends Controller
             return response()->json(['success' => 'Successfully Added on Your Cart']);
         }
     }
-
     public function content()
     {
 
@@ -67,16 +71,15 @@ class CartController extends Controller
             'cartQty'               => $cartQty,
             'cartTotal'             => $cartTotal,
         ));
-
     }
-
     public function RemoveMiniCart($rowId)
     {
         Cart::remove($rowId);
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
         return response()->json(['success' => 'Product Remove from Cart']);
     }
-
-    // Cart Increment
     public function CartIncrement($rowId)
     {
 
@@ -85,32 +88,46 @@ class CartController extends Controller
         if ($product->product_qty > $row->qty) {
 
             Cart::update($rowId, $row->qty + 1);
+            if (Session::has('coupon')) {
+                $coupon_name            = Session::get('coupon')['coupon_name'];
+                $coupon                 = Coupon::where('coupon_name',$coupon_name)->first();
+                Session::put('coupon', [
+                    'coupon_name'       => $coupon->coupon_name,
+                    'coupon_discount'   => $coupon->coupon_discount,
+                    'discount_amount'   => round((str_replace(',', '', Cart::total()) * $coupon->coupon_discount) / 100),
+                    'total_amount'      => round(str_replace(',', '', Cart::total()) - (str_replace(',', '', Cart::total()) * $coupon->coupon_discount) / 100)
+                ]);
+            }
             return response()->json('increment');
         } else {
             $is_true                = true;
             $product_qty            = $product->product_qty;
-            return response()->json(['error' => 'Add less than ' . $product->product_qty, 'product_qty'=> $product_qty, 'is_true' => $is_true]);
+            return response()->json(['error' => 'Add less than ' . $product->product_qty, 'product_qty' => $product_qty, 'is_true' => $is_true]);
         }
     }
-
-
-    // Cart Decrement
     public function CartDecrement($rowId)
     {
         $row                        = Cart::get($rowId);
         if ($row->qty == 1) {
-            $is_true=true;
+            $is_true = true;
             return response()->json(['is_true' => $is_true]);
         } else {
             Cart::update($rowId, $row->qty - 1);
+            if (Session::has('coupon')) {
+                $coupon_name = Session::get('coupon')['coupon_name'];
+                $coupon = Coupon::where('coupon_name',$coupon_name)->first();
+                Session::put('coupon', [
+                    'coupon_name'       => $coupon->coupon_name,
+                    'coupon_discount'   => $coupon->coupon_discount,
+                    'discount_amount'   => round((str_replace(',', '', Cart::total()) * $coupon->coupon_discount) / 100),
+                    'total_amount'      => round(str_replace(',', '', Cart::total()) - (str_replace(',', '', Cart::total()) * $coupon->coupon_discount) / 100)
+                ]);
+            }
             return response()->json('Decrement');
         }
     }
-    // My Cart content
     public function myCart()
     {
-      return view('frontend.custommer.myCart');
+        return view('frontend.custommer.myCart');
     }
-
-
 }

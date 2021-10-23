@@ -52,19 +52,41 @@
       display: block;
     }
 
-    /* Ajax */
-    .centered {
+    /* Spiner */
+    #overlay {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transform: -webkit-translate(-50%, -50%);
-      transform: -moz-translate(-50%, -50%);
-      transform: -ms-translate(-50%, -50%);
-      color: darkred;
-      background: rgba(0, 0, 0, 0.5);
+      top: 0;
       z-index: 100;
-      visibility: hidden;
+      width: 100%;
+      height: 100%;
+      display: none;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .cv-spinner {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px #ddd solid;
+      border-top: 4px #2e93e6 solid;
+      border-radius: 50%;
+      animation: sp-anime 0.8s infinite linear;
+    }
+
+    @keyframes sp-anime {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .is-hide {
+      display: none;
     }
 
   </style>
@@ -73,9 +95,14 @@
 
 <body
   class="lazy_icons zoom_tp_2 css_scrollbar template-index lazyload js_search_true cart_pos_side kalles_toolbar_true hover_img2 swatch_style_rounded swatch_list_size_small label_style_rounded wrapper_full_width header_full_true header_sticky_true hide_scrolld_true des_header_2 h_banner_true top_bar_true spcdt4_ js_search_type">
+  <!-- ==================   Ajax ============================ -->
+  <div id="overlay">
+    <div class="cv-spinner">
+      <span class="spinner"></span>
+    </div>
+  </div>
+  <!-- ==================   Ajax End ============================ -->
 
-  <img class="centered"
-    src="/images/ajax-loader.gif">
 
   <!--header-->
   @include('frontend.partials.header')
@@ -505,7 +532,11 @@
   <!-- back to top button-->
   <a id="nt_backtop"
     class="pf br__50 z__100 des_bt1"
-    href="#"><span class="tc br__50 db cw"><i class="pr pegk pe-7s-angle-up"></i></span></a>
+    href="#">
+    <span class="tc br__50 db cw">
+      <i class="pr pegk pe-7s-angle-up"></i>
+    </span>
+  </a>
 
   <script src=" {{ asset('frontend/assets/js/jquery-3.5.1.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/jarallax.min.js') }}"></script>
@@ -518,7 +549,14 @@
   <script src=" {{ asset('frontend/assets/js/jquery.countdown.min.js') }}"></script>
   <script src=" {{ asset('frontend/assets/js/script.js') }}"></script>
 
+
+  <!-- Toaster-->
+  @include('auth.toast')
+  <!--end Toaster-->
+
+  <!--========================== Ajax=============================-->
   <script>
+    // Category dropdown menu
     $(document).ready(function() {
       $('.dropdown-submenu a.test').on("click", function(e) {
         $(this).next('ul').toggle();
@@ -526,8 +564,6 @@
         e.preventDefault();
       });
     });
-  </script>
-  <script>
     $(".btn-group, .dropdown").hover(
       function() {
         $('>.dropdown-menu', this).stop(true, true).fadeIn("fast");
@@ -537,19 +573,17 @@
         $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
         $(this).removeClass('open');
       });
-  </script>
-  @include('auth.toast')
+    //End Category dropdown menu
 
-
-
-  {{-- AJAX --}}
-  <script>
-    //Ajax setup
+    //Ajax Token setup
     $.ajaxSetup({
       headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
       },
     });
+    //End Ajax Token setup
+
+    // Product Quick View
     $("body").on("click", ".productView", function() {
       var product_id = $(this).attr("product_id");
       $.ajax({
@@ -583,8 +617,6 @@
           $("#short_description_en").text(
             data.product.short_description_en
           );
-
-
           if (data.product.discount == null) {
             $("#discount").text("New");
             $("#discount_bg").addClass("bg-success");
@@ -598,8 +630,7 @@
             $("#new_price").text("$" + Math.round(new_price));
             $("#price").text("$" + data.product.price);
             $("#discount_bg").addClass("bg-danger");
-          } // end prodcut price
-
+          }
           // All quick shop for id 2
           if (data.product.discount == null) {
             $("#discount2display").hide();
@@ -614,7 +645,7 @@
             $("#new_price2").text("$" + Math.round(new_price));
             $("#price2").text("$" + data.product.price);
             $("#discount_bg2").addClass("bg-danger");
-          } //All quick shop for id 2
+          }
 
           // Color
           if (data.color.length > 1) {
@@ -655,16 +686,14 @@
         },
       });
     });
+    //End Product Quick View
 
-    /**
-     * Add to cart
-     */
+    // Add to cart function
     window.addToCart = function() {
       var id = $("#product_id").val();
       var color = $("#color option:selected").text();
       var size = $("#size option:selected").text();
       var quantity = $("#qty").val();
-
       $.ajax({
         type: "POST",
         dataType: "json",
@@ -674,6 +703,9 @@
           quantity: quantity,
         },
         url: "/cart/data/store/" + id,
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
         success: function(data) {
           miniCart();
           toastr.options = {
@@ -687,27 +719,25 @@
           } else {
             toastr["success"]("Successfully added successfully!");
           }
-
-
-          // End Message
         },
         error: function(xhr, status, error) {
           var err = eval("(" + xhr.responseText + ")");
-          // alert(err.message);
           toastr["error"](err.message);
         },
+        complete: function() {
+          $("#overlay").fadeOut(300);
+        }
       });
     };
     // End add to cart
 
+    // MiniCart
     function miniCart() {
-
       $.ajax({
         type: "GET",
         url: "/product/cart/content/",
         success: function(data) {
           var miniCart = "";
-
           $.each(data.carts, function(key, value) {
             if (data.carts.toString().length > 0) {
               $("#cartQty").text(data.cartQty);
@@ -902,9 +932,10 @@
         },
       });
     }
-    // Call mini
     miniCart();
+    //End MiniCart mini
 
+    //Item Remove form minicart
     $(document).on("click", ".miniCartRemoveItem", function() {
       var rowId = $(this).attr("id");
       $.ajax({
@@ -914,6 +945,7 @@
         success: function(data) {
           miniCart();
           cartContent();
+          CouponCalculate();
           toastr["success"]("Successfully product remove from cart!");
         },
         error: function(xhr, status, error) {
@@ -922,8 +954,9 @@
         },
       });
     });
+    //End Item Remove form minicart
 
-
+    //Item Increment Form cart
     function cartIncrement(rowId) {
       $.ajax({
         type: 'GET',
@@ -932,6 +965,7 @@
         success: function(data) {
           miniCart();
           cartContent();
+          CouponCalculate();
           toastr.options = {
             closeButton: true,
             closeHtml: "<button>&#xd7;</button>",
@@ -946,8 +980,9 @@
         }
       });
     }
+    //End Item Increment Form cart
 
-
+    //Item Decrement Form cart
     function cartDecrement(rowId) {
       $.ajax({
         type: 'GET',
@@ -956,6 +991,7 @@
         success: function(data) {
           miniCart();
           cartContent();
+          CouponCalculate();
           toastr.options = {
             closeButton: true,
             closeHtml: "<button>&#xd7;</button>",
@@ -970,18 +1006,15 @@
         }
       });
     }
+    //End Item Decrement Form cart
 
-
-
-    // Cart Content
+    // Cart Item
     function cartContent() {
-
       $.ajax({
         type: "GET",
         url: "/product/cart/content/",
         success: function(data) {
           var cartItem = "";
-
           $.each(data.carts, function(key, value) {
             if (data.carts.toString().length > 0) {
               $("#cartQty").text(data.cartQty);
@@ -997,7 +1030,7 @@
                     <div class="page_cart_info flex al_center">
                       <a href="/bn/details/${value.id}/${value.options.product_slug_bn}">
                         <img class="lazyload w__100 lz_op_ef "
-                        style="height: 100px;width: 100px;"
+                          style="height: 100px;width: 100px;"
                           src="/${value.options.image}"
                           data-src="/${value.options.image}"
                           alt="">
@@ -1009,28 +1042,28 @@
                           <p class="cart_selling_plan"></p>
                         </div>
                         <div class="mini_cart_tool mt__10">
-                            <a href="#"
-                      id="${value.rowId}"
-                      class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
-                      <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <line x1="10"
-                          y1="11"
-                          x2="10"
-                          y2="17"></line>
-                        <line x1="14"
-                          y1="11"
-                          x2="14"
-                          y2="17"></line>
-                      </svg>
-                    </a>
+                          <a href="#"
+                            id="${value.rowId}"
+                            class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
+                            <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round">
+                              <polyline points="3 6 5 6 21 6"></polyline>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10"
+                                y1="11"
+                                x2="10"
+                                y2="17"></line>
+                              <line x1="14"
+                                y1="11"
+                                x2="14"
+                                y2="17"></line>
+                            </svg>
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -1071,7 +1104,7 @@
                   </div>
                 </div>
               </div>
-            <hr>
+              <hr>
               `;
             @else
               cartItem += `
@@ -1082,7 +1115,7 @@
                     <div class="page_cart_info flex al_center">
                       <a href="/en/details/${value.id}/${value.options.product_slug_en}">
                         <img class="lazyload w__100 lz_op_ef "
-                        style="height: 100px;width: 100px;"
+                          style="height: 100px;width: 100px;"
                           src="/${value.options.image}"
                           data-src="/${value.options.image}"
                           alt="">
@@ -1094,28 +1127,28 @@
                           <p class="cart_selling_plan"></p>
                         </div>
                         <div class="mini_cart_tool mt__10">
-                            <a href="#"
-                      id="${value.rowId}"
-                      class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
-                      <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <line x1="10"
-                          y1="11"
-                          x2="10"
-                          y2="17"></line>
-                        <line x1="14"
-                          y1="11"
-                          x2="14"
-                          y2="17"></line>
-                      </svg>
-                    </a>
+                          <a href="#"
+                            id="${value.rowId}"
+                            class="ttip_nt tooltip_top_right miniCartRemoveItem"><span class="tt_txt">Remove this item</span>
+                            <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              fill="none"
+                              stroke-linecap="round"
+                              stroke-linejoin="round">
+                              <polyline points="3 6 5 6 21 6"></polyline>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10"
+                                y1="11"
+                                x2="10"
+                                y2="17"></line>
+                              <line x1="14"
+                                y1="11"
+                                x2="14"
+                                y2="17"></line>
+                            </svg>
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -1181,9 +1214,12 @@
                 </p>
               </div>
               `;
+
             @endif
             var zero = 0;
             $("#cartQty").text(zero);
+            $("#cart_tot_price").text(zero);
+            $('.cartCheckout').css("display", 'none');
             $(".js_cart_footer").css("display", "none");
           }
           $("#cartItem").html(cartItem);
@@ -1191,10 +1227,84 @@
       });
     }
     cartContent();
+    // Cart End Item
 
+    //Add to Wishlist
+    window.addToWishlist = function() {
+      var id = $("#product_id").val();
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        data: {
+          id: id,
+        },
+        url: "/user/wishlist/store/" + id,
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
+        success: function(data) {
+          wishlist();
+          if (data.is_true == "added") {
+            toastr["success"]("Succesfully added to wishlist");
+            $(".nt_add_w").addClass("wis_added");
+          } else if (data.is_true == "remove") {
+            $(".nt_add_w").removeClass("wis_added");
+            toastr["success"]("Succesfully remove form to wishlist");
 
+          } else {
+            toastr["error"]("Login first");
+          }
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          toastr["error"](err.message);
+        },
+        complete: function() {
+          $("#overlay").fadeOut(300);
+        }
+      });
+    };
+    //End Add to Wishlist
 
-    // Wishlish
+    // Wishlist heart Class add
+    const body = $("body"),
+      $window = $(window),
+      rtl_mode = body.hasClass("rtl"),
+      $ld = $("#ld_cl_bar"),
+      window_w = $window.width(),
+      is_smaller_768 = window_w < 768,
+      mask = $(".mask-overlay"),
+      html = $("html"),
+      touchevents = Modernizr.touchevents;
+
+    body.on("click", ".wis_remove", function() {
+      let $product = $(this).closest(".product");
+      $product.addClass("kalles-hidden-product");
+      setTimeout(() => $product.remove(), 500);
+      var product_id = $(this).attr("product_id");
+      $.ajax({
+        type: "POST",
+        url: "/wishlist/product-remove/" + product_id,
+        dataType: "json",
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
+        success: function(data) {
+          wishlist();
+          toastr["success"]("Successfully product remove from wishlist!");
+        },
+        error: function(xhr, status, error) {
+          var err = eval("(" + xhr.responseText + ")");
+          toastr["error"](err.message);
+        },
+        complete: function() {
+          $("#overlay").fadeOut(300);
+        }
+      });
+    });
+    // End Wishlist heart Class
+
+    // Wishlish Item
     function wishlist() {
       $.ajax({
         type: "POST",
@@ -1231,11 +1341,9 @@
             @endif
           </span>
         </button>
-      </div>
-              `;
+      </div>`;
           } else {
             $.each(data.wishlists, function(key, value) {
-
               @if (session()->get('language') === 'bangla')
                 wishlist += `
                 <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
@@ -1382,14 +1490,12 @@
         },
       });
     }
-    // Call wishlist
     @auth
-    wishlist();
+      wishlist();
     @endauth
+    // End Wishlish
 
-  </script>
-
-  <script>
+    // Sort Product
     $(".sort").on('change', function() {
       var sort = $(this).val();
       var url = $('.url').val();
@@ -1400,9 +1506,6 @@
       var color = $('li .color ,.active a #scolor').text();
       $.ajax({
         url: url,
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
         data: {
           color: color,
           url: url,
@@ -1413,19 +1516,21 @@
           max_price: max_price,
 
         },
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
         success: function(resp) {
           $('.filterOption').html(resp);
 
         },
         complete: function() {
-          $('.centered').css("visibility", "hidden");
+          $("#overlay").fadeOut(300);
         }
-      })
+      });
     });
+    // Sort Product
 
-    /**
-     * Filter Brand
-     */
+    // Filter By Brand
     $('.brand').on('click', function() {
       var brand = ($(this).data("brand"));
       var url = $('.url').val();
@@ -1436,9 +1541,6 @@
       var max_price = $('.max_price').val();
       $.ajax({
         url: url,
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
         data: {
           url: url,
           brand: brand,
@@ -1448,19 +1550,21 @@
           min_price: min_price,
           max_price: max_price,
         },
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
         success: function(resp) {
           $('.filterOption').html(resp);
           $.magnificPopup.close();
         },
         complete: function() {
-          $('.centered').css("visibility", "hidden");
+          $("#overlay").fadeOut(300);
         }
       })
     });
+    //End Filter By Brand
 
-    /**
-     * Filter Color
-     */
+    // Filter By Color
     $('.color').on('click', function() {
       var color = ($(this).data("color"));
       var url = $('.url').val();
@@ -1469,12 +1573,8 @@
       var size = $('li .size,.active a #s_size').text();
       var min_price = $('.min_price').val();
       var max_price = $('.max_price').val();
-
       $.ajax({
         url: url,
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
         data: {
           color: color,
           url: url,
@@ -1484,20 +1584,23 @@
           min_price: min_price,
           max_price: max_price,
         },
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
         success: function(resp) {
           $('.filterOption').html(resp);
           $.magnificPopup.close();
         },
         complete: function() {
-          $('.centered').css("visibility", "hidden");
-        }
+          $("#overlay").fadeOut(300);
+        },
+
       })
 
     });
+    //End Filter By Color
 
-    /**
-     * Filter Size
-     */
+    // Filter By Size
     $('.size').on('click', function() {
       var size = ($(this).data("size"));
       var url = $('.url').val();
@@ -1508,9 +1611,6 @@
       var max_price = $('.max_price').val();
       $.ajax({
         url: url,
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
         data: {
           size: size,
           url: url,
@@ -1521,18 +1621,22 @@
           max_price: max_price,
 
         },
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
         success: function(resp) {
           $('.filterOption').html(resp);
           $.magnificPopup.close();
         },
         complete: function() {
-          $('.centered').css("visibility", "hidden");
+          $("#overlay").fadeOut(300);
         }
       })
 
     });
+    //End Filter By Size
 
-
+    // Filter By Price
     $('.price').on('click', function() {
       var min_price = $('.min_price').val();
       var max_price = $('.max_price').val();
@@ -1544,9 +1648,6 @@
       var color = $('li .color,.active').attr("data-color");
       $.ajax({
         url: url,
-        beforeSend: function() {
-          $('.centered').css("visibility", "visible");
-        },
         data: {
           min_price: min_price,
           max_price: max_price,
@@ -1555,102 +1656,222 @@
           color: color,
           sort: sort,
           brand: brand,
-
+        },
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
         },
         success: function(resp) {
           $('.filterOption').html(resp);
           $.magnificPopup.close();
         },
         complete: function() {
-          $('.centered').css("visibility", "hidden");
+          $("#overlay").fadeOut(300);
         }
       })
     });
+    //End Filter By price
 
-
-
-
-    /**
-     * Add to Wishlist
-     */
-    window.addToWishlist = function() {
-      var id = $("#product_id").val();
+    // Coupon Apply
+    $("#couponApply").click(function(event) {
+      event.preventDefault();
+      var coupon = $("#couponApplyText").val();
       $.ajax({
         type: "POST",
         dataType: "json",
+        url: "/user/coupon/apply",
         data: {
-          id: id,
+          coupon: coupon,
         },
-        url: "/user/wishlist/store/" + id,
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
         success: function(data) {
-          wishlist();
-          if (data.is_true == "added") {
-            toastr["success"]("Succesfully added to wishlist");
-            $(".nt_add_w").addClass("wis_added");
-          } else if (data.is_true == "remove") {
-            $(".nt_add_w").removeClass("wis_added");
-            toastr["success"]("Succesfully remove form to wishlist");
+          if (data.is_true == 'valid') {
+            CouponCalculate();
+            toastr["success"]("Coupon Apply Successfully");
+            $('#hideCoupon').hide();
+            $('#showCoupon').show();
+            $('#CouponDiscount').show();
+            $('#couponId').text('');
 
+
+          } else if (data.is_true == 'empty') {
+            toastr["error"]("Your cart is empty");
           } else {
-            toastr["error"]("Login first");
+            toastr["error"]("Invalid coupon");
           }
-
-
-          // End Message
         },
-        error: function(xhr, status, error) {
-          var err = eval("(" + xhr.responseText + ")");
-          // alert(err.message);
-          toastr["error"](err.message);
-        },
+        complete: function() {
+          $("#overlay").fadeOut(300);
+        }
 
-      });
-    };
-    // End add to cart
-  </script>
-  <script>
-    const body = $("body"),
-      $window = $(window),
-      rtl_mode = body.hasClass("rtl"),
-      $ld = $("#ld_cl_bar"),
-      window_w = $window.width(),
-      is_smaller_768 = window_w < 768,
-      mask = $(".mask-overlay"),
-      html = $("html"),
-      touchevents = Modernizr.touchevents;
-
-    body.on("click", ".wis_remove", function() {
-
-      let $product = $(this).closest(".product");
-
-      $product.addClass("kalles-hidden-product");
-      setTimeout(() => $product.remove(), 500);
-
-      var product_id = $(this).attr("product_id");
-      $.ajax({
-        type: "POST",
-        url: "/wishlist/product-remove/" + product_id,
-        dataType: "json",
-        success: function(data) {
-          wishlist();
-          toastr["success"]("Successfully product remove from wishlist!");
-        },
-        error: function(xhr, status, error) {
-          var err = eval("(" + xhr.responseText + ")");
-          toastr["error"](err.message);
-        },
-      });
+      })
     });
+    //End Coupon Apply
+
+    // Coupon Caculate
+    function CouponCalculate() {
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: '/coupons/calculate',
+        @if (session()->get('language') === 'bangla')
+          success: function(data) {
+          if (data.total) {
+          $('#couponData').html(
+          ` <div class="total row in_flex fl_between al_center cd fs__18 tu">
+            <div class="col-auto"><strong>সর্বমোট:</strong></div>
+            <div class="col-auto tr js_cat_ttprice fs__20 fwm">
+              <div class="cart_tot_price">${data.total} ৳
+              </div>
+            </div>
+
+          </div>`
+          )
+          } else {
+          $('#couponData').html(`
+          <div class="total row in_flex fl_between al_center cd fs__18 tu">
+            <div class="col-auto"><strong class="text-primary">উপদাম:</strong></div>
+            <div class="col-auto tr js_cat_ttprice fs__20 fwm">
+              <div class="cart_tot_price text-primary">${data.subtotal}৳
+              </div>
+            </div>
+
+          </div>
+          <div class="clearfix"></div>
+          <span class="db txt_tax_ship mb__5 mt_5"><b><code>${data.coupon_name}</code> counpon(${data.coupon_discount} %) : -
+              ${data.discount_amount}</b>
+            <a href="#"
+              onclick="couponRemove()"
+              id=""
+              class="ttip_nt tooltip_top_right "><span class="tt_txt">এই কুপনটি সরান</span>
+              <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10"
+                  y1="11"
+                  x2="10"
+                  y2="17"></line>
+                <line x1="14"
+                  y1="11"
+                  x2="14"
+                  y2="17"></line>
+              </svg>
+            </a></span>
+
+          <div class="total row in_flex fl_between al_center cd fs__18 tu">
+            <div class="col-auto"><strong class="text-danger">সর্বমোট:</strong></div>
+            <div class="col-auto tr js_cat_ttprice fs__20 fwm">
+              <div class="cart_tot_price text-danger">${data.total_amount} ৳
+              </div>
+            </div>
+
+          </div>
+          <div class="clearfix"></div>
+          `);
+          }
+          },
+        @else
+          success: function(data) {
+          if (data.total) {
+          $('#couponData').html(
+          ` <div class="total row in_flex fl_between al_center cd fs__18 tu">
+            <div class="col-auto"><strong>GrandTotal:</strong></div>
+            <div class="col-auto tr js_cat_ttprice fs__20 fwm">
+              <div class="cart_tot_price">${data.total}
+              </div>
+            </div>
+
+          </div>`
+          )
+          } else {
+          $('#couponData').html(`
+          <div class="total row in_flex fl_between al_center cd fs__18 tu">
+            <div class="col-auto"><strong class="text-primary">Subtotal:</strong></div>
+            <div class="col-auto tr js_cat_ttprice fs__20 fwm">
+              <div class="cart_tot_price text-primary">${data.subtotal}
+              </div>
+            </div>
+
+          </div>
+          <div class="clearfix"></div>
+          <span class="db txt_tax_ship mb__5 mt_5"><b><code>${data.coupon_name}</code> counpon(${data.coupon_discount} %) : -
+              ${data.discount_amount}</b>
+            <a href=""    onclick="couponRemove()"
+              id=""
+              class="ttip_nt tooltip_top_right  "><span class="tt_txt">Remove this coupon</span>
+              <svg style="width: 20px;height: 20px;stroke-width: 1.5;"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10"
+                  y1="11"
+                  x2="10"
+                  y2="17"></line>
+                <line x1="14"
+                  y1="11"
+                  x2="14"
+                  y2="17"></line>
+              </svg>
+            </a></span>
+
+          <div class="total row in_flex fl_between al_center cd fs__18 tu">
+            <div class="col-auto"><strong class="text-danger">Grand Total:</strong></div>
+            <div class="col-auto tr js_cat_ttprice fs__20 fwm">
+              <div class="cart_tot_price text-danger">${data.total_amount}
+              </div>
+            </div>
+
+          </div>
+          <div class="clearfix"></div>
+          `);
+          }
+          },
+        @endif
+      })
+    }
+    CouponCalculate();
+    // End Coupon Caculate
+
+    // Coupon Remove
+    function couponRemove() {
+      $.ajax({
+        type: 'GET',
+        url: "/user/coupon-remove",
+        dataType: 'json',
+        beforeSend: function() {
+          $("#overlay").fadeIn(300);
+        },
+        success: function(data) {
+            $('#hideCoupon').show();
+            $('#showCoupon').hide();
+            $('#CouponDiscount').hide();
+            CouponCalculate();
+            toastr["success"]("Coupon Remove Successfully");
+        },
+
+        complete: function() {
+          $("#overlay").fadeOut(300);
+        }
+      });
+    }
+    // End Coupon Remove
   </script>
-
-
-  {{-- End ajax --}}
+  <!--========================== End Ajax=========================-->
 
   @stack('js')
   <script src="{{ asset('frontend/assets/js/interface.js') }}"></script>
-
-
-
 </body>
 
 </html>

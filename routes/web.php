@@ -1,5 +1,8 @@
 <?php
 
+namespace App;
+
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +14,7 @@ use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\frontend\CustommerController;
-use App\Models\Brand;
+
 
 
 
@@ -36,6 +39,9 @@ Route::get('/user/wishlist', [CustommerController::class, 'wishlistdata'])->name
 Route::post('/user/wishlist/data', [CustommerController::class, 'wishlistdataget'])->name('user.wishlistdataget')->middleware('auth');
 Route::post('/user/wishlist/store/{product_id}', [CustommerController::class, 'wishlist'])->name('user.wishlist');
 Route::post('/wishlist/product-remove/{product_id}', [CustommerController::class, 'RemoveWishlist'])->middleware('auth');
+Route::post('/user/coupon/apply', [CustommerController::class, 'applyCoupon']);
+Route::get('/coupons/calculate', [CustommerController::class, 'calculateCoupon']);
+Route::get('/user/coupon-remove', [CustommerController::class, 'couponRemove']);
 
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
