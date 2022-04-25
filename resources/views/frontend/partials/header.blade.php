@@ -9,48 +9,55 @@
               <div class="row al_center">
                 <div class="col-lg-3 col-12 tc tl_lg col-md-12 dn_false_1024">
                   <div class="nt-social">
-                    <a href="#"
+                    <a target="_blank" href="https://www.facebook.com/imzuyel"
                       class="facebook cb ttip_nt tooltip_bottom_right">
                       <span class="tt_txt">Follow on Facebook</span><i class="facl facl-facebook"></i>
                     </a>
-                    <a href="#"
+                    <a target="_blank" href="https://twitter.com/imzuyel"
                       class="twitter cb ttip_nt tooltip_bottom_right">
                       <span class="tt_txt">Follow on Twitter</span><i class="facl facl-twitter"></i>
                     </a>
-                    <a href="#"
+                    <a target="_blank" href="https://www.instagram.com/imzuyel/"
                       class="instagram cb ttip_nt tooltip_bottom_right">
                       <span class="tt_txt">Follow on Instagram</span><i class="facl facl-instagram"></i>
                     </a>
-                    <a href="#"
+                    <a target="_blank" href="https://www.linkedin.com/in/imzuyel"
                       class="linkedin cb ttip_nt tooltip_bottom_right">
                       <span class="tt_txt">Follow on Linkedin</span><i class="facl facl-linkedin"></i>
                     </a>
-                    <a href="#"
-                      class="pinterest cb ttip_nt tooltip_bottom_right">
-                      <span class="tt_txt">Follow on Pinterest</span><i class="facl facl-pinterest"></i>
-                    </a>
                   </div>
                 </div>
+
                 <div class="col-lg-6 col-12 tc col-md-12 dn_false_1024">
+                    @if (session()->get('language') === 'bangla')
+                      <div class="header-text">গ্রীষ্মকালীন বিক্রয় ছাড়
+                        <span class="cr fwm">20%</span> কোড ব্যবহার করুন “SUMMER20”!
+                        <a href="{{ route('categoryproductsbn', $category->category_slug_bn) }}"><span class="cr fwm">কিনুন</span> </a>
+                      </div>
+                  @else
                   <div class="header-text">Summer sale discount off
                     <span class="cr fwm">20%</span> use code “SUMMER20”!
-                    <a href="shop.html"><span class="cr fwm">Shop Now</span> </a>
+                    <a href="{{ route('categoryproductsen', $category->category_slug_en) }}"><span class="cr fwm">Shop Now</span> </a>
                   </div>
+                  @endif
+
                 </div>
+
                 <div class="col-lg-3 col-12 tc col-md-12 tr_lg dn_false_1024">
                   <div class="nt_currency pr cg currencies sp_currencies wsn dib cur_stt_0">
                     @if (session()->get('language') === 'bangla')
-                      <span class="nt-currency-flag--usd--w16-h-12 active ">ভাষা</span><i
+                      <span class="active text-danger">ভাষা</span><i
                         class="facl facl-angle-down ml__5"></i>
                     @else
-                      <span class="nt-currency-flag--usd--w16-h-12 active ">Language</span><i
+                      <span class=" active text-danger">Language</span><i
                         class="facl facl-angle-down ml__5"></i>
                     @endif
 
                     <ul class="pa pe_none ts__03 bgbl ul_none tl op__0 z_100 r__0 pt__15 pb__15 pr__15 pl__15">
-                      <li><a class="nt-currency-flag--aud--w16-h-12 cg db"
+                      <li><a class=" cg db text-dark-blue"
                           href="{{ route('language.english') }}">English</a></li>
-                      <li><a class="nt-currency-flag--cad--w16-h-12 cg db"
+
+                      <li><a class=" cg db text-dark-blue"
                           href="{{ route('language.bangla') }}">বাংলা</a></li>
                     </ul>
                   </div>
@@ -86,7 +93,7 @@
                 <div class="col-lg-3 col-md-4 col-6 tc tl_lg">
                   <div class="branding ts__05 lh__1">
                     <a class="dib"
-                      href="index.html">
+                      href="{{ route('frontend.home') }}">
                       <img class="w__95 logo_normal dn db_lg"
                         src="/{{ setting('site_logo') }}"
                         alt="Kalles Template">
@@ -106,22 +113,21 @@
                     role="search">
                     <div class="row no-gutters al_center">
                       <div class="frm_search_cat col-auto">
+                        @if (session()->get('language') === 'bangla')
                         <select name="product_type">
-                          <option value="*">All Categories</option>
-                          <option value="Acessories">Acessories</option>
-                          <option value="Bag">Bag</option>
-                          <option value="Camera">Camera</option>
-                          <option value="Decor">Decor</option>
-                          <option value="Earphones">Earphones</option>
-                          <option value="Electric">Electric</option>
-                          <option value="Furniture">Furniture</option>
-                          <option value="Headphone">Headphone</option>
-                          <option value="Men">Men</option>
-                          <option value="Shoes">Shoes</option>
-                          <option value="Speaker">Speaker</option>
-                          <option value="Watch">Watch</option>
-                          <option value="Women">Women</option>
+                          <option value="*">সব ক্যাটাগরি</option>
+                          @foreach ($categories as $category)
+                          <option value="{{ $category->category_name_bn }}">{{ $category->category_name_bn }}</option>
+                         @endforeach
                         </select>
+                        @else
+                        <select name="product_type">
+                            <option value="*">All categories</option>
+                            @foreach ($categories as $category)
+                            <option value="{{ $category->category_name_en }}">{{ $category->category_name_en }}</option>
+                           @endforeach
+                          </select>
+                        @endif
                       </div>
                       <div class="col-auto h_space_search"></div>
                       <div class="frm_search_input pr oh col">
@@ -134,154 +140,24 @@
                       </div>
                       <div class="frm_search_cat col-auto">
                         <button class="h_search_btn js_btn_search"
-                          type="submit">Search</button>
+                          type="submit">
+                          @if (session()->get('language') === 'bangla')
+                          খোজুন
+                        @else
+                        Search
+                        @endif
+                        </button>
                       </div>
                     </div>
                   </form>
-                  <div class="pr">
-                    <div class="mini_cart_content fixcl-scroll widget">
-                      <div class="fixcl-scroll-content product_list_widget">
-                        <div class="ld_bar_search"></div>
-                        <div class="skeleton_wrap skeleton_js dn">
-                          <div class="row mb__10 pb__10">
-                            <div class="col-auto widget_img_pr">
-                              <div class="skeleton_img"></div>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <div class="skeleton_txt1"></div>
-                              <div class="skeleton_txt2"></div>
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col-auto widget_img_pr">
-                              <div class="skeleton_img"></div>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <div class="skeleton_txt1"></div>
-                              <div class="skeleton_txt2"></div>
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col-auto widget_img_pr">
-                              <div class="skeleton_img"></div>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <div class="skeleton_txt1"></div>
-                              <div class="skeleton_txt2"></div>
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col-auto widget_img_pr">
-                              <div class="skeleton_img"></div>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <div class="skeleton_txt1"></div>
-                              <div class="skeleton_txt2"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="js_prs_search">
-                          <div class="row mb__10 pb__10">
-                            <div class="col widget_img_pr">
-                              <a class="db pr oh"
-                                href="product-detail-layout-01.html">
-                                <img
-                                  src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20640%20640%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E"
-                                  data-src="{{ asset('/') }}frontend/assets/images/home-electronic-vertical/pr-01-80x.jpg"
-                                  class="w__100 lazyload lz_op_ef"
-                                  alt="Ysamsung Camera" />
-                              </a>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <a class="product-title db"
-                                href="product-detail-layout-01.html">Ysamsung Camera</a>
-                              <del>$35.00</del>
-                              <ins>$25.00</ins>
-                              <span class="onsale nt_label">-29%</span>
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col widget_img_pr">
-                              <a class="db pr oh"
-                                href="product-detail-layout-01.html">
-                                <img
-                                  src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20640%20640%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E"
-                                  data-src="{{ asset('/') }}frontend/assets/images/home-electronic-vertical/pr-02-80x.jpg"
-                                  class="w__100 lazyload lz_op_ef"
-                                  alt="Beats Solo3 Wireless" />
-                              </a>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <a class="product-title db"
-                                href="product-detail-layout-01.html">Beats Solo3 Wireless</a>$35.00
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col widget_img_pr">
-                              <a class="db pr oh"
-                                href="product-detail-layout-01.html">
-                                <img
-                                  src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20640%20640%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E"
-                                  data-src="{{ asset('/') }}frontend/assets/images/home-electronic-vertical/pr-03-80x.jpg"
-                                  class="w__100 lazyload lz_op_ef"
-                                  alt="Lomo Sanremo Edition" />
-                              </a>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <a class="product-title db"
-                                href="product-detail-layout-01.html">Lomo Sanremo Edition</a>$65.00
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col widget_img_pr">
-                              <a class="db pr oh"
-                                href="product-detail-layout-01.html">
-                                <img
-                                  src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%201000%201000%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E"
-                                  data-src="{{ asset('/') }}frontend/assets/images/home-electronic-vertical/pr-04-80x.jpg"
-                                  class="w__100 lazyload lz_op_ef"
-                                  alt="Ygoogle Speaker" />
-                              </a>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <a class="product-title db"
-                                href="product-detail-layout-01.html">Ygoogle Speaker</a>$65.00
-                            </div>
-                          </div>
-                          <div class="row mb__10 pb__10">
-                            <div class="col widget_img_pr">
-                              <a class="db pr oh"
-                                href="product-detail-layout-01.html">
-                                <img
-                                  src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%201000%201000%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E"
-                                  data-src="{{ asset('/') }}frontend/assets/images/home-electronic-vertical/pr-05-80x.jpg"
-                                  class="w__100 lazyload lz_op_ef"
-                                  alt="Ybeoplay H9i" />
-                              </a>
-                            </div>
-                            <div class="col widget_if_pr">
-                              <a class="product-title db"
-                                href="product-detail-layout-01.html">Ybeoplay H9i</a>$55.00
-                            </div>
-                          </div>
-                          <a href="#"
-                            class="btn fwsb detail_link">View All(107)
-                            <i class="facl facl-right"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
                 <div class="col-lg-3 col-md-4 col-3 tr">
                   <div class="nt_action in_flex al_center cart_des_1">
                     <a class="icon_search push_side cb chp"
                       data-id="#nt_search_canvas"
                       href="#"><i class="las la-search"></i></a>
-                    <div class="my-account ts__05 pr dn db_md">
-                      <a class="cb chp db push_side"
-                        href="#"
-                        data-id="#nt_login_canvas"><i class="las la-user"></i></a>
-                    </div>
+
                     <a class="icon_like cb chp pr dn db_md js_link_wis"
                       href="{{ route('user.wishlistdata') }}">
                    @auth
@@ -369,6 +245,10 @@
                           <a class="lh__1 flex al_center pr"
                             href="{{ route('frontend.home') }}">হোম</a>
                         </li>
+                        <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                            <a target="_blank" class="lh__1 flex al_center pr"
+                              href="https://www.imzuyel.com">এবাউট</a>
+                          </li>
                       </ul>
                     </nav>
                   </div>
@@ -377,7 +257,7 @@
                       class="ttip_nt tooltip_top mr__10">
                       <span class="tt_txt"><span class="__cf_email__"
                           data-cfemail="a6cdc7cacac3d5e6c2c9cbc7cfc888c5c9cb">Ecommerce</span></span>
-                      <i class="las la-envelope fs__14 mr__5"></i><span>contact</span>
+                      <i class="las la-envelope fs__14 mr__5"></i><span>যোগাযোগ</span>
                     </a>
                     <a class="ttip_nt tooltip_top mr__10">
                       <span class="tt_txt">Time: 08:00 - 17:00</span>
@@ -385,8 +265,8 @@
                     </a>
                     <a href="tel:+01%2023456789"
                       class="ttip_nt tooltip_top">
-                      <span class="tt_txt">Phone: +01 23456789</span>
-                      <i class="las la-phone fs__14 mr__5"></i><span>+01 23456789</span>
+                      <span class="tt_txt">Phone: +01312733791/span>
+                      <i class="las la-phone fs__14 mr__5"></i><span>+01312733791/span>
                     </a>
                   </div>
                 </div>
@@ -454,6 +334,10 @@
                           <a class="lh__1 flex al_center pr"
                             href="{{ route('frontend.home') }}">Home</a>
                         </li>
+                        <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                            <a target="_blank" class="lh__1 flex al_center pr"
+                              href="https://www.imzuyel.com">About</a>
+                          </li>
                       </ul>
                     </nav>
                   </div>

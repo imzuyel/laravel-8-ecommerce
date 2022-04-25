@@ -6,7 +6,6 @@ Happy to shop
 <div id="nt_wrapper">
 
   <div id="nt_content">
-
     <!-- main slide -->
     <div class="kalles-kids__wrap-slide kalles-section nt_section type_slideshow type_carousel">
       <div class="nt_full se_height_adapt nt_first">
@@ -32,7 +31,7 @@ Happy to shop
                     <p class="kalles-kids__slide-layout-01__desc slt4_p mg__0 dn db_md">
                       {{ $slider->description_bn }}</p>
                     <div class="kalles-kids__slide-layout-01__br-03 slt4_space"></div>
-                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="shop-filter-options.html">এক্সপ্লোর করুন</a>
+                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="{{ route('categoryproductsbn', $category->category_slug_bn) }}">এক্সপ্লোর করুন</a>
                   </div>
                 </div>
                 @else
@@ -46,7 +45,7 @@ Happy to shop
                     <p class="kalles-kids__slide-layout-01__desc slt4_p mg__0 dn db_md">
                       {{ $slider->description_en }}</p>
                     <div class="kalles-kids__slide-layout-01__br-03 slt4_space"></div>
-                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="shop-filter-options.html">Explore Now</a>
+                    <a class="kalles-kids__slide-layout-01__button slt4_btn button pe_auto round_true btn_icon_false" href="{{ route('categoryproductsen', $category->category_slug_en) }}">Explore Now</a>
                   </div>
                 </div>
                 @endif
@@ -134,14 +133,14 @@ Happy to shop
           <div class="col-auto col-md">
             <h3 class="dib tc section-title fs__24">ক্যাটাগরি</h3>
           </div>
-          <div class="col-auto"><a href="#">সব ক্যাটাগরি</a></div>
+          <div class="col-auto"><a href="{{ route('categoryproductsbn', $category->category_slug_bn) }}">ক্যাটাগরি</a></div>
         </div>
         @else
         <div class="row al_center fl_center title_10">
           <div class="col-auto col-md">
             <h3 class="dib tc section-title fs__24">Category</h3>
           </div>
-          <div class="col-auto"><a href="#">See all category</a></div>
+          <div class="col-auto"><a href="{{ route('categoryproductsen', $category->category_slug_en) }}">See category</a></div>
         </div>
         @endif
 
@@ -153,7 +152,7 @@ Happy to shop
             <div class="product-inner pr">
               <div class="product-image pr oh lazyload">
 
-                <a class="db" href="product-detail-layout-01.html">
+                <a class="db" href=" {{ session()->get('language') === 'bangla' ? route('categoryproductsbn', $category->category_slug_bn) :route('categoryproductsen', $category->category_slug_en) }}">
                   <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ $category->image }}">
                   </div>
                 </a>
@@ -165,7 +164,7 @@ Happy to shop
               </div>
               <div class="product-info mt__15">
                 <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="">{{ session()->get('language') === 'bangla' ? $category->category_name_bn : $category->category_name_en }}</a>
+                  <a class="cd chp" href="{{ session()->get('language') === 'bangla' ? route('categoryproductsbn', $category->category_slug_bn) :route('categoryproductsen', $category->category_slug_en) }}">{{ session()->get('language') === 'bangla' ? $category->category_name_bn : $category->category_name_en }}</a>
                 </h3>
               </div>
             </div>
@@ -188,331 +187,83 @@ Happy to shop
             <div class="countdown-wrap in_flex fl_center al_center wrap pr_deal_dt">
               <div class="countdown-label">
                 {{ session()->get('language') === 'bangla' ? 'সমাপ্তি' : 'End in' }}:</div>
-              <div class="countdown pr_coun_dt" data-date="
-                            {{ date('Y/m/d', strtotime('+1 day')) }}
-                            "></div>
+              <div class="countdown pr_coun_dt" data-date="{{ date('Y/m/d', strtotime('+1 day')) }}"></div>
             </div>
           </div>
           <div class="products nt_products_holder row fl_center row_pr_1 js_carousel nt_slider nt_cover ratio1_1 position_8 space_ prev_next_3 btn_owl_1 dot_owl_1 dot_color_1 btn_vi_2 equal_nt" data-flickity='{"imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": 1,"pageDots": false, "autoPlay" : 0, "pauseAutoPlayOnHover" : true, "rightToLeft": false }'>
-            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__10 pr_grid_item product nt_pr desgin__1">
+
+            @forelse ($allProducts as $product)
+            @if (session()->get('language') === 'bangla')
+            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
               <div class="product-inner pr">
-                <div class="product-info mb__15">
-                  <h3 class="product-title pr fs__14 mg__0 fwm">
-                    <a class="cd chp" href="product-detail-layout-01.html">Disposable Hand Wash
-                      Gel</a>
-                  </h3>
-                  <span class="price dib mb__5">
-                    <del><span class="money">$27.00</span></del><ins><span class="money">$20.00</span></ins>
-                  </span>
-                </div>
                 <div class="product-image pr oh lazyload">
-                  <span class="tc nt_labels pa pe_none cw">
-                    <span class="onsale nt_label"><span>-26%</span></span>
-                  </span>
-                  <a class="db" href="product-detail-layout-01.html">
-                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-11.jpg">
-                    </div>
-                  </a>
-                  <div class="nt_add_w ts__03 pa">
-                    <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                      <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                    </a>
-                  </div>
-                  <div class="hover_button op__0 tc pa flex column ts__03">
-                    <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                      <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span>
-                    </a>
-                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                      <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to cart</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="loop-product-stock">
-                  <div class="status-bar">
-                    <div class="sold-bar w_85-percent"></div>
-                  </div>
-                  <div class="product-stock-status flex wrap">
-                    <div class="sold">
-                      <span class="label">Sold: </span>
-                      <span class="value">5<span></span></span>
-                    </div>
-                    <div class="available">
-                      <span class="label">Available: </span>
-                      <span class="value">1<span></span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__10 pr_grid_item product nt_pr desgin__1">
-              <div class="product-inner pr">
-                <div class="product-info mb__15">
-                  <h3 class="product-title pr fs__14 mg__0 fwm">
-                    <a class="cd chp" href="product-detail-layout-01.html">Surgical Latex Gloves</a>
-                  </h3>
-                  <span class="price dib mb__5">
-                    <del><span class="money">$16.00</span></del>
-                    <ins><span class="money">$10.00</span></ins>
-                  </span>
-                </div>
-                <div class="product-image pr oh lazyload">
-                  <span class="tc nt_labels pa pe_none cw">
-                    <span class="onsale nt_label"><span>-38%</span></span>
-                  </span>
-                  <a class="db" href="product-detail-layout-01.html">
-                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-12.jpg">
-                    </div>
+                  <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
+                  <a class="d-block" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">
+                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                   </a>
                   <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-13.jpg">
-                    </div>
+                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                   </div>
-                  <div class="nt_add_w ts__03 pa">
-                    <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                      <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                    </a>
-                  </div>
+
                   <div class="hover_button op__0 tc pa flex column ts__03">
-                    <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                      <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span>
-                    </a>
-                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                      <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to cart</span>
-                    </a>
+
+                    <a  class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i class="iccl iccl-cart"></i><span>কার্টে যোগ
+                        করুন</span></a>
                   </div>
                 </div>
-                <div class="loop-product-stock">
-                  <div class="status-bar">
-                    <div class="sold-bar w_70-percent"></div>
-                  </div>
-                  <div class="product-stock-status flex wrap">
-                    <div class="sold">
-                      <span class="label">Sold: </span>
-                      <span class="value">21<span></span></span>
-                    </div>
-                    <div class="available">
-                      <span class="label">Available: </span>
-                      <span class="value">9<span></span></span>
-                    </div>
-                  </div>
+                <div class="product-info mt__15">
+                  <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_bn }}</a></div>
+                  <h3 class="product-title pr fs__14 mg__0 fwm">
+                    <a class="cd chp" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
+                  </h3>
+                  @if (isset($product->discount))
+                  <p class="price_range" id="price_qv">
+                    <del> ৳{{ $product->price }}</del>
+                    <ins> ৳{{ round($product->price - (($product->discount * $product->price) / 100)) }}</ins>
+                  </p>
+                  @else
+                  <span class="price dib mb__5"> ৳ {{ $product->price }} <span class="text-danger"></span></span>
+                  @endif
                 </div>
               </div>
             </div>
-            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__10 pr_grid_item product nt_pr desgin__1">
+            @else
+            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
               <div class="product-inner pr">
-                <div class="product-info mb__15">
-                  <h3 class="product-title pr fs__14 mg__0 fwm">
-                    <a class="cd chp" href="product-detail-layout-01.html">Manual Oxygen Device</a>
-                  </h3>
-                  <span class="price dib mb__5">
-                    <del><span class="money">$15.00</span></del>
-                    <ins><span class="money">$12.00</span></ins>
-                  </span>
-                </div>
                 <div class="product-image pr oh lazyload">
-                  <span class="tc nt_labels pa pe_none cw">
-                    <span class="onsale nt_label"><span>-20%</span></span>
-                  </span>
-                  <a class="db" href="product-detail-layout-01.html">
-                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-14.jpg">
-                    </div>
+                  <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
+                  <a class="d-block" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">
+                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                   </a>
                   <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-15.jpg">
-                    </div>
+                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                   </div>
-                  <div class="nt_add_w ts__03 pa">
-                    <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                      <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                    </a>
-                  </div>
+
                   <div class="hover_button op__0 tc pa flex column ts__03">
-                    <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                      <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span>
-                    </a>
-                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                      <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to cart</span>
-                    </a>
+
+                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView" product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to
+                        cart</span></a>
                   </div>
                 </div>
-                <div class="loop-product-stock">
-                  <div class="status-bar">
-                    <div class="sold-bar w__100"></div>
-                  </div>
-                  <div class="product-stock-status flex wrap">
-                    <div class="sold">
-                      <span class="label">Sold: </span>
-                      <span class="value">10<span></span></span>
-                    </div>
-                    <div class="available">
-                      <span class="label">Available: </span>
-                      <span class="value">0<span></span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__10 pr_grid_item product nt_pr desgin__1">
-              <div class="product-inner pr">
-                <div class="product-info mb__15">
+                <div class="product-info mt__15">
+                  <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_en }}</a></div>
                   <h3 class="product-title pr fs__14 mg__0 fwm">
-                    <a class="cd chp" href="product-detail-layout-01.html">12-Ply Gauze Sponges</a>
+                    <a class="cd chp" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
                   </h3>
-                  <span class="price dib mb__5">
-                    <del><span class="money">$10.00</span></del>
-                    <ins><span class="money">$7.00</span></ins>
-                  </span>
-                </div>
-                <div class="product-image pr oh lazyload">
-                  <span class="tc nt_labels pa pe_none cw">
-                    <span class="onsale nt_label"><span>-30%</span></span><span class="nt_label out-of-stock">Sold
-                      out</span>
-                  </span>
-                  <a class="db" href="product-detail-layout-01.html">
-                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-16.jpg">
-                    </div>
-                  </a>
-                  <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-17.jpg">
-                    </div>
-                  </div>
-                  <div class="nt_add_w ts__03 pa">
-                    <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                      <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                    </a>
-                  </div>
-                  <div class="hover_button op__0 tc pa flex column ts__03">
-                    <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                      <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span>
-                    </a>
-                    <a href="product-detail-layout-01.html" class="pr_atc cd br__40 bgw tc dib cb chp ttip_nt tooltip_top_left read-more">
-                      <span class="tt_txt">Read more</span><i class="iccl iccl-info"></i><span>Read more</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="loop-product-stock">
-                  <div class="status-bar">
-                    <div class="sold-bar w__95-percent"></div>
-                  </div>
-                  <div class="product-stock-status flex wrap">
-                    <div class="sold">
-                      <span class="label">Sold: </span>
-                      <span class="value">14<span></span></span>
-                    </div>
-                    <div class="available">
-                      <span class="label">Available: </span>
-                      <span class="value">1<span></span></span>
-                    </div>
-                  </div>
+                  @if (isset($product->discount))
+                  <p class="price_range" id="price_qv">
+                    <del> ৳{{ $product->price }}</del>
+                    <ins> ৳{{ round($product->price - (($product->discount * $product->price) / 100)) }}</ins>
+                  </p>
+                  @else
+                  <span class="price dib mb__5"> ৳ {{ $product->price }} <span class="text-danger"></span></span>
+                  @endif
                 </div>
               </div>
             </div>
-            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__10 pr_grid_item product nt_pr desgin__1">
-              <div class="product-inner pr">
-                <div class="product-info mb__15">
-                  <h3 class="product-title pr fs__14 mg__0 fwm">
-                    <a class="cd chp" href="product-detail-layout-01.html">Cara Portable Air
-                      Compressor</a>
-                  </h3>
-                  <span class="price dib mb__5">
-                    <del><span class="money">$145.00</span></del>
-                    <ins><span class="money">$120.00</span></ins>
-                  </span>
-                </div>
-                <div class="product-image pr oh lazyload">
-                  <span class="tc nt_labels pa pe_none cw">
-                    <span class="onsale nt_label"><span>-18%</span></span>
-                  </span>
-                  <a class="db" href="product-detail-layout-01.html">
-                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-18.jpg">
-                    </div>
-                  </a>
-                  <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-19.jpg">
-                    </div>
-                  </div>
-                  <div class="nt_add_w ts__03 pa">
-                    <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                      <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                    </a>
-                  </div>
-                  <div class="hover_button op__0 tc pa flex column ts__03">
-                    <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                      <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span>
-                    </a>
-                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                      <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to cart</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="loop-product-stock">
-                  <div class="status-bar">
-                    <div class="sold-bar w__100"></div>
-                  </div>
-                  <div class="product-stock-status flex wrap">
-                    <div class="sold">
-                      <span class="label">Sold: </span>
-                      <span class="value">7<span></span></span>
-                    </div>
-                    <div class="available">
-                      <span class="label">Available: </span>
-                      <span class="value">0<span></span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__10 pr_grid_item product nt_pr desgin__1">
-              <div class="product-inner pr">
-                <div class="product-info mb__15">
-                  <h3 class="product-title pr fs__14 mg__0 fwm">
-                    <a class="cd chp" href="product-detail-layout-01.html">Portable Personal
-                      Compressor</a>
-                  </h3>
-                  <span class="price dib mb__5">
-                    <del><span class="money">$76.00</span></del>
-                    <ins><span class="money">$55.00</span></ins>
-                  </span>
-                </div>
-                <div class="product-image pr oh lazyload">
-                  <span class="tc nt_labels pa pe_none cw">
-                    <span class="onsale nt_label"><span>-28%</span></span>
-                  </span>
-                  <a class="db" href="product-detail-layout-01.html">
-                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ asset('/') }}frontend/assets/images/home-medical/pr-20.jpg">
-                    </div>
-                  </a>
-                  <div class="nt_add_w ts__03 pa">
-                    <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                      <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                    </a>
-                  </div>
-                  <div class="hover_button op__0 tc pa flex column ts__03">
-                    <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                      <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick view</span>
-                    </a>
-                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                      <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to cart</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="loop-product-stock">
-                  <div class="status-bar">
-                    <div class="sold-bar w__100"></div>
-                  </div>
-                  <div class="product-stock-status flex wrap">
-                    <div class="sold">
-                      <span class="label">Sold: </span>
-                      <span class="value">15<span></span></span>
-                    </div>
-                    <div class="available">
-                      <span class="label">Available: </span>
-                      <span class="value">0<span></span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            @endif
+            @empty
+            @endforelse
           </div>
         </div>
       </div>
@@ -552,7 +303,7 @@ Happy to shop
 
             <div class="tab_se_element ct_active" id="all">
               <div class="products nt_products_holder row  row_pr_2 cdt_des_2 round_cd_true nt_cover ratio_nt position_8 space_30 equal_nt">
-                @forelse ($products as $product)
+                @forelse ($products->take(10) as $product)
                 @if (session()->get('language') === 'bangla')
                 <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
                   <div class="product-inner pr">
@@ -566,8 +317,7 @@ Happy to shop
                       </div>
 
                       <div class="hover_button op__0 tc pa flex column ts__03">
-                        <a class=" pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">এখনই কিনুন</span><i class="iccl iccl-eye"></i><span>এখনই
-                            কিনুন</span></a>
+
                         <a  class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i class="iccl iccl-cart"></i><span>কার্টে যোগ
                             করুন</span></a>
                       </div>
@@ -601,8 +351,7 @@ Happy to shop
                       </div>
 
                       <div class="hover_button op__0 tc pa flex column ts__03">
-                        <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                            view</span></a>
+
                         <a href="#" class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView" product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to
                             cart</span></a>
                       </div>
@@ -645,8 +394,7 @@ Happy to shop
                       </div>
 
                       <div class="hover_button op__0 tc pa flex column ts__03">
-                        <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView" href="#" product_id={{ $product->id }}><span class="tt_txt">এখনই কিনুন</span><i class="iccl iccl-eye"></i><span>এখনই
-                            কিনুন</span></a>
+
                         <a href="#" class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView" product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i class="iccl iccl-cart"></i><span>কার্টে যোগ
                             করুন</span></a>
                       </div>
@@ -680,8 +428,7 @@ Happy to shop
                       </div>
 
                       <div class="hover_button op__0 tc pa flex column ts__03">
-                        <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left productView" href="#" product_id={{ $product->id }}><span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                            view</span></a>
+
                         <a class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to
                             cart</span></a>
                       </div>
@@ -716,312 +463,197 @@ Happy to shop
     </div>
     <!-- end tab section-->
 
-    <!-- bestselling products-->
+    <!-- Hot deals-->
     <div class="kalles-section nt_section type_featured_collection tp_se_cdt">
       <div class="kalles-electronic-vertical__bestseller container">
         <div class="row al_center fl_center title_10">
           <div class="col-auto col-md">
-            <h3 class="dib tc section-title fs__24">Best selling items</h3>
+            <h3 class="dib tc section-title fs__24">{{ session()->get('language') === 'bangla' ? 'হট ডেয়ালস' : 'Hot Deals' }}</h3>
+
           </div>
-          <div class="col-auto"><a href="#">See all products</a></div>
+          @if (session()->get('language') === 'bangla')
+          <div class="col-auto"><a href="{{ route('categoryproductsbn', $category->category_slug_bn) }}">সমস্ত পণ্য </a></div>
+          @else
+          <div class="col-auto"><a href="{{ route('categoryproductsen', $category->category_slug_en) }}">all product</a></div>
+          @endif
         </div>
         <div class="products nt_products_holder row  row_pr_2 cdt_des_1 round_cd_false nt_cover ratio1_1 position_8 space_30 equal_nt">
-          <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
-            <div class="product-inner pr">
-              <div class="product-image pr oh lazyload">
-                <span class="tc nt_labels pa pe_none cw">
-                  <span class="onsale nt_label"><span>-29%</span></span>
-                </span>
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-01.jpg">
-                  </div>
-                </a>
-                <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-02.jpg">
-                  </div>
-                </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
-                <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
-                </div>
-              </div>
-              <div class="product-info mt__15">
-                <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Ysamsung Camera</a>
-                </h3>
-                <span class="price dib mb__5"><del>$35.00</del><ins>$25.00</ins></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
-            <div class="product-inner pr">
-              <div class="product-image pr oh lazyload">
 
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-03.jpg">
-                  </div>
-                </a>
-                <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-04.jpg">
-                  </div>
-                </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
-                <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
-                </div>
-              </div>
-              <div class="product-info mt__15">
-                <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Beats Solo3 Wireless</a>
-                </h3>
-                <span class="price dib mb__5">$35.00 </span>
-              </div>
-            </div>
-          </div>
+          @forelse ($hotDealsProducts as $product)
+          @if (session()->get('language') === 'bangla')
           <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
             <div class="product-inner pr">
               <div class="product-image pr oh lazyload">
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-05.jpg">
-                  </div>
+                <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
+                <a class="d-block" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">
+                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                 </a>
                 <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-06.jpg">
-                  </div>
+                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                 </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
+
                 <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
+
+                  <a  class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i class="iccl iccl-cart"></i><span>কার্টে যোগ
+                      করুন</span></a>
                 </div>
               </div>
               <div class="product-info mt__15">
+                <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_bn }}</a></div>
                 <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Lomo Sanremo Edition</a>
+                  <a class="cd chp" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
                 </h3>
-                <span class="price dib mb__5">$65.00 </span>
+                @if (isset($product->discount))
+                <p class="price_range" id="price_qv">
+                  <del> ৳{{ $product->price }}</del>
+                  <ins> ৳{{ round($product->price - (($product->discount * $product->price) / 100)) }}</ins>
+                </p>
+                @else
+                <span class="price dib mb__5"> ৳ {{ $product->price }} <span class="text-danger"></span></span>
+                @endif
               </div>
             </div>
           </div>
+          @else
           <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
             <div class="product-inner pr">
               <div class="product-image pr oh lazyload">
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-07.jpg">
-                  </div>
+                <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
+                <a class="d-block" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">
+                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                 </a>
                 <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-electronic/pr-08.jpg">
-                  </div>
+                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
                 </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
+
                 <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
+
+                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView" product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to
+                      cart</span></a>
                 </div>
               </div>
               <div class="product-info mt__15">
+                <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_en }}</a></div>
                 <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Ygoogle Speaker</a>
+                  <a class="cd chp" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
                 </h3>
-                <span class="price dib mb__5">$65.00 </span>
+                @if (isset($product->discount))
+                <p class="price_range" id="price_qv">
+                  <del> ৳{{ $product->price }}</del>
+                  <ins> ৳{{ round($product->price - (($product->discount * $product->price) / 100)) }}</ins>
+                </p>
+                @else
+                <span class="price dib mb__5"> ৳ {{ $product->price }} <span class="text-danger"></span></span>
+                @endif
               </div>
             </div>
           </div>
-          <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
-            <div class="product-inner pr">
-              <div class="product-image pr oh lazyload">
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-14.jpg">
-                  </div>
-                </a>
-                <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-15.jpg">
-                  </div>
-                </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
-                <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
-                </div>
-              </div>
-              <div class="product-info mt__15">
-                <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Ybeoplay H9i</a>
-                </h3>
-                <span class="price dib mb__5">$55.00</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
-            <div class="product-inner pr">
-              <div class="product-image pr oh lazyload">
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-16.jpg">
-                  </div>
-                </a>
-                <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-17.jpg">
-                  </div>
-                </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
-                <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
-                </div>
-              </div>
-              <div class="product-info mt__15">
-                <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">YApple MacBook</a>
-                </h3>
-                <span class="price dib mb__5">$55.00</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
-            <div class="product-inner pr">
-              <div class="product-image pr oh lazyload">
-                <span class="tc nt_labels pa pe_none cw"><span class="nt_label new">New</span></span>
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-20.jpg">
-                  </div>
-                </a>
-                <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-21.jpg">
-                  </div>
-                </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
-                <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
-                </div>
-              </div>
-              <div class="product-info mt__15">
-                <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Contemporary design
-                    classic</a>
-                </h3>
-                <span class="price dib mb__5">$25.00</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
-            <div class="product-inner pr">
-              <div class="product-image pr oh lazyload">
-                <a class="db" href="product-detail-layout-01.html">
-                  <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-26.jpg">
-                  </div>
-                </a>
-                <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                  <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__100" data-bgset="{{ asset('/') }}frontend/assets/images/home-decor-2/pr-27.jpg">
-                  </div>
-                </div>
-                <div class="nt_add_w ts__03 pa">
-                  <a href="#" class="wishlistadd cb chp ttip_nt tooltip_right">
-                    <span class="tt_txt">Add to Wishlist</span><i class="facl facl-heart-o"></i>
-                  </a>
-                </div>
-                <div class="hover_button op__0 tc pa flex column ts__03">
-                  <a class="pr nt_add_qv js_add_qv cd br__40 pl__25 pr__25 bgw tc dib ttip_nt tooltip_top_left" href="#">
-                    <span class="tt_txt">Quick view</span><i class="iccl iccl-eye"></i><span>Quick
-                      view</span>
-                  </a>
-                  <a href="#" class="pr pr_atc cd br__40 bgw tc dib js_addtc cb chp ttip_nt tooltip_top_left">
-                    <span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add
-                      to cart</span>
-                  </a>
-                </div>
-              </div>
-              <div class="product-info mt__15">
-                <h3 class="product-title pr fs__14 mg__0 fwm">
-                  <a class="cd chp" href="product-detail-layout-01.html">Yapple Watch Nike Series
-                    4</a>
-                </h3>
-                <span class="price dib mb__5">$49.00</span>
-              </div>
-            </div>
-          </div>
+          @endif
+          @empty
+          @endforelse
+
         </div>
         <div class="products-footer tc mt__40">
-          <a class="se_cat_lm pr nt_cat_lm button button_dark br_rd_false btn_icon_false" href="#">Load
-            More</a>
+            @if (session()->get('language') === 'bangla')
+          <a class="se_cat_lm pr  button button_dark br_rd_false btn_icon_false" href="{{ route('categoryproductsbn', $category->category_slug_bn) }}">আরো</a>
+            @else
+            <a class="se_cat_lm pr  button button_dark br_rd_false btn_icon_false" href="{{ route('categoryproductsen', $category->category_slug_en) }}">Load
+                More</a>
+            @endif
         </div>
       </div>
     </div>
-    <!-- end bestselling products-->
+    <!-- end Hot deals-->
+
+    <!-- featured products-->
+    <div class="kalles-section nt_section type_prs_countd_deal type_carousel tp_se_cdt">
+      <div class="kalles-medical__deal-section container">
+        <div class="medizin_laypout">
+          <div class="product-cd-header in_flex wrap al_center fl_center tc">
+            <h6 class="product-cd-heading section-title">
+              {{ session()->get('language') === 'bangla' ? 'বৈশিষ্ট্যযুক্ত পণ্য' : 'Featured product' }}
+            </h6>
+
+          </div>
+          <div class="products nt_products_holder row fl_center row_pr_1 js_carousel nt_slider nt_cover ratio1_1 position_8 space_ prev_next_3 btn_owl_1 dot_owl_1 dot_color_1 btn_vi_2 equal_nt" data-flickity='{"imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": 1,"pageDots": false, "autoPlay" : 0, "pauseAutoPlayOnHover" : true, "rightToLeft": false }'>
+
+            @forelse ($featuredProducts as $product)
+            @if (session()->get('language') === 'bangla')
+            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
+              <div class="product-inner pr">
+                <div class="product-image pr oh lazyload">
+                  <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
+                  <a class="d-block" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">
+                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
+                  </a>
+                  <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
+                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
+                  </div>
+
+                  <div class="hover_button op__0 tc pa flex column ts__03">
+
+                    <a  class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left  productView" href="#"  product_id={{ $product->id }}><span class="tt_txt">কার্টে যোগ করুন</span><i class="iccl iccl-cart"></i><span>কার্টে যোগ
+                        করুন</span></a>
+                  </div>
+                </div>
+                <div class="product-info mt__15">
+                  <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_bn }}</a></div>
+                  <h3 class="product-title pr fs__14 mg__0 fwm">
+                    <a class="cd chp" href="{{ route('frontend.detailsbn',['category'=>$product->category->category_slug_bn,'slug'=>$product->product_slug_bn]) }}">{{ Str::limit($product->product_name_bn, 20, '...') }}</a>
+                  </h3>
+                  @if (isset($product->discount))
+                  <p class="price_range" id="price_qv">
+                    <del> ৳{{ $product->price }}</del>
+                    <ins> ৳{{ round($product->price - (($product->discount * $product->price) / 100)) }}</ins>
+                  </p>
+                  @else
+                  <span class="price dib mb__5"> ৳ {{ $product->price }} <span class="text-danger"></span></span>
+                  @endif
+                </div>
+              </div>
+            </div>
+            @else
+            <div class="col-lg-15 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__2 tc">
+              <div class="product-inner pr">
+                <div class="product-image pr oh lazyload">
+                  <span class="tc nt_labels pa pe_none cw"><span class="nt_label new {{ isset($product->discount) ? 'bg-danger' : '' }}">{{ isset($product->discount) ? '- '.$product->discount . ' %' : 'New' }}</span></span>
+                  <a class="d-block" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">
+                    <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
+                  </a>
+                  <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
+                    <div class="pr_lazy_img back-img pa nt_bg_lz lazyload" data-bgset="{{ $product->image }}"></div>
+                  </div>
+
+                  <div class="hover_button op__0 tc pa flex column ts__03">
+
+                    <a href="#" class="pr pr_atc cd br__40 bgw tc dib js__qs cb chp ttip_nt tooltip_top_left productView" product_id={{ $product->id }}><span class="tt_txt">Add to cart</span><i class="iccl iccl-cart"></i><span>Add to
+                        cart</span></a>
+                  </div>
+                </div>
+                <div class="product-info mt__15">
+                  <div class="product-brand"><a class="cg chp" href="#">{{ $product->brand->brand_name_en }}</a></div>
+                  <h3 class="product-title pr fs__14 mg__0 fwm">
+                    <a class="cd chp" href="{{ route('frontend.detailsen',['category'=>$product->category->category_slug_en,'slug'=>$product->product_slug_en]) }}">{{ Str::limit($product->product_name_en, 20, '...') }}</a>
+                  </h3>
+                  @if (isset($product->discount))
+                  <p class="price_range" id="price_qv">
+                    <del> ৳{{ $product->price }}</del>
+                    <ins> ৳{{ round($product->price - (($product->discount * $product->price) / 100)) }}</ins>
+                  </p>
+                  @else
+                  <span class="price dib mb__5"> ৳ {{ $product->price }} <span class="text-danger"></span></span>
+                  @endif
+                </div>
+              </div>
+            </div>
+            @endif
+            @empty
+            @endforelse
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end featured products-->
   </div>
 </div>
-
 @endsection

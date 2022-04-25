@@ -21,14 +21,12 @@ class HomeController extends Controller
         $data['categories']         = Category::with('products')->where('status', true)->oldest('id')->where('status', 1)->get();
         return view('frontend.index', $data);
     }
-    public function shop()
-    {
-        return view('frontend.shop.index');
-    }
+
     public function detailsbn($category, $slug)
     {
         $product                    = Product::where('product_slug_bn', $slug)->firstOrFail();
         $id                         = $product->id;
+        $category                   =Category::where('id',$product->category_id)->firstOrFail();
         $data['product']            = $product;
 
         $data['previous_product']   = Product::where('id', '<', $id)->where('status', 1)->orderBy('id', 'desc')->first();
@@ -56,7 +54,8 @@ class HomeController extends Controller
 
     public function category()
     {
-        return view('frontend.shop.category');
+        $category = Category::where('status', 1)->inRandomOrder()->first();
+        return view('frontend.shop.category',compact('category'));
     }
     function viewProduct($id)
     {
@@ -427,5 +426,10 @@ class HomeController extends Controller
             $subsubcategory = SubSubCategory::where('subsubcategory_slug_bn', $subsubcategory)->with('products')->firstOrFail();
             return view('frontend.shop.subsubcategory', compact('subsubcategory', 'brands', 'colors', 'sizes'));
         }
+    }
+
+
+    public function commingsoon(){
+        return view('frontend.partials.commingsoon');
     }
 }

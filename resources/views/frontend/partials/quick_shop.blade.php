@@ -12,9 +12,9 @@
       <div class="col cl_pr_title tc">
         <h3 class="product-title pr fs__16 mg__0 fwm">
           @if (session()->get('language')==='bangla')
-          <a id="product_name_bn2" class="cd chp" href=""> </a>
+          <a id="product_name_bn2" class="cd chp" href="javascript:void(0)"> </a>
           @else
-          <a id="product_name_en2" class="cd chp" href=""> </a>
+          <a id="product_name_en2" class="cd chp" href="javascript:void(0)"> </a>
           @endif
 
         </h3>
@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <a href="product-detail-layout-01.html" class="btn fwsb detail_link dib mt__15">View full details<i class="facl facl-right"></i></a>
+
     </div>
   </div>
 </div>

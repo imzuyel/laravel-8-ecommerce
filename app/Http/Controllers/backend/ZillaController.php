@@ -54,7 +54,6 @@ class ZillaController extends Controller
             'division_id'   =>'required',
             'name'          =>'required|string|unique:zillas,name,'.$zilla->id,
         ]);
-        $zilla              =new Zilla();
         $zilla->division_id =$request->division_id;
         $zilla->name        =$request->name;
         $zilla->save();

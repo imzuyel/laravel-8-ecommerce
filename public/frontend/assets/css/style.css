@@ -3604,10 +3604,7 @@ body .tooltip_bottom_right:hover .tt_txt {
     z-index: 4500;
 }
 
-.cat_sortby_js.opended:before {
-    pointer-events: auto;
-    opacity: 0.4;
-}
+
 
 .cat_sortby_js.opended .nt_sortby {
     -webkit-transform: translateY(0);
@@ -11344,3 +11341,5 @@ body .tooltip_bottom_right:hover .tt_txt {
 .kalles-section-pr_summary .product_title {
     font-size: 20px;
 }
+
+

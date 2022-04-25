@@ -19,94 +19,94 @@
      * Define Pref
      * ***************************************************************/
     let kallesInitTimzone = (T) => {
-            return (
-                {
-                    ACDT: "+1030",
-                    ACST: "+0930",
-                    ADT: "-0300",
-                    AEDT: "+1100",
-                    AEST: "+1000",
-                    AHDT: "-0900",
-                    AHST: "-1000",
-                    AST: "-0400",
-                    AT: "-0200",
-                    AWDT: "+0900",
-                    AWST: "+0800",
-                    BAT: "+0300",
-                    BDST: "+0200",
-                    BET: "-1100",
-                    BST: "-0300",
-                    BT: "+0300",
-                    BZT2: "-0300",
-                    CADT: "+1030",
-                    CAST: "+0930",
-                    CAT: "-1000",
-                    CCT: "+0800",
-                    CDT: "-0500",
-                    CED: "+0200",
-                    CET: "+0100",
-                    CEST: "+0200",
-                    CST: "-0600",
-                    EAST: "+1000",
-                    EDT: "-0400",
-                    EED: "+0300",
-                    EET: "+0200",
-                    EEST: "+0300",
-                    EST: "-0500",
-                    FST: "+0200",
-                    FWT: "+0100",
-                    GMT: "GMT",
-                    GST: "+1000",
-                    HDT: "-0900",
-                    HST: "-1000",
-                    IDLE: "+1200",
-                    IDLW: "-1200",
-                    IST: "+0530",
-                    IT: "+0330",
-                    JST: "+0900",
-                    JT: "+0700",
-                    MDT: "-0600",
-                    MED: "+0200",
-                    MET: "+0100",
-                    MEST: "+0200",
-                    MEWT: "+0100",
-                    MST: "-0700",
-                    MT: "+0800",
-                    NDT: "-0230",
-                    NFT: "-0330",
-                    NT: "-1100",
-                    NST: "+0630",
-                    NZ: "+1100",
-                    NZST: "+1200",
-                    NZDT: "+1300",
-                    NZT: "+1200",
-                    PDT: "-0700",
-                    PST: "-0800",
-                    ROK: "+0900",
-                    SAD: "+1000",
-                    SAST: "+0900",
-                    SAT: "+0900",
-                    SDT: "+1000",
-                    SST: "+0200",
-                    SWT: "+0100",
-                    USZ3: "+0400",
-                    USZ4: "+0500",
-                    USZ5: "+0600",
-                    USZ6: "+0700",
-                    UT: "-0000",
-                    UTC: "-0000",
-                    UZ10: "+1100",
-                    WAT: "-0100",
-                    WET: "-0000",
-                    WST: "+0800",
-                    YDT: "-0800",
-                    YST: "-0900",
-                    ZP4: "+0400",
-                    ZP5: "+0500",
-                    ZP6: "+0600",
-                }[T] || "UTC"
-            );
-        },
+        return (
+            {
+                ACDT: "+1030",
+                ACST: "+0930",
+                ADT: "-0300",
+                AEDT: "+1100",
+                AEST: "+1000",
+                AHDT: "-0900",
+                AHST: "-1000",
+                AST: "-0400",
+                AT: "-0200",
+                AWDT: "+0900",
+                AWST: "+0800",
+                BAT: "+0300",
+                BDST: "+0200",
+                BET: "-1100",
+                BST: "-0300",
+                BT: "+0300",
+                BZT2: "-0300",
+                CADT: "+1030",
+                CAST: "+0930",
+                CAT: "-1000",
+                CCT: "+0800",
+                CDT: "-0500",
+                CED: "+0200",
+                CET: "+0100",
+                CEST: "+0200",
+                CST: "-0600",
+                EAST: "+1000",
+                EDT: "-0400",
+                EED: "+0300",
+                EET: "+0200",
+                EEST: "+0300",
+                EST: "-0500",
+                FST: "+0200",
+                FWT: "+0100",
+                GMT: "GMT",
+                GST: "+1000",
+                HDT: "-0900",
+                HST: "-1000",
+                IDLE: "+1200",
+                IDLW: "-1200",
+                IST: "+0530",
+                IT: "+0330",
+                JST: "+0900",
+                JT: "+0700",
+                MDT: "-0600",
+                MED: "+0200",
+                MET: "+0100",
+                MEST: "+0200",
+                MEWT: "+0100",
+                MST: "-0700",
+                MT: "+0800",
+                NDT: "-0230",
+                NFT: "-0330",
+                NT: "-1100",
+                NST: "+0630",
+                NZ: "+1100",
+                NZST: "+1200",
+                NZDT: "+1300",
+                NZT: "+1200",
+                PDT: "-0700",
+                PST: "-0800",
+                ROK: "+0900",
+                SAD: "+1000",
+                SAST: "+0900",
+                SAT: "+0900",
+                SDT: "+1000",
+                SST: "+0200",
+                SWT: "+0100",
+                USZ3: "+0400",
+                USZ4: "+0500",
+                USZ5: "+0600",
+                USZ6: "+0700",
+                UT: "-0000",
+                UTC: "-0000",
+                UZ10: "+1100",
+                WAT: "-0100",
+                WET: "-0000",
+                WST: "+0800",
+                YDT: "-0800",
+                YST: "-0900",
+                ZP4: "+0400",
+                ZP5: "+0500",
+                ZP6: "+0600",
+            }[T] || "UTC"
+        );
+    },
         kallesIsVisible = (el, partial, hidden, direction, container) => {
             if (el.length < 1) return;
             /*Set direction default to 'both'.*/
@@ -129,19 +129,19 @@
                 var rec = t.getBoundingClientRect(),
                     tViz = isContained
                         ? rec.top - wPosition.top >= 0 &&
-                          rec.top < vpHeight + wPosition.top
+                        rec.top < vpHeight + wPosition.top
                         : rec.top >= 0 && rec.top < vpHeight,
                     bViz = isContained
                         ? rec.bottom - wPosition.top > 0 &&
-                          rec.bottom <= vpHeight + wPosition.top
+                        rec.bottom <= vpHeight + wPosition.top
                         : rec.bottom > 0 && rec.bottom <= vpHeight,
                     lViz = isContained
                         ? rec.left - wPosition.left >= 0 &&
-                          rec.left < vpWidth + wPosition.left
+                        rec.left < vpWidth + wPosition.left
                         : rec.left >= 0 && rec.left < vpWidth,
                     rViz = isContained
                         ? rec.right - wPosition.left > 0 &&
-                          rec.right < vpWidth + wPosition.left
+                        rec.right < vpWidth + wPosition.left
                         : rec.right > 0 && rec.right <= vpWidth,
                     vVisible = partial ? tViz || bViz : tViz && bViz,
                     hVisible = partial ? lViz || rViz : lViz && rViz,
@@ -207,8 +207,8 @@
         $(this).flickity(
             JSON.parse(
                 $(this).attr("data-flickity") ||
-                    $(this).attr("data-flickityjs") ||
-                    "{}"
+                $(this).attr("data-flickityjs") ||
+                "{}"
             )
         );
         return $(this);
@@ -430,14 +430,14 @@
                         $id.html(
                             event.strftime(
                                 '<div class="block tc"><span class="flip-top">%-D</span><br><span class="label tu">' +
-                                    txt_day +
-                                    '</span></div><div class="block tc"><span class="flip-top">%H</span><br><span class="label tu">' +
-                                    txt_hr +
-                                    '</span></div><div class="block tc"><span class="flip-top">%M</span><br><span class="label tu">' +
-                                    txt_min +
-                                    '</span></div><div class="block tc"><span class="flip-top">%S</span><br><span class="label tu">' +
-                                    txt_sec +
-                                    "</span></div>"
+                                txt_day +
+                                '</span></div><div class="block tc"><span class="flip-top">%H</span><br><span class="label tu">' +
+                                txt_hr +
+                                '</span></div><div class="block tc"><span class="flip-top">%M</span><br><span class="label tu">' +
+                                txt_min +
+                                '</span></div><div class="block tc"><span class="flip-top">%S</span><br><span class="label tu">' +
+                                txt_sec +
+                                "</span></div>"
                             )
                         );
                     }
@@ -544,7 +544,7 @@
                     // bodyRight      = global_wrapper.outerWidth() + global_wrapper.offset().left,
                     viewportWidth =
                         body.hasClass("wrapper-boxed") ||
-                        body.hasClass("wrapper-boxed-small")
+                            body.hasClass("wrapper-boxed-small")
                             ? bodyRight
                             : screenWidth;
 
@@ -552,8 +552,8 @@
                 nav_dropdown.addClass("calc_pos").attr("style", "");
                 if (h7Check) {
                     let bottom =
-                            nav_dropdown.offset().top +
-                            nav_dropdown.outerHeight(),
+                        nav_dropdown.offset().top +
+                        nav_dropdown.outerHeight(),
                         viewportBottom =
                             $window.scrollTop() + $window.outerHeight();
                     if (bottom > viewportBottom) {
@@ -953,8 +953,8 @@
                     }
                     if ($this.data("filter")) {
                         let $p_thumb = $this
-                                .closest(".container_cat")
-                                .find(".p-thumb"),
+                            .closest(".container_cat")
+                            .find(".p-thumb"),
                             $p_nav = $this
                                 .closest(".container_cat")
                                 .find(".p-nav"),
@@ -1004,7 +1004,7 @@
                                 ".pr_sticky_content"
                             ).kallesStickySingleProductDetail(
                                 !is_smaller_768 &&
-                                    body.hasClass("single-product-template")
+                                body.hasClass("single-product-template")
                             );
 
                             /*Single thumbnail magnifier*/
@@ -1056,10 +1056,10 @@
                         popup && popup.data("stt")
                             ? popup.data("stt")
                             : {
-                                  day_next: 30,
-                                  date_of_birth: true,
-                                  age_limit: 18,
-                              },
+                                day_next: 30,
+                                date_of_birth: true,
+                                age_limit: 18,
+                            },
                     age_limit = stt && stt.age_limit ? stt.age_limit : 18,
                     date_of_birth =
                         stt && stt.date_of_birth ? stt.date_of_birth : true,
@@ -1193,18 +1193,18 @@
 
                     markup.push(
                         '<div class="' +
-                            navClass +
-                            'col-3 n-item" data-mdid="' +
-                            mdid +
-                            '" data-mdtype="' +
-                            mdtype +
-                            '"><span class="nt_bg_lz lazyload" data-bgset="' +
-                            bgset +
-                            '"' +
-                            style +
-                            '><i class="' +
-                            icon +
-                            '"></i></span></div>'
+                        navClass +
+                        'col-3 n-item" data-mdid="' +
+                        mdid +
+                        '" data-mdtype="' +
+                        mdtype +
+                        '"><span class="nt_bg_lz lazyload" data-bgset="' +
+                        bgset +
+                        '"' +
+                        style +
+                        '><i class="' +
+                        icon +
+                        '"></i></span></div>'
                     );
                 });
 
@@ -1218,7 +1218,7 @@
                     $mainGallery = $(this).find(".p-thumb"),
                     navClass =
                         $(".thumb_left").length > 0 ||
-                        $(".thumb_right").length > 0
+                            $(".thumb_right").length > 0
                             ? "col-lg-12 "
                             : "",
                     $col_nav = $(".col_nav"),
@@ -1307,8 +1307,8 @@
         if ($objects.length) {
             const hostFromVideoElement = function (video) {
                 let tagName = video.tagName
-                        ? video.tagName.toLocaleLowerCase()
-                        : "",
+                    ? video.tagName.toLocaleLowerCase()
+                    : "",
                     hostName = tagName === "video" ? "html5" : null;
 
                 if (
@@ -1425,8 +1425,8 @@
                     }
                 } else if (media.host === "model") {
                     let $wrapModel = $("<div>", {
-                            class: "kalles-model-viewer-ui kalles-model-viewer-ui--desktop",
-                        }),
+                        class: "kalles-model-viewer-ui kalles-model-viewer-ui--desktop",
+                    }),
                         buttonControl = [];
                     buttonControl.push(
                         '<div class="kalles-model-viewer-ui__controls-overlay">'
@@ -1756,8 +1756,8 @@
                     ],
                     getThumbBoundsFn: function (index) {
                         let thumbnail = $(".p-thumb .p_ptw:visible").eq(
-                                index
-                            )[0],
+                            index
+                        )[0],
                             pageYScroll =
                                 window.pageYOffset ||
                                 document.documentElement.scrollTop,
@@ -1808,6 +1808,7 @@
                     );
                 });
             };
+
 
             $(this).on("click", ".show_btn_pr_gallery", function (e) {
                 e.preventDefault();
@@ -2086,7 +2087,7 @@
                     preloader: false,
                     fixedContentPos: false,
                     callbacks: {
-                        beforeOpen: function () {},
+                        beforeOpen: function () { },
                         open: function () {
                             if (!$container.hasClass("done")) {
                                 threesixty = $container.ThreeSixty({
@@ -2118,7 +2119,7 @@
                                 .removeClass("nav_bar_stop")
                                 .addClass("nav_bar_play");
                         },
-                        close: function () {},
+                        close: function () { },
                     },
                 });
             }
@@ -2149,11 +2150,11 @@
                 }
                 collum === "listt4"
                     ? $catView_holder
-                          .removeClass("on_list_view_false")
-                          .addClass("on_list_view_true")
+                        .removeClass("on_list_view_false")
+                        .addClass("on_list_view_true")
                     : $catView_holder
-                          .removeClass("on_list_view_true")
-                          .addClass("on_list_view_false");
+                        .removeClass("on_list_view_true")
+                        .addClass("on_list_view_false");
 
                 $this.closest("div").removeClass("dev_view_cat");
                 $this.addClass("active").siblings().removeClass("active");
@@ -2198,7 +2199,7 @@
 
                 let $this = $(this),
                     $filter = $($this.data("id"));
-                    $this.toggleClass("opened");
+                $this.toggleClass("opened");
 
                 if ($filter.is(":hidden")) {
                     $filter.stop().slideDown(200);
@@ -2765,10 +2766,7 @@
         e.preventDefault();
     });
 
-    /**********************************************
-     * Top head banner
-     * ********************************************/
-    $("#kalles-section-header_banner").hTransparent();
+
 
     /**********************************************
      * Menu sticky
@@ -2822,14 +2820,11 @@
             }
             if (body.hasClass("cart_pos_dropdown")) {
                 setTimeout(() => {
-                    $("html, body").animate({ scrollTop: 0 }, "slow", () => {
-                        mini_cart_block$.addClass("current_hover");
-                        btn$.removeClass("loading");
-                    });
+                    btn$.removeClass("loading");
                 }, 500);
             } else {
                 setTimeout(() => {
-                    btn$.openMenu(mini_cart_block$);
+
                     btn$.removeClass("loading");
                 }, 500);
             }
@@ -2943,10 +2938,10 @@
      * ********************************************/
     if ($(".r--reply-form-wrapper").length) {
         const open_comment_form = ($wrap_form) => {
-                $wrap_form.find(".r--reply-items").addClass("d-none");
-                $wrap_form.find(".r--comment-form-wrap").removeClass("d-none");
-                $wrap_form.find(".r--reply-button").addClass("d-none");
-            },
+            $wrap_form.find(".r--reply-items").addClass("d-none");
+            $wrap_form.find(".r--comment-form-wrap").removeClass("d-none");
+            $wrap_form.find(".r--reply-button").addClass("d-none");
+        },
             close_comment_form = ($wrap_form) => {
                 $wrap_form.find(".r--reply-items").removeClass("d-none");
                 $wrap_form.find(".r--comment-form-wrap").addClass("d-none");
@@ -2998,7 +2993,7 @@
             over: function (t) {
                 $(this).swatchesOnBGGrid();
             },
-            out: function () {},
+            out: function () { },
         });
     }
 
@@ -3066,8 +3061,8 @@
                     if (
                         footerOffsetTop <
                         windowScroll +
-                            $footer.outerHeight() +
-                            $window.outerHeight()
+                        $footer.outerHeight() +
+                        $window.outerHeight()
                     ) {
                         $footer.addClass("visible_footer");
                     } else {
@@ -3169,8 +3164,8 @@
                         return;
                     }
                     var num_height =
-                            $(".ntheader.live_stuck .sp_header_mid").height() ||
-                            0,
+                        $(".ntheader.live_stuck .sp_header_mid").height() ||
+                        0,
                         of_active =
                             el.find(".sp-tab.active").offset().top -
                             num_height -
@@ -3184,7 +3179,7 @@
     /**********************************************
      * popup newsletter
      * ********************************************/
-    $(".popup_new_wrap").newsletterPopup();
+
 
     /**********************************************
      * age verify section

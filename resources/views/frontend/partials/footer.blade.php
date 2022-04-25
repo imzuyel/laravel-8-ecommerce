@@ -26,27 +26,23 @@
                     </p>
                     <p><i class="pegk pe-7s-call"></i> <span>+01312733791 </span></p>
                     <div class="nt-social">
-                      <a href="https://www.facebook.com/" class="facebook cb ttip_nt tooltip_top">
-                        <span class="tt_txt">Follow on Facebook</span>
-                        <i class="facl facl-facebook"></i>
-                      </a>
-                      <a href="https://twitter.com/" class="twitter cb ttip_nt tooltip_top">
-                        <span class="tt_txt">Follow on Twitter</span>
-                        <i class="facl facl-twitter"></i>
-                      </a>
-                      <a href="https://www.instagram.com/" class="instagram cb ttip_nt tooltip_top">
-                        <span class="tt_txt">Follow on Instagram</span>
-                        <i class="facl facl-instagram"></i>
-                      </a>
-                      <a href="https://www.linkedin.com/" class="linkedin cb ttip_nt tooltip_top">
-                        <span class="tt_txt">Follow on Linkedin</span>
-                        <i class="facl facl-linkedin"></i>
-                      </a>
-                      <a href="https://www.pinterest.com/" class="pinterest cb ttip_nt tooltip_top">
-                        <span class="tt_txt">Follow on Pinterest</span>
-                        <i class="facl facl-pinterest"></i>
-                      </a>
-                    </div>
+                        <a target="_blank" href="https://www.facebook.com/imzuyel"
+                          class="facebook cb ttip_nt tooltip_bottom_right">
+                          <span class="tt_txt">Follow on Facebook</span><i class="facl facl-facebook"></i>
+                        </a>
+                        <a target="_blank" href="https://twitter.com/imzuyel"
+                          class="twitter cb ttip_nt tooltip_bottom_right">
+                          <span class="tt_txt">Follow on Twitter</span><i class="facl facl-twitter"></i>
+                        </a>
+                        <a target="_blank" href="https://www.instagram.com/imzuyel/"
+                          class="instagram cb ttip_nt tooltip_bottom_right">
+                          <span class="tt_txt">Follow on Instagram</span><i class="facl facl-instagram"></i>
+                        </a>
+                        <a target="_blank" href="https://www.linkedin.com/in/imzuyel"
+                          class="linkedin cb ttip_nt tooltip_bottom_right">
+                          <span class="tt_txt">Follow on Linkedin</span><i class="facl facl-linkedin"></i>
+                        </a>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -54,29 +50,22 @@
             <div class="col-lg-2 col-md-6 col-12 mb__50 order-lg-2 order-1">
               <div class="widget widget_nav_menu">
                 <h3 class="widget-title fwsb flex al_center fl_between fs__16 mg__0 mb__30">
-                  <span class="txt_title">Categories</span>
+                  <span class="txt_title">  {{ (session()->get('language') === 'bangla') ? 'ক্যাটাগরি' : 'Categories'}} </span>
                   <span class="nav_link_icon ml__5"></span>
                 </h3>
                 <div class="menu_footer widget_footer">
                   <ul class="menu">
+                    @foreach ($categoriesfooter as $category)
                     <li class="menu-item">
-                      <a href="shop-filter-options.html">Men</a>
+                    @if (session()->get('language') === 'bangla')
+                    <a href="{{ $category->category_name_bn }}">{{ $category->category_name_bn }}</a>
+                    @else
+                    <a href="{{ $category->category_name_en }}">{{ $category->category_name_en }}</a>
+                    @endif
+
+
                     </li>
-                    <li class="menu-item">
-                      <a href="shop-filter-options.html">Women</a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="shop-1600px-layout.html">Accessories</a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="shop-1600px-layout.html">Shoes</a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="shop-1600px-layout.html">Denim</a>
-                    </li>
-                    <li class="menu-item">
-                      <a href="shop-1600px-layout.html">Dress</a>
-                    </li>
+                @endforeach
                   </ul>
                 </div>
               </div>
@@ -90,22 +79,22 @@
                 <div class="menu_footer widget_footer">
                   <ul class="menu">
                     <li class="menu-item">
-                      <a href="about-us.html">About Us</a>
+                      <a target="_blank" href="https://www.imzuyel.com/">About Us</a>
                     </li>
                     <li class="menu-item">
-                      <a href="contact-us.html">Contact Us</a>
+                      <a target="_blank" href="https://www.imzuyel.com/">Contact Us</a>
                     </li>
                     <li class="menu-item">
-                      <a href="terms-conditions.html">Terms &amp; Conditions</a>
+                      <a href="#">Terms &amp; Conditions</a>
                     </li>
                     <li class="menu-item">
-                      <a href="returns-exchanges.html">Returns &amp; Exchanges</a>
+                      <a href="#">Returns &amp; Exchanges</a>
                     </li>
                     <li class="menu-item">
-                      <a href="shipping-delivery.html">Shipping &amp; Delivery</a>
+                      <a href="#">Shipping &amp; Delivery</a>
                     </li>
                     <li class="menu-item">
-                      <a href="privacy-policy.html">Privacy Policy</a>
+                      <a href="#">Privacy Policy</a>
                     </li>
                   </ul>
                 </div>
@@ -120,23 +109,21 @@
                 <div class="menu_footer widget_footer">
                   <ul class="menu">
                     <li class="menu-item">
-                      <a href="store-location.html">Store Location</a>
+                      <a href="">Store Location</a>
                     </li>
                     <li class="menu-item">
-                      <a href="blog-grid.html">Latest News</a>
+                      <a href="">Latest News</a>
                     </li>
                     <li class="menu-item">
-                      <a href="my-account.html">My Account</a>
+                      <a href="#">My Account</a>
                     </li>
                     <li class="menu-item">
-                      <a href="size-guide.html">Size Guide</a>
+                      <a href="#">Size Guide</a>
                     </li>
                     <li class="menu-item">
-                      <a href="faqs-2.html">FAQs 2</a>
+                      <a href="#">FAQs 2</a>
                     </li>
-                    <li class="menu-item">
-                      <a href="faqs.html">FAQs</a>
-                    </li>
+
                   </ul>
                 </div>
               </div>
@@ -161,9 +148,6 @@
                       </div>
                     </div>
                   </form>
-                  <p class="mt__20">
-                    <img class="w__100 lazyload w__max-width__197" data-src="{{ asset('/') }}frontend/assets/images/payment2.png" src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20197%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" alt="">
-                  </p>
                 </div>
               </div>
             </div>
@@ -171,7 +155,7 @@
         </div>
       </div>
     </div>
- 
+
     </div>
   </footer>
   <!-- end footer -->

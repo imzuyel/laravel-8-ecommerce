@@ -65,11 +65,7 @@
                         </div>
 
                       </form>
-                      <p class="mt__20">
-                        <img class="w__100 lz_op_ef w__max-width__197 lazyloaded"
-                          data-src="assets/images/payment2.png"
-                          src="assets/images/payment2.png"
-                          alt="">
+                      alt="">
                       </p>
                     </div>
                   </div>
@@ -92,12 +88,7 @@
                         </div>
 
                       </form>
-                      <p class="mt__20">
-                        <img class="w__100 lz_op_ef w__max-width__197 lazyloaded"
-                          data-src="assets/images/payment2.png"
-                          src="assets/images/payment2.png"
-                          alt="">
-                      </p>
+
                     </div>
                   </div>
                 </div>
@@ -135,12 +126,7 @@
                         </div>
 
                       </form>
-                      <p class="mt__20">
-                        <img class="w__100 lz_op_ef w__max-width__197 lazyloaded"
-                          data-src="assets/images/payment2.png"
-                          src="assets/images/payment2.png"
-                          alt="">
-                      </p>
+
                     </div>
                   </div>
                 </div>
@@ -148,17 +134,12 @@
 
               <div class="col-12 tr_md tc order-md-4 order-4 col-md-6">
                 <div id="couponData"></div>
-                <button type="submit"
+                <a href="{{ route('frontend.commingSoon') }}"
                   data-confirm="ck_lumise"
                   name="checkout"
-                  class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld">চেক আউট</button>
+                  class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld">চেক আউট</a>
                 <div class="clearfix"></div>
-                <div class="cat_img_trust mt__10">
-                  <img class="lz_op_ef w-50 lazyloaded"
-                    src="assets/images/shopping-cart/cart_image.png"
-                    data-src="assets/images/shopping-cart/cart_image.png"
-                    alt="">
-                </div>
+
               </div>
             </div>
           </div>
@@ -198,12 +179,7 @@
                         </div>
 
                       </form>
-                      <p class="mt__20">
-                        <img class="w__100 lz_op_ef w__max-width__197 lazyloaded"
-                          data-src="assets/images/payment2.png"
-                          src="assets/images/payment2.png"
-                          alt="">
-                      </p>
+
                     </div>
                   </div>
                 </div>
@@ -225,12 +201,7 @@
                         </div>
 
                       </form>
-                      <p class="mt__20">
-                        <img class="w__100 lz_op_ef w__max-width__197 lazyloaded"
-                          data-src="assets/images/payment2.png"
-                          src="assets/images/payment2.png"
-                          alt="">
-                      </p>
+
                     </div>
                   </div>
                 </div>
@@ -268,12 +239,7 @@
                         </div>
 
                       </form>
-                      <p class="mt__20">
-                        <img class="w__100 lz_op_ef w__max-width__197 lazyloaded"
-                          data-src="assets/images/payment2.png"
-                          src="assets/images/payment2.png"
-                          alt="">
-                      </p>
+
                     </div>
                   </div>
                 </div>
@@ -281,17 +247,12 @@
 
               <div class="col-12 tr_md tc order-md-4 order-4 col-md-6">
                 <div id="couponData"></div>
-                <button type="submit"
+                <a href="{{ route('frontend.commingSoon') }}"
                   data-confirm="ck_lumise"
                   name="checkout"
-                  class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld">Check Out</button>
+                  class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld">Check Out</a>
                 <div class="clearfix"></div>
-                <div class="cat_img_trust mt__10">
-                  <img class="lz_op_ef w-50 lazyloaded"
-                    src="assets/images/shopping-cart/cart_image.png"
-                    data-src="assets/images/shopping-cart/cart_image.png"
-                    alt="">
-                </div>
+
               </div>
             </div>
           </div>

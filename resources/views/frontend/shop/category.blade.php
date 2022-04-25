@@ -7,7 +7,6 @@
     href="{{ asset('frontend/assets/css/drift-basic.min.css') }}">
   <link rel="stylesheet"
     href="{{ asset('frontend/assets/css/photoswipe.css') }}">
-  {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/home-default.css') }}"> --}}
   <link rel="stylesheet"
     href="{{ asset('frontend/assets/css/shop.css') }}">
   <style>
@@ -344,23 +343,7 @@
               </div>
               <!--end products list-->
 
-              <!--navigation-->
-              <div class="products-footer tc mt__40">
-                <nav class="nt-pagination w__100 tc paginate_ajax">
-                  <ul class="pagination-page page-numbers">
-                    <li><span class="page-numbers current">1</span></li>
-                    <li><a class="page-numbers"
-                        href="#">2</a></li>
-                    <li><a class="page-numbers"
-                        href="#">3</a></li>
-                    <li><a class="page-numbers"
-                        href="#">4</a></li>
-                    <li><a class="next page-numbers"
-                        href="#">Next</a></li>
-                  </ul>
-                </nav>
-              </div>
-              <!--end navigation-->
+
 
             </div>
           </div>

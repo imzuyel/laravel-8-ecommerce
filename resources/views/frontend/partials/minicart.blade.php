@@ -30,8 +30,8 @@
             <div class="cart_tot_price" id="cart_tot_price"></div>
           </div>
         </div>
-        <a href="shopping-cart.html" class="button btn-cart mt__10 mb__10 js_add_ld d-inline-flex justify-content-center align-items-center cd-imp">View cart</a>
-        <a href="{{ route('myCart') }}" class="button btn-checkout mt__10 mb__10 js_add_ld d-inline-flex justify-content-center align-items-center text-white">Check Out</a>
+        <a href="{{ route('myCart') }}" class="button btn-checkout mt__10 mb__10 js_add_ld d-inline-flex justify-content-center align-items-center text-white">View cart</a>
+        <a href="{{ route('frontend.commingSoon') }}" class="button btn-cart mt__10 mb__10 js_add_ld d-inline-flex justify-content-center align-items-center cd-imp ">Check Out</a>
 
       </div>
     </div>

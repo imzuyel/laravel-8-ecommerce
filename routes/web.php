@@ -14,9 +14,7 @@ use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\frontend\CustommerController;
-
-
-
+use App\Models\Product;
 
 Auth::routes();
 Route::get('/clear', [DashboardController::class, 'cache'])->name('cache');
@@ -45,10 +43,12 @@ Route::get('/user/coupon-remove', [CustommerController::class, 'couponRemove']);
 
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.home');
-Route::get('/shop', [HomeController::class, 'shop'])->name('frontend.shop');
 Route::get('/bn/details/{category}/{slug}', [HomeController::class, 'detailsbn'])->name('frontend.detailsbn');
 Route::get('/en/details/{category}/{slug}', [HomeController::class, 'detailsen'])->name('frontend.detailsen');
-Route::get('/category', [HomeController::class, 'category'])->name('frontend.category');
+
+
+// Comming Soon
+Route::get('/shop/comming/soon', [HomeController::class, 'commingsoon'])->name('frontend.commingSoon');
 
 
 //Poduct View modal with ajax
@@ -80,11 +80,31 @@ Route::get('/bn/{category}/{subcategory}/{subsubcategory}', [HomeController::cla
 // Brand
 Route::get('/products/brand/{brandid}', [HomeController::class, 'brandsProduct']);
 
+view()->composer('frontend.index', function ($view) {
+    $category = Category::where('status', 1)->inRandomOrder()->first();
+    $allProducts = Product::where('status', 1)->inRandomOrder(10)->orderBy('discount')->take(10)->get();
+    $hotDealsProducts = Product::where(['hot_deals'=>1,'status'=>1])->inRandomOrder()->orderBy('hot_deals')->take(12)->get();
+    $featuredProducts = Product::where(['featured'=>1,'status'=>1])->inRandomOrder()->take(12)->get();
+    $view->with('category', $category);
+    $view->with('allProducts', $allProducts);
+    $view->with('featuredProducts', $featuredProducts);
+    $view->with('hotDealsProducts', $hotDealsProducts);
+});
 
 view()->composer('frontend.partials.header', function ($view) {
     $categories = Category::where('status', 1)->latest('id')->get();
+    $category = Category::where('status', 1)->inRandomOrder()->first();
     $view->with('categories', $categories);
+    $view->with('category', $category);
 });
+
+view()->composer('frontend.partials.mobile_menu', function ($view) {
+    $categories = Category::where('status', 1)->latest('id')->get();
+    $category = Category::where('status', 1)->inRandomOrder()->first();
+    $view->with('categories', $categories);
+    $view->with('category', $category);
+});
+
 
 view()->composer('frontend.partials.minicart', function ($view) {
     $carts = Cart::content();
@@ -94,6 +114,11 @@ view()->composer('frontend.partials.minicart', function ($view) {
 view()->composer('frontend.shop.category', function ($view) {
     $brands = Brand::where('status', 1)->get();
     $view->with('brands', $brands);
+});
+
+view()->composer('frontend.partials.footer', function ($view) {
+    $categoriesfooter = Category::where('status', 1)->inRandomOrder()->take(5)->get();
+    $view->with('categoriesfooter', $categoriesfooter);
 });
 
 
